@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEAST MARAGAMES - Hub Central</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 40px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .card:hover {
+            border-color: #8B4789;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(139, 71, 137, 0.15);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            color: #333;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card-action {
+            color: #8B4789;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .card-action:after {
+            content: " →";
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-left: 4px solid #8B4789;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .info-box h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎮</div>
+        <h1>BEAST MARAGAMES</h1>
+        <p class="subtitle">Plataforma de Arena de Jogos Educacional</p>
+
+        <div class="status-badge">✅ Projeto Completo - Fase Design</div>
+
+        <div class="info-box">
+            <h3>📌 Sobre Este Hub</h3>
+            <p>Central de documentação e protótipo do projeto BEAST MARAGAMES. Acesse os arquivos abaixo para explorar decisões estratégicas, arquitetura de telas e interagir com o protótipo navegável.</p>
+        </div>
+
+        <div class="card-grid">
+            <a href="DELIVERABLE_COMPLETO.html" class="card">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Documentação Completa</div>
+                <div class="card-desc">Análise de decisões, arquitetura, fluxos e padrões de design</div>
+                <div class="card-action">Ver documento</div>
+            </a>
+
+            <a href="prototipo.html" class="card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">Protótipo Navegável</div>
+                <div class="card-desc">App interativo com todas as 7 telas - teste o fluxo completo</div>
+                <div class="card-action">Abrir protótipo</div>
+            </a>
+
+            <a href="ANALISE_DECISOES.md" class="card">
+                <div class="card-icon">🎯</div>
+                <div class="card-title">Análise de Decisões</div>
+                <div class="card-desc">Análise detalhada das 3 decisões estratégicas principais</div>
+                <div class="card-action">Ler markdown</div>
+            </a>
+
+            <a href="ARQUITETURA_TELAS.md" class="card">
+                <div class="card-icon">🖼️</div>
+                <div class="card-title">Arquitetura de Telas</div>
+                <div class="card-desc">Mapa completo de telas, componentes e especificações</div>
+                <div class="card-action">Ler markdown</div>
+            </a>
+        </div>
+
+        <div class="info-box">
+            <h3>🚀 Próximos Passos</h3>
+            <p>Fase 1 (Design) ✅ COMPLETO<br>
+            Fase 2: Desenvolvimento em React Native<br>
+            Fase 3: Backend API<br>
+            Fase 4: Deploy em produção</p>
+        </div>
+
+        <div class="footer">
+            <p>BEAST MARAGAMES © 2024 | Projeto Acadêmico</p>
+        </div>
+    </div>
+</body>
+</html>

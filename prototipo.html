@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEAST MARAGAMES - Protótipo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .device {
+            width: 375px;
+            height: 812px;
+            border: 12px solid #000;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notch {
+            height: 30px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .screen {
+            flex: 1;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .navbar p {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(139, 71, 137, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #8B4789;
+            box-shadow: 0 0 0 3px rgba(139, 71, 137, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .event-item {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #8B4789;
+        }
+
+        .event-item h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .event-item p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-box {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B4789;
+        }
+
+        .stat-box .label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .experience-list {
+            margin-bottom: 16px;
+        }
+
+        .experience-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .experience-item .icon {
+            font-size: 24px;
+            margin-right: 12px;
+            min-width: 32px;
+        }
+
+        .experience-item .info {
+            flex: 1;
+        }
+
+        .experience-item .name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .experience-item .time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .experience-item .status {
+            font-weight: 600;
+            color: #4caf50;
+        }
+
+        .bottom-nav {
+            display: flex;
+            border-top: 1px solid #eee;
+            background: white;
+            padding-bottom: 16px;
+        }
+
+        .nav-item {
+            flex: 1;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            background: white;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            color: #8B4789;
+            border-top: 2px solid #8B4789;
+            padding-top: 10px;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .qr-box {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border: 2px dashed #8B4789;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .qr-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .timer {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8B4789;
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .confirmation-dialog {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: flex-end;
+            z-index: 1000;
+            display: none;
+        }
+
+        .confirmation-dialog.show {
+            display: flex;
+        }
+
+        .dialog-content {
+            background: white;
+            width: 100%;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .dialog-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .dialog-header h2 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .dialog-info {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .dialog-info .item {
+            margin-bottom: 8px;
+        }
+
+        .dialog-info .label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .dialog-info .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .success-message {
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .success-message h2 {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 8px;
+        }
+
+        .success-message p {
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .rating-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .stars {
+            font-size: 48px;
+            margin: 16px 0;
+            cursor: pointer;
+            letter-spacing: 8px;
+        }
+
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .star.active {
+            color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <div class="device">
+        <div class="notch"></div>
+
+        <!-- TELA 1: HOME -->
+        <div class="screen active" id="homeScreen">
+            <div class="navbar">
+                <h1>🎮 BEAST ARENA</h1>
+                <p>Olá, João! Bem-vindo de volta</p>
+            </div>
+            <div class="content">
+                <div class="card">
+                    <h2>🎮</h2>
+                    <p>Entrar em Evento</p>
+                </div>
+                <button class="btn btn-primary" onclick="showScreen('entradaScreen')">
+                    INICIAR PARTICIPAÇÃO
+                </button>
+
+                <h3 style="margin: 24px 0 16px; color: #333; font-size: 14px; font-weight: 600;">Participações Recentes</h3>
+
+                <div class="event-item">
+                    <h3>🏟️ BEAST Arena - Shopping XYZ</h3>
+                    <p>📅 15 de Setembro de 2024</p>
+                    <p>⏱️ Permanência: 2h 45min</p>
+                    <p>⭐ Avaliação: 4/5</p>
+                    <button class="btn btn-secondary" onclick="showScreen('detalheScreen')" style="margin-top: 12px; padding: 10px;">
+                        VER DETALHES
+                    </button>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-item active" onclick="switchTab(this, 'homeScreen')">
+                    <div class="nav-icon">🏠</div>
+                    <div>Início</div>
+                </button>
+                <button class="nav-item" onclick="switchTab(this, 'eventosScreen')">
+                    <div class="nav-icon">📍</div>
+                    <div>Eventos</div>
+                </button>
+                <button class="nav-item" onclick="switchTab(this, 'perfilScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div>Perfil</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 2: ENTRADA (QR CODE) -->
+        <div class="screen" id="entradaScreen">
+            <div class="navbar">
+                <h1>Entrar em Evento</h1>
+            </div>
+            <div class="content">
+                <div class="qr-box">
+                    <div class="qr-icon">📷</div>
+                    <h3 style="color: #666; margin-bottom: 8px;">Escanear QR Code</h3>
+                    <p style="color: #999; font-size: 12px; margin-bottom: 16px;">Aponte a câmera para o QR Code do evento</p>
+                    <button class="btn btn-primary" onclick="showConfirmation()">
+                        ESCANEAR QR CODE
+                    </button>
+                </div>
+
+                <div style="text-align: center; margin: 24px 0; color: #999;">
+                    <p>—— ou ——</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Digitar Código do Evento</label>
+                    <input type="text" class="input-field" placeholder="Ex: BEAST2024" id="codigoInput">
+                </div>
+
+                <button class="btn btn-secondary" onclick="confirmarCodigo()">
+                    CONFIRMAR CÓDIGO
+                </button>
+
+                <button class="btn btn-secondary" onclick="showScreen('homeScreen')" style="background: #f0f0f0;">
+                    VOLTAR
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 3: CONFIRMAÇÃO -->
+        <div class="screen" id="confirmacaoScreen">
+            <div class="navbar">
+                <h1>Confirmar Entrada</h1>
+            </div>
+            <div class="content">
+                <div class="card" style="text-align: left; padding: 16px;">
+                    <div style="margin-bottom: 16px;">
+                        <h2>🏟️ BEAST Arena</h2>
+                        <p style="font-size: 14px; margin-top: 4px;">Shopping XYZ</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); border-radius: 8px; padding: 12px;">
+                        <p>📅 15 de Setembro de 2024</p>
+                        <p>⏰ Horário: 14:30</p>
+                        <p>🎮 Experiências: PlayStation, VR, Simulador</p>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="enterEvent()">
+                    ✅ CONFIRMAR ENTRADA
+                </button>
+
+                <button class="btn btn-secondary" onclick="showScreen('entradaScreen')">
+                    ❌ CANCELAR
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 4: EVENTO EM ANDAMENTO -->
+        <div class="screen" id="eventoScreen">
+            <div class="navbar">
+                <h1>Arena em Andamento</h1>
+            </div>
+            <div class="content">
+                <div class="timer" id="timerDisplay">01:45:30</div>
+
+                <h3 style="color: #333; font-size: 14px; font-weight: 600; margin-bottom: 12px;">Experiências</h3>
+
+                <div class="experience-list">
+                    <div class="experience-item">
+                        <div class="icon">🎮</div>
+                        <div class="info">
+                            <div class="name">PlayStation</div>
+                            <div class="time">14:35</div>
+                        </div>
+                        <div class="status">✅</div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="icon">🥽</div>
+                        <div class="info">
+                            <div class="name">Realidade Virtual</div>
+                            <div class="time">15:10</div>
+                        </div>
+                        <div class="status">✅</div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="icon">🚗</div>
+                        <div class="info">
+                            <div class="name">Simulador de Corrida</div>
+                            <div class="time">—</div>
+                        </div>
+                        <div class="status" style="color: #999;">⭕</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 24px;">
+                    REGISTRAR EXPERIÊNCIA
+                </button>
+
+                <button class="btn btn-primary" onclick="showScreen('resumoScreen')">
+                    SAIR DA ARENA
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 5: RESUMO & AVALIAÇÃO -->
+        <div class="screen" id="resumoScreen">
+            <div class="navbar">
+                <h1>Evento Finalizado</h1>
+            </div>
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">✅</div>
+                    <h2 style="color: #4caf50; font-size: 20px;">Obrigado por participar!</h2>
+                </div>
+
+                <div class="event-item">
+                    <h3>🏟️ BEAST Arena - Shopping XYZ</h3>
+                    <p>📅 15 de Setembro de 2024</p>
+                    <p>⏱️ Permanência: 2h 45min (14:30 - 17:15)</p>
+
+                    <h4 style="margin-top: 12px; margin-bottom: 8px; font-weight: 600;">Experiências realizadas:</h4>
+                    <p>✅ PlayStation</p>
+                    <p>✅ Realidade Virtual</p>
+                    <p>✅ Simulador de Corrida</p>
+                </div>
+
+                <h3 style="color: #333; font-size: 14px; font-weight: 600; margin: 24px 0 12px;">Como foi sua experiência?</h3>
+
+                <div class="rating-container">
+                    <div class="stars" onclick="setRating(event)">
+                        <span class="star" data-value="1">⭐</span>
+                        <span class="star" data-value="2">⭐</span>
+                        <span class="star" data-value="3">⭐</span>
+                        <span class="star" data-value="4">⭐</span>
+                        <span class="star" data-value="5">⭐</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>O que você mais gostou? (Opcional)</label>
+                    <textarea class="input-field" placeholder="Deixe um comentário..." style="height: 80px; resize: none;"></textarea>
+                </div>
+
+                <button class="btn btn-primary" onclick="showScreen('homeScreen')">
+                    VOLTAR À HOME
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 6: DETALHES DA PARTICIPAÇÃO -->
+        <div class="screen" id="detalheScreen">
+            <div class="navbar">
+                <h1>Detalhes da Participação</h1>
+            </div>
+            <div class="content">
+                <div class="event-item">
+                    <h3>🏟️ Arena: BEAST Arena - Shopping XYZ</h3>
+                    <p>📅 Data: 15 de Setembro de 2024</p>
+                    <p>⏱️ Permanência: 2h 45min</p>
+                    <p style="margin-top: 12px; font-size: 12px; color: #666;">Entrada: 14:30 | Saída: 17:15</p>
+                </div>
+
+                <h3 style="color: #333; font-size: 14px; font-weight: 600; margin: 24px 0 12px;">🎮 Experiências Realizadas</h3>
+
+                <div class="experience-list">
+                    <div class="experience-item">
+                        <div class="icon">🎮</div>
+                        <div class="info">
+                            <div class="name">PlayStation</div>
+                            <div class="time">14:35</div>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="icon">🥽</div>
+                        <div class="info">
+                            <div class="name">Realidade Virtual</div>
+                            <div class="time">15:10</div>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="icon">🚗</div>
+                        <div class="info">
+                            <div class="name">Simulador de Corrida</div>
+                            <div class="time">16:20</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+                    <p><strong>⭐ Sua Avaliação: 4/5</strong></p>
+                    <p style="font-size: 12px; color: #666; margin-top: 4px;">💬 "Muito legal!"</p>
+                </div>
+
+                <button class="btn btn-secondary" onclick="showScreen('homeScreen')">
+                    VOLTAR
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 7: EVENTOS -->
+        <div class="screen" id="eventosScreen">
+            <div class="navbar">
+                <h1>Meus Eventos</h1>
+            </div>
+            <div class="content">
+                <div class="event-item">
+                    <h3>🏟️ BEAST Arena - Shopping XYZ</h3>
+                    <p>📅 15 de Setembro de 2024</p>
+                    <p>⏱️ 2h 45min</p>
+                    <p>⭐ 4/5</p>
+                    <button class="btn btn-secondary" onclick="showScreen('detalheScreen')" style="margin-top: 12px; padding: 10px;">
+                        VER DETALHES
+                    </button>
+                </div>
+
+                <div class="event-item">
+                    <h3>🏟️ BEAST Arena - Feira de Games</h3>
+                    <p>📅 10 de Agosto de 2024</p>
+                    <p>⏱️ 1h 30min</p>
+                    <button class="btn btn-secondary" style="margin-top: 12px; padding: 10px;">
+                        VER DETALHES
+                    </button>
+                </div>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="switchTab(this, 'homeScreen')">
+                    <div class="nav-icon">🏠</div>
+                    <div>Início</div>
+                </button>
+                <button class="nav-item active" onclick="switchTab(this, 'eventosScreen')">
+                    <div class="nav-icon">📍</div>
+                    <div>Eventos</div>
+                </button>
+                <button class="nav-item" onclick="switchTab(this, 'perfilScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div>Perfil</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA 8: PERFIL -->
+        <div class="screen" id="perfilScreen">
+            <div class="navbar">
+                <h1>Meu Perfil</h1>
+            </div>
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%); border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px;">
+                        👤
+                    </div>
+                    <h2 style="margin-top: 12px;">João Silva</h2>
+                    <p style="color: #666; font-size: 12px;">joao@email.com</p>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="value">3</div>
+                        <div class="label">Eventos</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="value">8h</div>
+                        <div class="label">Total</div>
+                    </div>
+                </div>
+
+                <h3 style="color: #333; font-size: 14px; font-weight: 600; margin-bottom: 12px;">Preferências</h3>
+
+                <div class="event-item">
+                    <p><strong>Faixa Etária:</strong> 18-25 anos</p>
+                    <p><strong>Relação com Games:</strong> Jogo frequentemente</p>
+                    <p><strong>Gêneros Favoritos:</strong> Ação, RPG, Esportes</p>
+                </div>
+
+                <button class="btn btn-secondary" style="margin-top: 24px;">
+                    EDITAR PERFIL
+                </button>
+
+                <button class="btn btn-secondary" style="background: #f0f0f0;">
+                    SAIR DA CONTA
+                </button>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-item" onclick="switchTab(this, 'homeScreen')">
+                    <div class="nav-icon">🏠</div>
+                    <div>Início</div>
+                </button>
+                <button class="nav-item" onclick="switchTab(this, 'eventosScreen')">
+                    <div class="nav-icon">📍</div>
+                    <div>Eventos</div>
+                </button>
+                <button class="nav-item active" onclick="switchTab(this, 'perfilScreen')">
+                    <div class="nav-icon">👤</div>
+                    <div>Perfil</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function switchTab(element, screenId) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            showScreen(screenId);
+        }
+
+        function showConfirmation() {
+            showScreen('confirmacaoScreen');
+        }
+
+        function confirmarCodigo() {
+            const codigo = document.getElementById('codigoInput').value;
+            if (codigo.trim()) {
+                showScreen('confirmacaoScreen');
+            } else {
+                alert('Digite um código válido');
+            }
+        }
+
+        function enterEvent() {
+            showScreen('eventoScreen');
+            startTimer();
+        }
+
+        function startTimer() {
+            let seconds = 6330; // 1h 45min 30s
+            const timerDisplay = document.getElementById('timerDisplay');
+
+            setInterval(() => {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = seconds % 60;
+
+                timerDisplay.textContent =
+                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+                if (seconds > 0) seconds--;
+            }, 1000);
+        }
+
+        function setRating(event) {
+            if (event.target.classList.contains('star')) {
+                const rating = event.target.dataset.value;
+                document.querySelectorAll('.star').forEach((star, index) => {
+                    star.classList.toggle('active', index < rating);
+                });
+            }
+        }
+
+        // Initialize with home screen
+        showScreen('homeScreen');
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+services:
+  - type: static
+    name: beast-maragames
+    staticPublishPath: .
+    buildCommand: echo "No build required"
+    envVars: []
