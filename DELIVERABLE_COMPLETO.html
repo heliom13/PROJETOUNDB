@@ -343,13 +343,71 @@
             color: #666;
             font-size: 14px;
         }
+
+        .stat-card .number.text {
+            font-size: 22px;
+            line-height: 1.5;
+        }
+
+        .decided {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 12px 0;
+        }
+
+        .decided strong {
+            color: #2e7d32;
+        }
+
+        .pending {
+            background: #fff8e1;
+            border-left: 4px solid #f9a825;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 12px 0;
+        }
+
+        .pending strong {
+            color: #8d6e00;
+        }
+
+        .discarded {
+            opacity: 0.7;
+            border-style: dashed;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        .tag.ok { background: #e8f5e9; color: #2e7d32; }
+        .tag.eval { background: #fff8e1; color: #8d6e00; }
+        .tag.off { background: #eeeeee; color: #666; }
+
+        .context-group {
+            margin: 24px 0;
+        }
+
+        .context-group > h4 {
+            color: #8B4789;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>🎮 BEAST MARAGAMES</h1>
         <p>Plataforma de Arena de Jogos Educacional</p>
-        <div class="status">📋 Documentação Completa | Fase: Design & Prototipagem</div>
+        <div class="status">📋 Documentação Completa | Fase: Definição estrutural e fluxos</div>
     </header>
 
     <div class="container">
@@ -358,11 +416,11 @@
             <h3>📑 Índice</h3>
             <ul>
                 <li><a href="#resumo">Resumo Executivo</a></li>
-                <li><a href="#decisoes">Análise de Decisões Estratégicas</a></li>
-                <li><a href="#arquitetura">Arquitetura de Telas</a></li>
+                <li><a href="#decisoes">Decisões Estratégicas</a></li>
+                <li><a href="#arquitetura">Arquitetura de Telas e Interfaces</a></li>
                 <li><a href="#fluxos">Fluxos de Navegação</a></li>
-                <li><a href="#design">Padrões de Design</a></li>
-                <li><a href="#entregaveis">Entregáveis</a></li>
+                <li><a href="#design">Diretrizes Visuais Provisórias do Protótipo</a></li>
+                <li><a href="#entregaveis">Entregáveis e Próximos Passos</a></li>
             </ul>
         </div>
 
@@ -372,25 +430,21 @@
 
             <div class="stats">
                 <div class="stat-card">
-                    <div class="number">7</div>
-                    <div class="label">Telas Principais</div>
-                </div>
-                <div class="stat-card">
                     <div class="number">3</div>
-                    <div class="label">Decisões Estratégicas</div>
+                    <div class="label">Interfaces: Participante, Staff e Monitor</div>
                 </div>
                 <div class="stat-card">
                     <div class="number">∞</div>
                     <div class="label">Eventos Suportados</div>
                 </div>
                 <div class="stat-card">
-                    <div class="number">100%</div>
-                    <div class="label">Navegável</div>
+                    <div class="number text">Protótipo Estrutural</div>
+                    <div class="label">Fluxos principais navegáveis</div>
                 </div>
             </div>
 
             <h3>Visão Geral</h3>
-            <p><strong>BEAST MARAGAMES</strong> é uma plataforma mobile educacional para participação em eventos de arenas de jogos. O sistema permite que participantes se registrem, entrem em eventos através de QR Code ou código manual, registrem experiências, e recebam feedback em tempo real.</p>
+            <p><strong>BEAST MARAGAMES</strong> é uma plataforma mobile educacional para participação em eventos de arenas de jogos. O sistema permite que participantes se cadastrem, entrem em eventos por QR Code ou código manual, acompanhem filas e participem das experiências disponíveis na Arena. A solução também contempla uma interface operacional para o staff gerenciar filas e confirmar experiências, além de um monitor público para chamadas em tempo real.</p>
 
             <h3>Objetivos Principais</h3>
             <ul class="checklist">
@@ -399,6 +453,11 @@
                 <li>Criar histórico personalizado por participante</li>
                 <li>Facilitar coleta de feedback após eventos</li>
                 <li>Oferecer interface intuitiva e responsiva</li>
+                <li>Gerenciar filas das experiências/estações</li>
+                <li>Permitir acompanhamento da posição na fila pelo participante</li>
+                <li>Apoiar o staff no gerenciamento e na confirmação das experiências</li>
+                <li>Exibir chamadas em monitor público atualizado em tempo real</li>
+                <li>Mensurar tempo de permanência e interação do público</li>
             </ul>
 
             <h3>Princípios de Design</h3>
@@ -408,17 +467,21 @@
             </div>
             <div class="subsection">
                 <h4>💎 Valor ao Participante</h4>
-                <p>Histórico, progresso e reconhecimento das atividades realizadas.</p>
+                <p>Histórico, estatísticas pessoais e reconhecimento das atividades realizadas.</p>
             </div>
             <div class="subsection">
                 <h4>⚡ Zero Fricção</h4>
-                <p>Entrada rápida, fluxo intuitivo, mínimo de digitação.</p>
+                <p>Entrada rápida, fluxo intuitivo, mínimo de digitação. Avaliação curta na saída, sem formulários extensos.</p>
+            </div>
+            <div class="subsection">
+                <h4>📊 Coleta Transparente</h4>
+                <p>Priorizar dados obtidos naturalmente durante a utilização do sistema, evitando solicitar ao participante informações que o próprio fluxo já consegue registrar.</p>
             </div>
         </section>
 
         <!-- DECISÕES ESTRATÉGICAS -->
         <section class="section" id="decisoes">
-            <h2>🎯 Análise de Decisões Estratégicas</h2>
+            <h2>🎯 Decisões Estratégicas</h2>
 
             <h3>Decisão #1: Como participantes entram em eventos?</h3>
 
@@ -439,65 +502,126 @@
             </div>
 
             <div class="decision-box">
-                <div class="title">Opção C: Ambos (Híbrido) ⭐ RECOMENDADO</div>
+                <div class="title">Opção C: Ambos (Híbrido)</div>
                 <p><span class="pro">✅ Velocidade:</span> QR Code primário (rápido)</p>
-                <p><span class="pro">✅ Robustez:</span> Código fallback (seguro)</p>
+                <p><span class="pro">✅ Robustez:</span> Código manual como alternativa</p>
                 <p><span class="pro">✅ UX:</span> Melhor dos dois mundos</p>
             </div>
 
-            <div class="recommendation">
-                <strong>✅ Recomendação:</strong> Implementar entrada HÍBRIDA (QR Code primário + Código manual como fallback)
+            <div class="decided">
+                <strong>✅ Decisão adotada: entrada híbrida.</strong> QR Code como método principal + código manual como alternativa.
             </div>
 
             <hr style="margin: 40px 0;">
 
-            <h3>Decisão #2: Como rastrear experiências durante o evento?</h3>
+            <h3>Decisão #2: Como registrar e organizar a participação nas experiências?</h3>
 
-            <div class="decision-box">
-                <div class="title">Opção A: Entry/Exit Apenas</div>
-                <p><span class="pro">✅ Simplicidade:</span> Mínimas dados</p>
-                <p><span class="con">❌ Valor:</span> Sem detalhes sobre o que foi feito</p>
+            <div class="decision-box discarded">
+                <div class="title">Opção A: Entry/Exit Apenas <span class="tag off">Descartada</span></div>
+                <p><span class="pro">✅ Simplicidade:</span> Mínimo de dados</p>
+                <p><span class="con">❌ Valor:</span> Sem detalhes sobre o que foi feito na Arena</p>
+            </div>
+
+            <div class="decision-box discarded">
+                <div class="title">Opção B: QR por Estação <span class="tag off">Descartada</span></div>
+                <p><span class="pro">✅ Detalhe:</span> Registra em qual estação o participante esteve</p>
+                <p><span class="con">❌ Registro pelo próprio participante:</span> Não garante que a experiência foi de fato realizada</p>
+                <p><span class="con">❌ Sem organização do acesso:</span> Não resolve a espera nas estações</p>
             </div>
 
             <div class="decision-box">
-                <div class="title">Opção B: QR por Estação</div>
-                <p><span class="pro">✅ Detalhe:</span> Sabe exatamente o que participou</p>
-                <p><span class="pro">✅ Engajamento:</span> Timer em tempo real</p>
-                <p><span class="pro">✅ Dados:</span> Melhor qualidade de dados</p>
-                <p><span class="con">❌ Complexidade:</span> Requer QR em cada estação</p>
+                <div class="title">Opção C: Fila virtual por estação + confirmação pelo staff</div>
+                <p><span class="pro">✅ Organização:</span> Cada estação possui sua própria fila</p>
+                <p><span class="pro">✅ Confiabilidade:</span> A experiência só é registrada após confirmação do staff</p>
+                <p><span class="pro">✅ Dados:</span> Tempos de espera, chamadas e conclusões registrados pelo próprio fluxo</p>
             </div>
 
-            <div class="recommendation">
-                <strong>✅ Recomendação:</strong> QR Code por estação de experiência (detalhe + qualidade de dados)
+            <div class="decided">
+                <strong>✅ Decisão adotada: fila virtual por estação + confirmação pelo staff.</strong>
+                <p style="margin-top: 8px;"><strong>Participante:</strong> entra na fila → acompanha posição → é chamado → realiza a experiência.</p>
+                <p><strong>Staff:</strong> gerencia a fila → realiza a chamada → confirma a conclusão.</p>
+                <p>A conclusão confirmada pelo staff registra a experiência no histórico do participante. Não existe QR Code por estação na solução atual.</p>
             </div>
 
             <hr style="margin: 40px 0;">
 
-            <h3>Decisão #3: O que mostrar como benefício ao participante?</h3>
+            <h3>Decisão #3: Uma fila de estação por vez</h3>
+
+            <div class="decided">
+                <strong>✅ Decisão adotada:</strong> o participante só pode ocupar uma fila de estação por vez.
+                <p style="margin-top: 8px;"><strong>Justificativa operacional:</strong> evita chamadas simultâneas para diferentes experiências e simplifica o gerenciamento da participação.</p>
+                <p>Após o staff confirmar a conclusão da experiência, o participante fica livre para entrar em outra fila.</p>
+            </div>
+
+            <hr style="margin: 40px 0;">
+
+            <h3>Decisão #4: Fila dinâmica de acesso à Arena</h3>
+
+            <div class="decided">
+                <strong>✅ Decisão adotada:</strong> a fila de acesso à Arena é ativada e desativada pelo staff conforme o fluxo de público.
+                <ul style="margin: 8px 0 0 20px;">
+                    <li>Não precisa existir durante todo o evento</li>
+                    <li>Pode ser ativada pelo staff quando houver aumento do fluxo</li>
+                    <li>Pode ser desativada posteriormente</li>
+                    <li>Seu estado muda em tempo real para todas as interfaces</li>
+                </ul>
+            </div>
+
+            <div class="flow-diagram">
+Fila desativada:  Confirma entrada → Arena
+Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
+            </div>
+
+            <div class="recommendation">
+                <strong>⏱️ Regra de tempo:</strong> o tempo aguardando na fila de entrada <strong>não</strong> compõe o tempo de permanência na Arena. O cronômetro começa somente após a entrada efetiva.
+            </div>
+
+            <hr style="margin: 40px 0;">
+
+            <h3>Decisão #5: O que mostrar como benefício ao participante?</h3>
 
             <div class="decision-box">
                 <div class="title">Opção A: Histórico Apenas</div>
-                <p><span class="pro">✅ Simples:</span> Lista de eventos passados</p>
+                <p><span class="pro">✅ Simples:</span> Lista de participações passadas</p>
                 <p><span class="con">❌ Engajamento:</span> Baixa motivação repetida</p>
             </div>
 
             <div class="decision-box">
-                <div class="title">Opção B: Histórico + Progresso Leve</div>
-                <p><span class="pro">✅ Engajamento:</span> Mostra progresso (horas, eventos)</p>
-                <p><span class="pro">✅ Simplicidade:</span> Sem gamificação complexa</p>
+                <div class="title">Opção B: Histórico + Estatísticas Pessoais</div>
+                <p><span class="pro">✅ Engajamento:</span> Mostra estatísticas (tempo total, participações)</p>
+                <p><span class="pro">✅ Simplicidade:</span> Sem gamificação ou sistema de progressão</p>
                 <p><span class="pro">✅ Motivação:</span> Incentiva participação repetida</p>
             </div>
 
-            <div class="recommendation">
-                <strong>✅ Recomendação:</strong> Histórico + Progresso Leve (horas totais, número de eventos, experiências realizadas)
+            <div class="decided">
+                <strong>✅ Decisão adotada: Histórico + Estatísticas Pessoais</strong> (tempo total, número de participações, experiências realizadas).
             </div>
         </section>
 
         <!-- ARQUITETURA DE TELAS -->
         <section class="section" id="arquitetura">
-            <h2>🖼️ Arquitetura de Telas</h2>
+            <h2>🖼️ Arquitetura de Telas e Interfaces</h2>
 
-            <h3>Mapa de Navegação Completo</h3>
+            <h3>Visão do Sistema: três interfaces, estados compartilhados</h3>
+            <div class="flow-diagram">
+                      SISTEMA BEAST ARENA
+                              │
+         ┌────────────────────┼────────────────────┐
+         ↓                    ↓                    ↓
+   PARTICIPANTE             STAFF               MONITOR
+  (app mobile)        (área restrita)       (exibição pública)
+         │                    │                    │
+         └──────────┬─────────┴──────────┬─────────┘
+                    ↓                    ↓
+          ┌──────────────────────────────────────┐
+          │        EVENTO / ESTADO EM TEMPO REAL │
+          │  • Fila de acesso à Arena (dinâmica) │
+          │  • Filas por estação                 │
+          │  • Chamadas e confirmações           │
+          └──────────────────────────────────────┘
+            </div>
+
+            <h3>Mapa de Navegação do Participante</h3>
             <div class="flow-diagram">
 ┌─────────────────────────────────────┐
 │      AUTENTICAÇÃO                   │
@@ -515,14 +639,11 @@
 │    HOME (Início | Eventos | Perfil) │
 │  • Saudação personalizada           │
 │  • Card de entrada em evento        │
-│  • Histórico de participações       │
+│  • Até 2 participações recentes     │
+│  • Ação "Ver todas" → aba Eventos   │
 └────────────┬────────────────────────┘
              │
-      ┌──────┴──────┐
-      ↓             ↓
-  [EVENTO]      [PERFIL]
-            │
-            ↓
+             ↓
 ┌─────────────────────────────────────┐
 │   ENTRADA → CONFIRMAÇÃO             │
 │   (QR Code ou Código Manual)        │
@@ -530,80 +651,132 @@
              │
              ↓
 ┌─────────────────────────────────────┐
-│   EVENTO EM ANDAMENTO               │
-│   • Timer em tempo real             │
-│   • Experiências registradas        │
-│   • Botão de registrar experiência  │
+│   FILA DE ACESSO À ARENA            │
+│   (somente se ativada pelo staff)   │
+└────────────┬────────────────────────┘
+             │
+             ↓
+┌─────────────────────────────────────┐
+│   ARENA EM ANDAMENTO                │
+│   • Timer de permanência            │
+│   • Experiências disponíveis        │
+│   • Estado das experiências         │
+│   • Entrada em fila de estação      │
+│   • Posição na fila                 │
+│   • Estado de chamada               │
+│   • Concluídas (check do staff)     │
+│   • Sair da Arena                   │
 └────────────┬────────────────────────┘
              │
              ↓
 ┌─────────────────────────────────────┐
 │   RESUMO + AVALIAÇÃO                │
-│   • Experiências realizadas         │
-│   • Rating (1-5 stars)              │
-│   • Comentário opcional             │
+│   • Tempo de permanência            │
+│   • Experiências concluídas         │
+│   • Rating (1-5) + comentário opc.  │
+│   • Finalizar ou Pular avaliação    │
 └────────────┬────────────────────────┘
              │
              ↓
 ┌─────────────────────────────────────┐
-│   HISTÓRICO (Aba Eventos)           │
-│   • Lista de todos os eventos       │
+│   MINHAS PARTICIPAÇÕES (Aba Eventos)│
+│   • Lista de participações          │
 │   • Detalhes de cada participação   │
 │   • Estatísticas pessoais           │
 └─────────────────────────────────────┘
             </div>
 
-            <h3>7 Telas Principais</h3>
+            <h3>Telas e Interfaces Principais</h3>
+            <p>Alguns itens abaixo são estados de uma mesma tela, e não necessariamente telas independentes na implementação. Por isso, a lista é organizada por contexto, sem contagem fixa.</p>
 
-            <div class="screen-grid">
-                <div class="screen-card">
-                    <div class="icon">👋</div>
-                    <h4>1. Autenticação</h4>
-                    <p>Boas-vindas, Cadastro e Login</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">📝</div>
-                    <h4>2. Perfil</h4>
-                    <p>Questionário (Idade, Gaming, Gêneros)</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">🏠</div>
-                    <h4>3. Home</h4>
-                    <p>Saudação + Card de entrada + Histórico</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">📍</div>
-                    <h4>4. Entrada</h4>
-                    <p>QR Code ou Código Manual</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">⏱️</div>
-                    <h4>5. Evento Ativo</h4>
-                    <p>Timer + Experiências + Registro</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">⭐</div>
-                    <h4>6. Avaliação</h4>
-                    <p>Rating + Comentário (Opcional)</p>
-                </div>
-
-                <div class="screen-card">
-                    <div class="icon">📊</div>
-                    <h4>7. Histórico</h4>
-                    <p>Todos eventos + Detalhes + Stats</p>
+            <div class="context-group">
+                <h4>📱 Participante</h4>
+                <div class="screen-grid">
+                    <div class="screen-card">
+                        <div class="icon">👋</div>
+                        <h4>Autenticação</h4>
+                        <p>Boas-vindas, Cadastro e Login</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">📝</div>
+                        <h4>Perfil Inicial</h4>
+                        <p>Questionário de perfil</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🏠</div>
+                        <h4>Home</h4>
+                        <p>Saudação + Card de entrada + até 2 participações recentes</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">📍</div>
+                        <h4>Entrada</h4>
+                        <p>QR Code ou Código Manual</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">✔️</div>
+                        <h4>Confirmação</h4>
+                        <p>Dados do evento antes de entrar</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🚪</div>
+                        <h4>Fila de Acesso</h4>
+                        <p>Aguardando liberação para a Arena (quando ativa)</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">⏱️</div>
+                        <h4>Arena em Andamento</h4>
+                        <p>Timer + Experiências + Filas de estação + Chamadas</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">⭐</div>
+                        <h4>Avaliação</h4>
+                        <p>Resumo + Rating + Comentário (opcional)</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">📊</div>
+                        <h4>Minhas Participações</h4>
+                        <p>Histórico + Estatísticas pessoais</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🔎</div>
+                        <h4>Detalhes</h4>
+                        <p>Detalhes de uma participação</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">👤</div>
+                        <h4>Perfil</h4>
+                        <p>Dados pessoais, preferências, logout</p>
+                    </div>
                 </div>
             </div>
 
-            <h3>Navegação de Abas (Sempre Visível)</h3>
+            <div class="context-group">
+                <h4>🛠️ Operação</h4>
+                <div class="screen-grid">
+                    <div class="screen-card">
+                        <div class="icon">🧑‍💼</div>
+                        <h4>Área do Staff</h4>
+                        <p>Gerenciar filas, chamar participantes, confirmar conclusões, ativar/desativar fila de acesso</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="context-group">
+                <h4>📺 Exibição Pública</h4>
+                <div class="screen-grid">
+                    <div class="screen-card">
+                        <div class="icon">🖥️</div>
+                        <h4>Monitor da Arena</h4>
+                        <p>Chamadas das filas em tempo real</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Navegação de Abas do Participante (Sempre Visível)</h3>
             <div class="subsection">
                 <h4>Bottom Tab Navigation</h4>
-                <p><strong>Aba 1: 🏠 Início</strong> - Home principal, saudação, card de entrada</p>
-                <p><strong>Aba 2: 📍 Eventos</strong> - Meus eventos, histórico, detalhes</p>
+                <p><strong>Aba 1: 🏠 Início</strong> - Home principal, saudação, card de entrada, participações recentes (no máximo duas)</p>
+                <p><strong>Aba 2: 📍 Eventos</strong> - Minhas Participações, histórico e detalhes</p>
                 <p><strong>Aba 3: 👤 Perfil</strong> - Dados pessoais, preferências, logout</p>
             </div>
         </section>
@@ -631,20 +804,23 @@
                     <p>Primeira vez sem histórico - pronto para participar!</p>
                 </div>
             </div>
+            <div class="pending">
+                <strong>⚠️ A revisar:</strong> as perguntas do questionário de perfil ainda serão conferidas em detalhe.
+            </div>
 
             <h3>Fluxo 2: Entrar em Evento</h3>
             <div class="timeline">
                 <div class="timeline-item">
                     <h4>1. Home → Entrar em Evento</h4>
-                    <p>Click no card principal</p>
+                    <p>Toque no card principal</p>
                 </div>
                 <div class="timeline-item">
                     <h4>2. Opção A: Escanear QR</h4>
                     <p>Câmera abre, escaneia QR do evento</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>2. Opção B: Digitar Código (Fallback)</h4>
-                    <p>Se QR falhar, digita código manual</p>
+                    <h4>2. Opção B: Digitar Código</h4>
+                    <p>Alternativa ao QR Code: digita o código do evento</p>
                 </div>
                 <div class="timeline-item">
                     <h4>3. Confirmação</h4>
@@ -652,102 +828,137 @@
                 </div>
                 <div class="timeline-item">
                     <h4>4. Confirmar Entrada</h4>
-                    <p>Timer começa, agora em "Evento Ativo"</p>
+                    <p>O próximo passo depende do estado da fila de acesso à Arena</p>
                 </div>
             </div>
+            <div class="flow-diagram">
+        Confirmar Entrada
+               ↓
+   Fila de acesso está ativa?
+               ↓
+        ┌──────┴──────┐
+       NÃO           SIM
+        ↓             ↓
+     Entrada     Fila da Arena
+        ↓             ↓
+      Timer       Liberação
+                      ↓
+                   Entrada
+                      ↓
+                    Timer
+            </div>
 
-            <h3>Fluxo 3: Participar e Registrar Experiências</h3>
+            <h3>Fluxo 3: Participar das Experiências</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h4>1. Evento em Andamento</h4>
-                    <p>Timer rodando, lista de experiências</p>
+                    <h4>1. Arena em Andamento</h4>
+                    <p>Timer de permanência rodando, experiências disponíveis e seus estados</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>2. Ir para Estação de Experiência</h4>
+                    <h4>2. Escolher Experiência</h4>
                     <p>Ex: PlayStation, VR Reality, Simulador</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>3. Registrar Experiência</h4>
-                    <p>Click em "Registrar" → Escaneia QR da estação</p>
+                    <h4>3. Entrar na Fila da Estação</h4>
+                    <p>Somente uma fila de estação por vez</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>4. Experiência Salva</h4>
-                    <p>Marca como ✅ com timestamp</p>
+                    <h4>4. Acompanhar Posição</h4>
+                    <p>Posição atualizada em tempo real</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>5. Sair da Arena</h4>
-                    <p>Vai para Resumo & Avaliação</p>
+                    <h4>5. Ser Chamado</h4>
+                    <p>Chamada exibida no app e no Monitor da Arena</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>6. Realizar Experiência</h4>
+                    <p>Participante vai até a estação</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>7. Staff Confirma Conclusão</h4>
+                    <p>Experiência registrada no histórico do participante</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>8. Livre para Outra Fila</h4>
+                    <p>O participante pode entrar na fila de outra estação</p>
                 </div>
             </div>
 
-            <h3>Fluxo 4: Avaliação e Histórico</h3>
+            <h3>Fluxo 4: Saída e Avaliação</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h4>1. Resumo do Evento</h4>
-                    <p>Tempo total, experiências realizadas</p>
+                    <h4>1. Sair da Arena</h4>
+                    <p>Participante solicita a saída</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>2. Avaliar Experiência</h4>
-                    <p>Click em estrelas (1-5), comentário opcional</p>
+                    <h4>2. Confirmação de Saída</h4>
+                    <p>Horário de saída e tempo de permanência registrados automaticamente</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>3. Enviar Avaliação</h4>
-                    <p>Salva no histórico</p>
+                    <h4>3. Resumo</h4>
+                    <p>Tempo de permanência e experiências concluídas</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>4. Volta à Home</h4>
-                    <p>Evento aparece em "Meus Eventos" na aba 2</p>
+                    <h4>4. Avaliação</h4>
+                    <p>Nota de 1 a 5 + comentário opcional</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>5. Finalizar ou Pular Avaliação</h4>
+                    <p>A avaliação não é obrigatória</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>6. Volta à Home</h4>
+                    <p>A participação aparece entre as Participações Recentes da Home e em Minhas Participações na aba Eventos</p>
                 </div>
             </div>
         </section>
 
-        <!-- PADRÕES DE DESIGN -->
+        <!-- DIRETRIZES VISUAIS PROVISÓRIAS -->
         <section class="section" id="design">
-            <h2>🎨 Padrões de Design</h2>
+            <h2>🎨 Diretrizes Visuais Provisórias do Protótipo</h2>
 
-            <h3>Identidade Visual</h3>
+            <div class="pending">
+                <strong>⚠️ Importante:</strong> as cores, tipografia e estilos utilizados no HTML são provisórios e têm finalidade de representação estrutural. A identidade visual definitiva será estabelecida posteriormente no Figma.
+            </div>
+
+            <h3>Cores Utilizadas no Protótipo</h3>
             <div class="subsection">
-                <h4>🎨 Cores Principais</h4>
-                <p><strong>Roxo Primário:</strong> #8B4789 (CTA, seleção, destaques)</p>
-                <p><strong>Vermelho Secundário:</strong> #C41E3A (Gradientes, ênfase)</p>
+                <h4>🎨 Paleta provisória</h4>
+                <p><strong>Roxo:</strong> #8B4789 (CTA, seleção, destaques)</p>
+                <p><strong>Vermelho:</strong> #C41E3A (Gradientes, ênfase)</p>
                 <p><strong>Branco Base:</strong> #FFFFFF (Fundo, cards)</p>
                 <p><strong>Neutro:</strong> #333333 (Texto), #666666 (Secundário), #999999 (Terciário)</p>
             </div>
 
-            <h3>Componentes Principais</h3>
+            <h3>Componentes do Protótipo</h3>
             <div class="subsection">
                 <h4>1. Bottom Tab Navigation</h4>
-                <p>Sempre visível, 3 abas (Início, Eventos, Perfil). Tab ativa tem linha roxa no topo.</p>
+                <p>Sempre visível, 3 abas (Início, Eventos, Perfil). Tab ativa com destaque.</p>
             </div>
 
             <div class="subsection">
                 <h4>2. Cards de Evento</h4>
-                <p>Gradiente roxo-vermelho, branco para texto, ícones de emoji para categoria.</p>
+                <p>Cards com destaque de cor, texto em contraste, ícones para categoria.</p>
             </div>
 
             <div class="subsection">
                 <h4>3. Botões CTA</h4>
-                <p><strong>Primário:</strong> Gradiente roxo-vermelho, uppercase, font-weight 600</p>
+                <p><strong>Primário:</strong> Cor de destaque, texto em evidência</p>
                 <p><strong>Secundário:</strong> Fundo cinza claro, texto escuro</p>
             </div>
 
             <div class="subsection">
                 <h4>4. Campos de Input</h4>
-                <p>Borda cinza 1px, border-radius 8px, focus com borda roxa</p>
+                <p>Borda discreta, cantos arredondados, destaque de cor no foco</p>
             </div>
 
-            <h3>Tipografia</h3>
+            <h3>Tipografia e Espaçamento no Protótipo</h3>
             <p><strong>Fonte:</strong> System fonts (-apple-system, Segoe UI, Roboto)</p>
-            <p><strong>H1/Títulos:</strong> 24px-32px, weight 700, cor #333</p>
-            <p><strong>Corpo:</strong> 14px-16px, weight 400, line-height 1.6</p>
-            <p><strong>Labels/Pequeno:</strong> 12px-13px, weight 600, cor #666</p>
+            <p><strong>Títulos:</strong> 24px-32px, weight 700 · <strong>Corpo:</strong> 14px-16px · <strong>Labels:</strong> 12px-13px</p>
+            <p><strong>Padding de cards:</strong> 16px-24px · <strong>Border radius:</strong> 8px (padrão), 12px-16px (cards grandes)</p>
 
-            <h3>Espaçamento</h3>
-            <p><strong>Padding Cards:</strong> 16px-24px</p>
-            <p><strong>Margin Between Sections:</strong> 24px</p>
-            <p><strong>Border Radius:</strong> 8px (padrão), 12px-16px (cards grandes)</p>
-
-            <h3>Estados de Erro</h3>
+            <h3>Estados de Erro <span class="tag eval">A validar</span></h3>
+            <p>Regras a validar e desenvolver posteriormente, junto com a definição da arquitetura e do backend.</p>
             <div class="subsection">
                 <h4>❌ Câmera não disponível</h4>
                 <p>Mensagem clara + opção de digitar código manual</p>
@@ -755,112 +966,125 @@
 
             <div class="subsection">
                 <h4>❌ Sem internet</h4>
-                <p>Mensagem + opção de tentar novamente ou usar código</p>
+                <p>Mensagem + opção de tentar novamente.</p>
+                <p><em>Pendente:</em> digitar o código em vez de escanear o QR não resolve necessariamente a falta de conexão, pois o sistema ainda pode precisar validar o evento no backend. Esse comportamento será revisto na definição da arquitetura/backend.</p>
             </div>
 
             <div class="subsection">
                 <h4>❌ Já registrado neste evento</h4>
-                <p>Aviso de duplicate + opção de continuar ou sair</p>
+                <p>Aviso de entrada duplicada + opção de continuar ou sair</p>
             </div>
         </section>
 
         <!-- ENTREGÁVEIS -->
         <section class="section" id="entregaveis">
-            <h2>📦 Entregáveis Completos</h2>
+            <h2>📦 Entregáveis e Próximos Passos</h2>
 
             <h3>Documentação</h3>
             <ul class="checklist">
-                <li><strong>ANALISE_DECISOES.md</strong> - Análise detalhada das 3 decisões estratégicas com matriz de pros/contras</li>
-                <li><strong>ARQUITETURA_TELAS.md</strong> - Mapa completo de telas, componentes, validações, fluxos</li>
+                <li><strong>ANALISE_DECISOES.md</strong> - Análise das decisões estratégicas com matriz de prós/contras</li>
+                <li><strong>ARQUITETURA_TELAS.md</strong> - Mapa de telas, componentes, validações, fluxos</li>
                 <li><strong>DELIVERABLE_COMPLETO.html</strong> - Este documento (visual, compilado)</li>
             </ul>
 
-            <h3>Protótipo Navegável</h3>
+            <h3>Protótipo</h3>
             <div class="cta-box">
-                <h3>🎮 Protótipo Interativo HTML</h3>
-                <p>Aplicação web totalmente navegável que simula todas as 7 telas do app:</p>
+                <h3>🎮 Protótipo Estrutural HTML</h3>
+                <p>Protótipo estrutural navegável dos principais fluxos e interfaces:</p>
                 <ul style="text-align: left; display: inline-block; margin-top: 12px;">
-                    <li>✅ Navegação funcional entre telas</li>
-                    <li>✅ Bottom tabs funcionando</li>
-                    <li>✅ Timer simulado</li>
-                    <li>✅ Rating interativo</li>
-                    <li>✅ Viewport mobile (iPhone 12/13)</li>
-                    <li>✅ Identidade visual BEAST completa</li>
+                    <li>✅ Fluxo do participante</li>
+                    <li>✅ Filas (acesso à Arena e estações)</li>
+                    <li>✅ Estados das experiências</li>
+                    <li>✅ Interface do staff</li>
+                    <li>✅ Monitor público</li>
                 </ul>
             </div>
 
-            <h3>Próximos Passos (Fases Futuras)</h3>
+            <h3>Próximos Passos</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h4>Fase 1: Design ✅ COMPLETO</h4>
-                    <p>Decisões estratégicas + Arquitetura + Protótipo HTML</p>
+                    <h4>Fase 1: Definição estrutural e fluxos — EM ANDAMENTO</h4>
+                    <p>Decisões estratégicas, arquitetura de telas e interfaces, protótipo estrutural HTML e regras de negócio</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 2: Desenvolvimento (React Native)</h4>
-                    <p>Implementação do app mobile com Expo</p>
+                    <h4>Fase 2: Prototipação visual no Figma</h4>
+                    <p>Definição da identidade visual definitiva</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 3: Backend</h4>
-                    <p>API para autenticação, eventos, histórico, avaliações</p>
+                    <h4>Fase 3: Desenvolvimento</h4>
+                    <p>Implementação do app do participante, da área do staff e do monitor público</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 4: Testes & Deploy</h4>
+                    <h4>Fase 4: Backend</h4>
+                    <p>Autenticação, eventos, participações, filas, estados em tempo real, experiências, ações do staff, avaliações e sincronização do monitor</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Fase 5: Testes & Deploy</h4>
                     <p>QA, ajustes de UX, deploy em produção</p>
                 </div>
             </div>
 
-            <h3>Especificações Técnicas (Para Desenvolvimento Futuro)</h3>
+            <h3>Armazenamento: requisito levantado junto à empresa</h3>
+            <div class="pending">
+                <strong>📁 Armazenamento informado pela empresa: Google Drive.</strong>
+                <p style="margin-top: 8px;">O papel do Google Drive na arquitetura final ainda será definido, especialmente considerando os requisitos de sincronização em tempo real das filas. Não se assume, neste momento, que ele será o banco de dados operacional.</p>
+            </div>
+
+            <h3>Tecnologias em Avaliação</h3>
+            <p>Nenhuma das opções abaixo é arquitetura definida; serão discutidas na definição técnica.</p>
             <table>
                 <tr>
                     <th>Aspecto</th>
-                    <th>Especificação</th>
+                    <th>Opções</th>
+                    <th>Status</th>
                 </tr>
                 <tr>
-                    <td>Plataforma</td>
+                    <td>Plataforma mobile</td>
                     <td>React Native + Expo (iOS/Android)</td>
+                    <td><span class="tag eval">A confirmar</span></td>
                 </tr>
                 <tr>
                     <td>Autenticação</td>
                     <td>Firebase Auth ou JWT</td>
+                    <td><span class="tag eval">Em avaliação</span></td>
                 </tr>
                 <tr>
-                    <td>Banco de Dados</td>
-                    <td>Firebase Firestore ou PostgreSQL</td>
+                    <td>Banco de dados operacional</td>
+                    <td>Firebase Firestore, PostgreSQL ou outra opção com suporte a tempo real</td>
+                    <td><span class="tag eval">Em avaliação</span></td>
                 </tr>
                 <tr>
-                    <td>QR Code Scanning</td>
+                    <td>Leitura de QR Code</td>
                     <td>expo-barcode-scanner ou react-native-camera</td>
+                    <td><span class="tag eval">Em avaliação</span></td>
                 </tr>
                 <tr>
-                    <td>Geolocation</td>
-                    <td>expo-location (futuro, para validar proximidade de eventos)</td>
-                </tr>
-                <tr>
-                    <td>Push Notifications</td>
+                    <td>Notificações de chamada</td>
                     <td>expo-notifications</td>
+                    <td><span class="tag eval">Em avaliação</span></td>
                 </tr>
                 <tr>
                     <td>Analytics</td>
                     <td>Firebase Analytics</td>
+                    <td><span class="tag eval">Em avaliação</span></td>
                 </tr>
             </table>
         </section>
 
         <!-- CONCLUSÃO -->
         <section class="section">
-            <h2>✅ Resumo Final</h2>
+            <h2>📌 Resumo Final</h2>
 
-            <p><strong>BEAST MARAGAMES</strong> é um projeto bem-estruturado, com decisões estratégicas justificadas e arquitetura de design completa.</p>
+            <p><strong>BEAST MARAGAMES</strong> tem fluxos principais e arquitetura estrutural definidos, com regras de negócio específicas e identidade visual ainda em evolução.</p>
 
-            <p><strong>Entregáveis:</strong></p>
-            <ul>
-                <li>✅ Análise de 3 decisões principais (com trade-offs documentados)</li>
-                <li>✅ Arquitetura completa de 7 telas + fluxos de navegação</li>
-                <li>✅ Protótipo HTML navegável e interativo</li>
-                <li>✅ Documentação clara para próximas fases</li>
+            <p><strong>Estado atual:</strong></p>
+            <ul style="margin-left: 20px;">
+                <li>✅ Decisões estratégicas adotadas (entrada híbrida, filas por estação com confirmação do staff, uma fila por vez, fila dinâmica de acesso, histórico + estatísticas pessoais)</li>
+                <li>✅ Arquitetura com três interfaces: participante, staff e monitor público</li>
+                <li>✅ Protótipo estrutural HTML dos fluxos principais</li>
+                <li>🔄 Regras de negócio pendentes (questionário de perfil, estados de erro, papel do Google Drive)</li>
+                <li>🔄 Identidade visual definitiva a ser criada no Figma</li>
             </ul>
-
-            <p style="margin-top: 24px; font-style: italic; color: #666;">Pronto para apresentação em contexto acadêmico e para desenvolvimento futuro em React Native.</p>
         </section>
     </div>
 
