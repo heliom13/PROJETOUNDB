@@ -183,12 +183,13 @@ FLUXO FALLBACK (se QR Code falhar):
 
 ### 2.1 Contexto
 
-Uma vez dentro do evento, como o app sabe quais experiências o participante fez?
+Uma vez dentro do evento, como o sistema registra quais experiências o participante realizou?
 
-Isso determina:
-- Dados que BEAST coleta
-- Valor que app oferece ao participante
-- Complexidade de uso
+O modelo deve:
+- Associar participante + experiência/estação
+- Gerar dados confiáveis para BEAST
+- Minimizar atrito para o participante
+- Permitir acompanhamento em tempo real (filas)
 
 ### 2.2 Alternativas Consideradas
 
@@ -303,131 +304,104 @@ Resultado no histórico:
 
 ---
 
-#### **ALTERNATIVA C: QR Code por Estação**
+#### **ALTERNATIVA C: Fila Virtual por Estação + Confirmação pelo Staff**
 
 **Modelo:**
 ```
-Cada estação tem um QR Code próprio:
+Cada estação tem sua própria FILA VIRTUAL:
 
-🎮 PlayStation: QR Code A
-🥽 VR Reality: QR Code B
-🚗 Simulador: QR Code C
+🎮 PlayStation: fila virtual
+🥽 VR Reality: fila virtual
+🚗 Simulador: fila virtual
 
-Quando participante termina uma experiência:
-1. Aponta câmera para QR Code da estação
-2. App registra automaticamente
-3. Mostra: "✅ PlayStation registrado às 14:35"
-4. Participante volta a aproveitar
+Fluxo:
+1. Participante escolhe estação na tela do app
+2. Entra na fila (apenas uma fila por vez)
+3. Acompanha posição em tempo real
+4. É chamado pelo sistema (notificação)
+5. Dirigir-se à estação
+6. Staff confirma conclusão no tablet/celular
+7. Experiência registrada automaticamente
+8. Participante fica livre para entrar em outra fila
 
-Resultado: Mesmo que Alternativa B, mas automático
+Resultado: Fila gerida pelo app + Validação pelo Staff
 ```
 
 **Vantagens:**
-- ✅ BEAST sabe quais experiências
-- ✅ Automático (2 segundos)
-- ✅ Sem possibilidade de erro
-- ✅ Sem possibilidade de duplicação
-- ✅ Histórico detalhado
-- ✅ Pouco atrito (rápido)
+- ✅ BEAST sabe exatamente quais experiências (Staff confirma)
+- ✅ Participante acompanha posição em tempo real
+- ✅ Sem necessidade de QR Code em cada estação
+- ✅ Fila gerida digitalmente (melhor operacional)
+- ✅ Participante + Estação já associados na fila
+- ✅ Staff confirma ocorrência real (validação)
+- ✅ Dados muito confiáveis
+- ✅ Experiência melhorada (participante sabe seu lugar)
+- ✅ Impacto operacional positivo (Staff controla fluxo)
 
 **Desvantagens:**
-- ❌ Requer QR Code em cada estação
-- ❌ Depende de câmera (pode falhar)
-- ❌ Requer conexão internet por múltiplas vezes
-- ❌ Implementação complexa (múltiplos QR Codes)
-- ❌ Pode confundir (escanear QR Code de saída ao invés de estação)
-- ❌ Custo maior (mais QR Codes)
+- ❌ Requer Staff com dispositivo (tablet/celular)
+- ❌ Implementação de sincronização em tempo real
+- ❌ Coordenação operacional (Staff deve confirmar)
 
-**Valor para BEAST:** ⭐⭐⭐⭐⭐ Excelente (dados detalhados + confiáveis)  
-**Valor para Participante:** ⭐⭐⭐⭐ Bom (histórico automático)  
-**Complexidade:** ⭐⭐⭐⭐ Alta  
+**Valor para BEAST:** ⭐⭐⭐⭐⭐ Excelente (dados + operacional)  
+**Valor para Participante:** ⭐⭐⭐⭐⭐ Excelente (acompanhamento + transparência)  
+**Complexidade:** ⭐⭐⭐ Média (sincronização)  
 
----
-
-#### **ALTERNATIVA D: Monitor Registra**
-
-**Modelo:**
-```
-Monitor (funcionário da Arena) registra:
-
-Monitor vê participante usando PlayStation:
-1. Abre app no seu tablet
-2. Busca participante por nome/código
-3. Clica: "PlayStation ✅"
-4. Sistema registra automaticamente
-
-Participante não faz nada.
-```
-
-**Vantagens:**
-- ✅ Participante não faz nada (zero atrito)
-- ✅ Dados validados (monitor confirma)
-- ✅ Impossível duplicação
-- ✅ Menos risco de erro
-
-**Desvantagens:**
-- ❌ Requer monitor em CADA estação
-- ❌ Custo operacional alto
-- ❌ Monitor pode esquecer de registrar
-- ❌ Monitor pode registrar errado
-- ❌ Scalability ruim (não funciona com muitos participantes)
-- ❌ Participante não vê seu histórico em tempo real
-- ❌ Depende de terceiros (monitor pode estar ausente)
-
-**Valor para BEAST:** ⭐⭐⭐⭐ Bom (dados confiáveis)  
-**Valor para Participante:** ⭐ Mínimo (não sabe seu histórico)  
-**Complexidade:** ⭐⭐⭐⭐⭐ Muito alta (operacional)  
+  
 
 ---
 
 ### 2.3 Matriz de Comparação
 
-| Critério | Entrada/Saída | Código Manual | QR Code | Monitor |
-|----------|---------------|---------------|---------|---------|
-| **Dados Detalhados** | ❌ | ✅ | ✅ | ✅ |
-| **Atrito (UX)** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Confiabilidade** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **Complexidade Dev** | ⭐ | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Valor Participante** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐ |
-| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ | ❌ |
+| Critério | Entrada/Saída | Código Manual | Fila Virtual + Staff |
+|----------|---------------|---------------|---------|
+| **Dados Detalhados** | ❌ | ✅ | ✅✅ |
+| **Atrito (UX)** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
+| **Confiabilidade** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Complexidade Dev** | ⭐ | ⭐⭐ | ⭐⭐⭐ |
+| **Valor Participante** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Gerenciamento Operacional** | ❌ | ❌ | ✅⭐⭐⭐⭐⭐ |
+| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 
 ---
 
 ### 2.4 Alinhamento com Princípios
 
-**Princípio: "Simplicidade"**
-- ✅ Entrada/Saída: Simples demais (sem valor)
-- ⚠️ Código Manual: Simples mas repetitivo
-- ✅ QR Code: Simples e automático
-- ❌ Monitor: Complexo operacionalmente
+**Princípio: "Coleta Transparente (Não Atrapalhar)"**
+- ✅ Entrada/Saída: Participante não faz nada
+- ❌ Código Manual: Alto atrito (múltiplas digitações)
+- ✅ Fila Virtual: Participante acompanha (valor) + Staff confirma
 
 **Princípio: "Oferecer Valor ao Participante"**
-- ❌ Entrada/Saída: Mínimo valor
+- ❌ Entrada/Saída: Mínimo valor (timer apenas)
 - ✅ Código Manual: Bom valor (histórico)
-- ✅ QR Code: Bom valor (histórico automático)
-- ❌ Monitor: Sem valor para participante
+- ✅✅ Fila Virtual: Máximo valor (posição em tempo real + transparência)
 
-**Princípio: "Não Atrapalhar Experiência"**
-- ✅ Entrada/Saída: Zero atrito
-- ❌ Código Manual: Alto atrito (múltiplas digitações)
-- ✅ QR Code: Baixo atrito (rápido)
-- ✅ Monitor: Zero atrito
+**Princípio: "Dados Confiáveis"**
+- ✅ Entrada/Saída: Muito confiável (automaticamente)
+- ⚠️ Código Manual: Risco de duplicação
+- ✅✅ Fila Virtual: Muito confiável (fila digital + Staff valida)
 
 ---
 
 ### 2.5 RECOMENDAÇÃO
 
-**Escolha: ALTERNATIVA C - QR Code por Estação**
+**Escolha: ALTERNATIVA C - Fila Virtual por Estação + Confirmação pelo Staff**
 
 **Justificativa:**
-1. Oferece valor ao participante (histórico detalhado)
-2. Baixo atrito (automático e rápido)
-3. Dados confiáveis (impossível duplicar)
-4. Alinha com fluxo de entrada (QR Code já é familiar)
-5. Oferece dados estratégicos para BEAST
+1. Máximo valor ao participante (acompanha posição em tempo real)
+2. Zero atrito durante participação (Staff confirma, não participante)
+3. Dados muito confiáveis (fila digital + validação do Staff)
+4. Elimina necessidade de QR Code em cada estação (reduz custo)
+5. Melhora experiência operacional (Staff gerencia melhor)
+6. Oferece dados estratégicos + operacionais para BEAST
+7. Escalável (funciona com qualquer número de participantes)
 
-**Alternativa Secundária (se QR Codes custarem muito):**
-Começar com Alternativa A (Entrada/Saída) e evoluir para QR Code depois.
+**Implementação:**
+- Fila virtual para cada estação/experiência
+- Participante pode estar em apenas 1 fila por vez
+- Staff confirma conclusão em dispositivo (tablet/celular)
+- Sistema sincroniza em tempo real (App + Staff + Monitor)
 
 ---
 
@@ -435,12 +409,19 @@ Começar com Alternativa A (Entrada/Saída) e evoluir para QR Code depois.
 
 ### 3.1 Contexto
 
-Além de registrar dados, o app deve oferecer valor ao participante. Que valor é esse?
+Além de registrar dados, o app deve oferecer valor ao participante ao longo do tempo.
+
+O valor deve ser:
+- Transparente (participante vê dados reais)
+- Significativo (não artificial ou inflacionado)
+- Não obtrusivo (não gamificação pesada)
+- Alinhado com objetivos educacionais da BEAST
 
 Opções consideradas:
 - Histórico simples (o que fez)
-- Progresso/Conquistas
-- Pontuação/Gamificação
+- Histórico + Estatísticas (dados consolidados)
+- Progresso/Níveis
+- Pontuação/Ranking
 - Recompensas
 
 ### 3.2 Alternativas Consideradas
@@ -482,7 +463,46 @@ Comentário: "Muito legal!"
 
 ---
 
-#### **ALTERNATIVA B: Progresso/Nível**
+#### **ALTERNATIVA B: Histórico + Estatísticas Pessoais**
+
+**O que mostra:**
+```
+Meu Perfil & Estatísticas
+
+3 Participações
+8h Tempo total
+12 Experiências realizadas
+
+Últimas participações:
+- BEAST Arena - Shopping XYZ (15 set)
+- BEAST Arena - Feira de Games (10 ago)
+
+Preferências observadas:
+- Experiências mais usadas: VR (3x), PS (2x)
+- Horário preferido: Manhã
+- Duração média: 2h 45min
+
+Avaliações:
+⭐⭐⭐⭐⭐ (4.5 média)
+```
+
+**Vantagens:**
+- ✅ Valor real ao participante (dados pessoais)
+- ✅ Simples e transparente
+- ✅ Sem elementos artificiais
+- ✅ Fácil de implementar
+- ✅ Educacional (participante vê seus padrões)
+- ✅ Alinha com propósito de coleta de dados
+
+**Desvantagens:**
+- ⚠️ Engajamento menor que gamificação
+
+**Engajamento:** ⭐⭐⭐ Moderado  
+**Valor Participante:** ⭐⭐⭐⭐ Excelente (dados reais)  
+
+---
+
+#### **ALTERNATIVA C: Progresso/Nível com Gamificação**
 
 **O que mostra:**
 ```
@@ -496,167 +516,157 @@ Progresso:
 
 Próximo nível em: 2 experiências
 
-Estatísticas:
-- Experiências realizadas: 12
-- Tempo total em Arenas: 8h
-- Eventos visitados: 3
-
-Próximas metas:
-🔓 "Desbloqueável": Fazer 5 experiências VR
+Desbloqueáveis:
+🔓 "Veterano": Completar 5 eventos
+🔒 "Fã de VR": Usar VR 5 vezes
 ```
 
 **Vantagens:**
 - ✅ Incentiva retorno
 - ✅ Oferece progresso visível
-- ✅ Gamificação leve
-- ✅ Aumenta engajamento
+- ✅ Engajamento moderado
 
 **Desvantagens:**
 - ❌ Mais complexo de implementar
-- ❌ Pode parecer artificial
+- ❌ Pode parecer artificial/inflacionado
 - ❌ Requer lógica de progressão
-- ❌ Pode confundir (muitas abas/seções)
+- ❌ Nem sempre alinha com objetivo educacional
 
 **Engajamento:** ⭐⭐⭐⭐ Alto  
-**Valor Participante:** ⭐⭐⭐⭐ Bom  
+**Valor Participante:** ⭐⭐⭐ Médio  
 
 ---
 
-#### **ALTERNATIVA C: Pontuação/Ranking**
+#### **ALTERNATIVA D: Ranking/Pontuação**
 
 **O que mostra:**
 ```
-Ranking de Experiências
+Ranking Global
 
-Você: Posição #127 Global
+Você: Posição #127
 
 Seus Pontos: 450
 
 Ranking semanal:
 1. João Silva - 1.200 pts
-2. Maria Santos - 980 pts
+2. Maria - 980 pts
 3. Você - 450 pts
-...
-
-Como ganhar pontos:
-- Usar experiência Nova: +50 pts
-- Usar 5 experiências diferentes: +100 pts
 ```
 
 **Vantagens:**
 - ✅ Alto engajamento competitivo
 - ✅ Incentiva uso múltiplo
-- ✅ Viral (pessoas querem ser top)
 
 **Desvantagens:**
 - ❌ Pode criar competição não saudável
-- ❌ Muito complexo
-- ❌ Pode prejudicar experiência real (foco em pontos)
-- ❌ Requer servidor de ranking
 - ❌ Pode desmotivar quem não está no top
+- ❌ Foco em pontos vs. experiência real
+- ❌ Muito artificial
 
 **Engajamento:** ⭐⭐⭐⭐⭐ Muito alto  
-**Valor Participante:** ⭐⭐⭐ Médio (artificial)  
-
----
-
-#### **ALTERNATIVA D: Recompensas**
-
-**O que mostra:**
-```
-Minhas Recompensas
-
-Pontos disponíveis: 450
-
-Resgate:
-🎁 10% desconto - próxima Arena (100 pts)
-🎁 Adesivo exclusivo (50 pts)
-🎁 Voucher R$50 (500 pts)
-
-Seus cupons:
-✅ Desconto 10% - BEAST Arena (válido até Dez/24)
-```
-
-**Vantagens:**
-- ✅ Máximo engajamento
-- ✅ Valor real ao participante
-- ✅ Incentiva retorno
-
-**Desvantagens:**
-- ❌ Muito complexo (economia, cupons, validade)
-- ❌ Requer parceria com eventos
-- ❌ Custo operacional
-- ❌ Pode não funcionar bem em primeiro evento
-- ❌ Fora do escopo educacional
-
-**Engajamento:** ⭐⭐⭐⭐⭐ Máximo  
-**Valor Participante:** ⭐⭐⭐⭐⭐ Máximo  
-**Complexidade:** ⭐⭐⭐⭐⭐ Muito alta  
+**Valor Real:** ⭐ Mínimo (artificial)  
 
 ---
 
 ### 3.3 Matriz de Comparação
 
-| Critério | Histórico | Progresso | Ranking | Recompensas |
-|----------|-----------|-----------|---------|-------------|
-| **Engajamento** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Valor Real** | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Simplicidade** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ | ⭐ |
-| **Complexidade Dev** | ⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Alinhamento Princípios** | ✅ | ✅ | ⚠️ | ❌ |
+| Critério | Histórico | Histórico + Estatísticas | Progresso/Nível | Ranking |
+|----------|-----------|---------|---------|---------|
+| **Engajamento** | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Valor Real** | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐ |
+| **Simplicidade** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
+| **Complexidade Dev** | ⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
+| **Alinhamento Princípios** | ✅ | ✅✅ | ⚠️ | ❌ |
 
 ---
 
 ### 3.4 Alinhamento com Princípios
 
 **Princípio: "Simplicidade"**
-- ✅ Histórico: Simples
-- ✅ Progresso: Simples (visual claro)
-- ⚠️ Ranking: Não é simples
-- ❌ Recompensas: Complexo
+- ✅✅ Histórico + Estatísticas: Muito simples
+- ✅ Histórico simples: Básico
+- ⚠️ Progresso/Nível: Moderado
+- ❌ Ranking: Complexo
 
-**Princípio: "Oferecer Valor"**
+**Princípio: "Oferecer Valor Real (Não Artificial)"**
 - ⭐ Histórico: Valor básico
-- ⭐⭐⭐⭐ Progresso: Bom valor (engajamento)
-- ⭐⭐ Ranking: Valor questionável
-- ⭐⭐⭐⭐⭐ Recompensas: Máximo valor
+- ⭐⭐⭐⭐⭐ Histórico + Estatísticas: Máximo valor (dados reais)
+- ⭐⭐⭐ Progresso/Nível: Valor artificial/inflacionado
+- ⭐ Ranking: Valor artificial
+
+**Princípio: "Coleta Educacional"**
+- ✅ Histórico + Estatísticas: Alinha com objetivo (entender comportamento do participante)
+- ⚠️ Progresso/Nível: Desvia do foco (gamificação)
+- ❌ Ranking: Desvia do foco (competição)
 
 ---
 
 ### 3.5 RECOMENDAÇÃO
 
-**Escolha: ALTERNATIVA A + B - Histórico + Progresso Leve**
+**Escolha: ALTERNATIVA B - Histórico + Estatísticas Pessoais**
 
 **Justificativa:**
-1. Oferece valor sem complexidade excessiva
-2. Alinha com princípios (simplicidade)
-3. Engajamento moderado (sem ser artificial)
-4. Implementação viável para MVP
-5. Histórico oferece rastreabilidade
-6. Progresso oferece motivação
+1. Oferece valor real ao participante (dados pessoais, não artificial)
+2. Alinha com princípios (simplicidade + transparência)
+3. Educacional (participante entende seus padrões)
+4. Implementação simples e viável
+5. Suporta objetivos principais da BEAST (coleta de dados com propósito)
+6. Não cria pressão artificial (sem gamificação pesada)
+7. Escalável
 
-**Implementação Faseada:**
-- **MVP**: Histórico simples + Avaliação
-- **V2**: Adicionar nível de progressão leve
-- **V3** (Futuro): Considerar recompensas se houver parceria
+**O que mostra:**
+- Número de participações
+- Tempo total em Arenas
+- Experiências mais usadas
+- Preferências observadas
+- Avaliações antigas
+- Histórico detalhado
+
+**Implementação:**
+- MVP: Histórico básico + Estatísticas simples
+- V2: Melhorar visualização de estatísticas (gráficos, tendências)
+- Futuro: Insights (ex: "Você gasta mais tempo em VR que outros participantes")
 
 ---
 
-## 4. RESUMO DAS DECISÕES
+## 4. RESUMO DAS DECISÕES PRINCIPAIS
 
 | Decisão | Recomendação | Justificativa |
 |---------|--------------|---------------|
 | **Entrada no Evento** | QR Code + Código Manual | Rápido + Robusto + Confiável |
-| **Registro Experiências** | QR Code por Estação | Automático + Dados Detalhados |
-| **Benefício Participante** | Histórico + Progresso Leve | Simples + Valor Real + Engajamento |
+| **Registro Experiências** | Fila Virtual + Staff Confirma | Transparência + Valor + Operacional |
+| **Benefício Participante** | Histórico + Estatísticas | Simples + Valor Real + Educacional |
 
 ---
 
-## 5. PRÓXIMAS ETAPAS
+## 5. DECISÕES ESTRUTURANTES COMPLEMENTARES
+
+### D1: Uma Fila por Vez
+**Decisão:** Participante pode estar em apenas UMA fila de estação por vez.
+**Justificativa:** Evita conflitos operacionais (timer, posição, notificações).
+
+### D2: No-Show Retorna ao Final
+**Decisão:** Se chamado e não comparecer, participante vai para o final da fila (não é removido).
+**Justificativa:** Oferece segunda chance; escalável.
+
+### D3: Fila de Acesso Dinâmica
+**Decisão:** Staff pode ativar/desativar fila de acesso à Arena em tempo real.
+**Justificativa:** Gerencia lotação; transparente.
+
+### D4: Espera não Conta como Permanência
+**Decisão:** Timer de permanência começa apenas na ENTRADA EFETIVA.
+**Justificativa:** Dados precisos (permanência = tempo aproveitado).
+
+### D5: Uma Participação Ativa por Vez
+**Decisão:** Cada usuário pode ter apenas UMA participação ativa por evento.
+**Justificativa:** Evita conflitos; clareza de estado.
+
+---
+
+## 6. PRÓXIMAS ETAPAS
 
 ✅ DECISÕES CONSOLIDADAS  
-⏭️ Definir Arquitetura de Telas  
-⏭️ Criar Fluxos Detalhados  
-⏭️ Desenvolver Protótipo HTML  
-⏭️ Mapear Estados de Erro  
+⏭️ Atualizar Arquitetura de Telas  
+⏭️ Protótipo Estrutural HTML  
+⏭️ Desenvolvimento Figma (Identidade Visual)  
 

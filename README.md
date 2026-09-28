@@ -12,20 +12,21 @@ Hub central com links para todos os recursos. Este é o arquivo principal - abra
 ### 2. **DELIVERABLE_COMPLETO.html** 📊
 Documentação visual compilada contendo:
 - Resumo executivo
-- Análise de 3 decisões estratégicas
-- Arquitetura de 7 telas
-- Fluxos de navegação
+- Análise de decisões consolidadas
+- Arquitetura de telas e interfaces
+- Fluxos de navegação (Participante, Staff, Monitor)
 - Padrões de design
 - Próximos passos
 
 ### 3. **prototipo.html** 📱
-Protótipo navegável e interativo do app mobile:
-- Todas as 7 telas funcionais
-- Bottom tab navigation
-- Timer simulado
-- Rating interativo
+Protótipo estrutural navegável do app mobile:
+- Fluxos principais funcionais
+- Bottom tab navigation (Início | Eventos | Perfil)
+- Simulação de estados e interações
+- Timer em tempo real
+- Avaliação simplificada
 - Layout mobile responsivo (iPhone 12/13)
-- Identidade visual BEAST completa
+- Nota: Design visual é estrutural; identidade visual final será definida no Figma
 
 **Como usar:**
 - Clique nos botões para navegar
@@ -33,26 +34,30 @@ Protótipo navegável e interativo do app mobile:
 - Teste o fluxo completo de entrada e avaliação
 
 ### 4. **ANALISE_DECISOES.md** 🎯
-Análise técnica detalhada de 3 decisões principais:
-1. **Entrada em Eventos** - QR Code vs Código Manual vs Híbrido
-2. **Rastreamento de Experiências** - Entry/Exit vs QR por Estação
-3. **Benefício ao Participante** - Histórico vs Progresso vs Ranking
+Análise técnica de decisões consolidadas do projeto:
+
+Decisões principais:
+1. **Entrada em Eventos** - QR Code + Código Manual (Híbrido)
+2. **Registro de Experiências** - Fila Virtual + Confirmação do Staff
+3. **Benefício ao Participante** - Histórico + Estatísticas Pessoais
+4. **Outras decisões estruturantes** - Filas por estação, no-show, acesso dinâmico
 
 Cada decisão inclui:
 - Contexto
-- 3-4 alternativas
-- Matriz de pros/contras
-- Recomendação justificada
+- Alternativas analisadas
+- Matriz de comparação
+- Recomendação fundamentada
 
 ### 5. **ARQUITETURA_TELAS.md** 🖼️
-Especificação completa de telas:
-- Mapa de navegação
-- 7 etapas de jornada do participante
-- Componentes detalhados
-- Validações e regras
-- Estados de erro
-- Fluxo completo resumido
-- Padrões de design
+Especificação completa de telas e interfaces:
+- Mapa de navegação integrado (Participante, Staff, Monitor)
+- Jornada do participante com filas de estação
+- Filas de acesso à Arena (dinâmica)
+- Componentes detalhados por interface
+- Validações e regras de negócio
+- Estados de erro e fallbacks
+- Padrões de design UX
+- Sincronização entre contextos
 
 ---
 
@@ -106,10 +111,16 @@ BEAST-MARAGAMES/
 
 ## 🎨 Identidade Visual
 
-- **Cores:** Roxo (#8B4789) + Vermelho (#C41E3A)
-- **Tipografia:** System fonts (legível em mobile)
-- **Layout:** Mobile-first, responsivo
-- **Componentes:** Cards, bottom tabs, gradient backgrounds
+**Nota:** As cores e tipografia do protótipo HTML são estruturais.
+
+A identidade visual definitiva será desenvolvida no **Figma** e incluirá:
+- Paleta de cores consolidada
+- Tipografia adequada
+- Componentes detalhados
+- Telas completas (participante, staff, monitor)
+- Estados e interações
+
+Protótipo atual: Roxo (#8B4789) + Vermelho (#C41E3A) — sujeito a mudanças
 
 ---
 
@@ -156,4 +167,23 @@ Consulte os documentos individuais ou revise o protótipo navegável para entend
 
 ---
 
-**Status:** ✅ Fase Design Completa | 📅 2024
+## 📊 Status do Projeto
+
+**Fase Atual:** Arquitetura consolidada
+
+✅ **Completado:**
+- Análise de decisões estratégicas
+- Fluxos de negócio principais definidos
+- Arquitetura de sistemas (Participante, Staff, Monitor)
+- Protótipo estrutural HTML navegável
+- Documentação consolidada
+
+🎨 **Próximo:**
+- Figma com identidade visual definitiva
+- Telas completas (todas as interfaces)
+- Design system consolidado
+
+🔨 **Futuro:**
+- Desenvolvimento (React Native/Frontend)
+- Backend (API, banco de dados)
+- Integração e deploy
