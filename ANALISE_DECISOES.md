@@ -3,25 +3,38 @@
 ## 📋 Documento de Trabalho de Conclusão de Curso
 
 **Projeto**: Aplicativo Mobile para Arena Itinerante - BEAST MARAGAMES  
-**Fase**: Design Thinking & Arquitetura de UX  
-**Objetivo**: Consolidar decisões de produto e definir fluxos de experiência do usuário  
+**Fase**: Definição estrutural e fluxos (em revisão/consolidação)  
+**Objetivo**: Registrar as decisões de produto, as alternativas consideradas e os trade-offs de cada escolha  
+
+> Esta análise foi atualizada após novos levantamentos de requisitos com a empresa. O projeto deixou de se organizar em torno de "3 decisões estratégicas principais": as decisões sobre filas, chamadas e controle de acesso passaram a ser centrais. Pontos ainda não definidos estão marcados como **pendentes**.
 
 ---
 
-## 1. ANÁLISE DA DECISÃO #1: ENTRADA NO EVENTO
+## 1. DECISÃO: ENTRADA NO EVENTO
 
 ### 1.1 Contexto
 
 A entrada no evento é o ponto de partida da experiência. É nela que:
-- O registro do participante é iniciado
+- A participação é iniciada
 - O evento é identificado
-- O participante começa a ser rastreado
+- O participante visualiza as informações do evento antes de confirmar
+
+**Fluxo esperado:**
+```
+Home → Entrar em Evento → QR Code ou Código Manual
+     → identificação do evento → tela de confirmação → confirmar entrada
+```
+
+O participante deve visualizar as informações do evento antes de efetivamente confirmar sua participação.
 
 **Princípios orientadores:**
 - Simplicidade: não deve exigir muito tempo do participante
-- Confiabilidade: dados devem ser precisos (evitar duplicação)
-- Robustez: funcionamento em qualquer contexto (conexão fraca, multidão)
-- Acessibilidade: qualquer participante consegue entrar
+- Confiabilidade: dados devem ser precisos (evitar entradas duplicadas)
+- Acessibilidade: qualquer participante deve conseguir entrar, mesmo sem câmera funcional
+
+**Sobre duplicidade:** a proteção contra entradas duplicadas vem das **regras do sistema** (confirmação explícita e uma participação ativa por usuário — ver Decisão 8), e não do simples fato de usar QR Code.
+
+**Observação:** QR Code e código manual são duas formas de **identificar o evento**. Nenhuma das duas, por si só, garante funcionamento sem internet: a disponibilidade offline depende da arquitetura de dados/backend, que ainda não foi definida.
 
 ### 1.2 Alternativas Consideradas
 
@@ -30,32 +43,26 @@ A entrada no evento é o ponto de partida da experiência. É nela que:
 **Fluxo de Uso:**
 ```
 1. Participante abre app (já autenticado)
-2. Clica em "Entrar em Evento"
+2. Toca em "Entrar em Evento"
 3. App abre câmera
 4. Participante aponta para QR Code na Arena
-5. Sistema identifica evento automaticamente
-6. Mostra confirmação: "Entrar em [NOME DO EVENTO]?"
+5. Sistema identifica o evento
+6. Mostra confirmação com as informações do evento
 7. Participante confirma
-8. Entrada registrada → Tela do evento
+8. Entrada registrada
 ```
 
 **Vantagens:**
-- ✅ Velocidade: ~2 segundos (automático)
-- ✅ Impossível duplicar (cada scan único)
-- ✅ Experiência "mágica" (tecnologia visível)
+- ✅ Velocidade: identificação praticamente imediata
+- ✅ Elimina erros de digitação
 - ✅ Sem necessidade de memorização
-- ✅ Rastreamento preciso (QR Code registra horário)
+- ✅ Padrão já familiar em eventos
 
 **Desvantagens:**
-- ❌ Dependência de câmera (pode não funcionar)
-- ❌ Requer conexão internet no momento
-- ❌ QR Code precisa estar bem visível/legível
-- ❌ Pode falhar em locais com pouca luz
+- ❌ Dependência de câmera
+- ❌ QR Code precisa estar visível e legível
+- ❌ Pode falhar em locais com pouca luz ou com QR danificado
 - ❌ Participante precisa encontrar o QR Code
-
-**Confiabilidade de Dados:** ⭐⭐⭐⭐⭐ Muito alta (scan único)  
-**Experiência UX:** ⭐⭐⭐⭐⭐ Excelente (rápido e automático)  
-**Robustez:** ⭐⭐⭐ Média (depende de câmera)  
 
 ---
 
@@ -64,34 +71,26 @@ A entrada no evento é o ponto de partida da experiência. É nela que:
 **Fluxo de Uso:**
 ```
 1. Participante abre app (já autenticado)
-2. Clica em "Entrar em Evento"
+2. Toca em "Entrar em Evento"
 3. Vê campo para digitar código
-4. Monitor/placa na Arena exibe: "BEAST2024"
+4. Placa/monitor na Arena exibe o código do evento
 5. Participante digita o código
-6. Sistema identifica evento
-7. Mostra confirmação: "Entrar em [NOME DO EVENTO]?"
+6. Sistema identifica o evento
+7. Mostra confirmação com as informações do evento
 8. Participante confirma
-9. Entrada registrada → Tela do evento
+9. Entrada registrada
 ```
 
 **Vantagens:**
-- ✅ Funciona offline (sincroniza depois)
-- ✅ Funciona em qualquer celular (não precisa câmera)
-- ✅ Código pode ser visualizado de longe (placa grande)
-- ✅ Fallback se câmera quebrar
-- ✅ Participante pode entrar depois (se esquecer no começo)
+- ✅ Não depende de câmera
+- ✅ Funciona em qualquer celular
+- ✅ Código pode ser exibido em placa grande, visível de longe
 
 **Desvantagens:**
-- ❌ Lento (~30 segundos com digitação)
+- ❌ Mais lento (exige digitação)
 - ❌ Risco de erro na digitação
-- ❌ Possibilidade de duplicação (digitar 2x)
-- ❌ Participante pode esquecer código
-- ❌ UX menos intuitiva (tediosa)
-- ❌ Requer código memorável (fácil de digitar)
-
-**Confiabilidade de Dados:** ⭐⭐ Baixa (risco de duplicação)  
-**Experiência UX:** ⭐⭐ Fraca (lenta e tediosa)  
-**Robustez:** ⭐⭐⭐⭐⭐ Muito alta (funciona sempre)  
+- ❌ Código precisa ser simples de digitar
+- ❌ Experiência menos fluida
 
 ---
 
@@ -100,32 +99,23 @@ A entrada no evento é o ponto de partida da experiência. É nela que:
 **Fluxo de Uso:**
 ```
 FLUXO PRINCIPAL (QR Code):
-1-8. [Mesmo que Alternativa A]
+[Mesmo que Alternativa A]
 
-FLUXO FALLBACK (se QR Code falhar):
-- Sistema detecta que câmera não funciona
-- Oferece opção: "Não conseguiu? Digite o código"
-- Participante digita código (como Alternativa B)
-- Entrada registrada
+FLUXO ALTERNATIVO (câmera indisponível ou QR ilegível):
+- App oferece: "Não conseguiu? Digite o código"
+- Participante digita o código (como Alternativa B)
+- Segue para a mesma tela de confirmação
 ```
 
 **Vantagens:**
-- ✅ Experiência principal é rápida (QR Code)
-- ✅ Sempre há alternativa se câmera falhar
-- ✅ Combina o melhor dos dois mundos
-- ✅ Alta confiabilidade (validação inteligente)
-- ✅ Robusta e resiliente
-- ✅ Funciona offline + online
+- ✅ Experiência principal rápida (QR Code)
+- ✅ Alternativa disponível quando a câmera ou o QR falham
+- ✅ Ambos os caminhos levam à mesma confirmação
 
 **Desvantagens:**
-- ❌ Implementação mais complexa
-- ❌ Duas formas de entrada pode confundir participante
-- ❌ Código precisa ser simples e memorável
-- ❌ Validação dupla (evitar duplicação entre QR e manual)
-
-**Confiabilidade de Dados:** ⭐⭐⭐⭐⭐ Muito alta (validação inteligente)  
-**Experiência UX:** ⭐⭐⭐⭐⭐ Excelente (rápido + fallback)  
-**Robustez:** ⭐⭐⭐⭐⭐ Muito alta (sempre funciona)  
+- ❌ Implementação um pouco mais extensa (dois caminhos de identificação)
+- ❌ Duas formas de entrada precisam ser apresentadas com clareza
+- ❌ Controle de entrada duplicada precisa valer para os dois caminhos
 
 ---
 
@@ -133,540 +123,512 @@ FLUXO FALLBACK (se QR Code falhar):
 
 | Critério | QR Code | Código Manual | Híbrida |
 |----------|---------|---------------|---------|
-| **Velocidade** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
-| **Confiabilidade** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Robustez** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Simplicidade** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **UX Participante** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Complexidade Dev** | ⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐ |
+| **Velocidade** | Alta | Baixa | Alta (caminho principal) |
+| **Risco de erro de identificação** | Baixo | Médio (digitação) | Baixo no principal, médio no alternativo |
+| **Depende de câmera** | Sim | Não | Não (há alternativa) |
+| **Funcionamento offline** | Depende do backend | Depende do backend | Depende do backend |
+| **Complexidade de desenvolvimento** | Média | Baixa | Média |
 
 ---
 
-### 1.4 Alinhamento com Princípios do Projeto
+### 1.4 Decisão Adotada
 
-**Princípio: "Simplicidade"**
-- ✅ Híbrida: Participante vê opção simples (QR) + fallback se falhar
-- ❌ QR Code: Falha se câmera não funcionar
-- ⚠️ Manual: Simples mas lenta
-
-**Princípio: "Oferecer Valor ao Participante"**
-- ⭐ Híbrida: Experiência rápida + sem frustração
-- ⭐ QR Code: Experiência rápida mas pode falhar
-- ⭐ Manual: Sempre funciona mas frustrante
-
-**Princípio: "Dados Confiáveis"**
-- ✅ Híbrida: Validação dupla impede duplicação
-- ✅ QR Code: Cada scan é único (não duplica)
-- ❌ Manual: Risco de duplicação
-
----
-
-### 1.5 RECOMENDAÇÃO
-
-**Escolha: ALTERNATIVA C - QR Code + Código Manual (Híbrida)**
+**✅ Decisão adotada: entrada híbrida — QR Code principal + código manual alternativo.**
 
 **Justificativa:**
-1. Atende ao princípio de simplicidade (fluxo principal rápido)
-2. Oferece valor sem frustração (sempre há fallback)
-3. Dados confiáveis (validação inteligente)
-4. Robusta em qualquer contexto
-5. Melhor equilíbrio entre UX e confiabilidade
+1. Mantém o caminho mais rápido como padrão (QR Code)
+2. Evita que o participante fique impedido de entrar quando a câmera ou o QR falham
+3. Os dois caminhos convergem para a mesma tela de confirmação, na qual o participante vê o evento antes de confirmar
 
-**Implementação:**
-- Fluxo padrão: QR Code (rápido)
-- Fluxo alternativo: Código Manual (fallback)
-- Validação: Impedir duplicação entre os dois fluxos
+**Pendente:** comportamento sem conexão com a internet, a ser definido junto com a arquitetura de dados/backend.
 
 ---
 
-## 2. ANÁLISE DA DECISÃO #2: REGISTRO DE EXPERIÊNCIAS
+## 2. DECISÃO: REGISTRO DAS EXPERIÊNCIAS
 
 ### 2.1 Contexto
 
-Uma vez dentro do evento, como o sistema registra quais experiências o participante realizou?
+**Pergunta central:** como registrar as experiências realizadas pelo participante com baixo atrito e dados confiáveis?
 
-O modelo deve:
-- Associar participante + experiência/estação
-- Gerar dados confiáveis para BEAST
-- Minimizar atrito para o participante
-- Permitir acompanhamento em tempo real (filas)
+Novo requisito levantado junto à empresa: **cada estande/estação possui sua própria fila, e o staff gerencia essas filas.** Isso muda a análise, pois o registro das experiências pode aproveitar a operação de fila que já precisa existir.
+
+A decisão anterior (QR Code em cada estação) foi abandonada. Não haverá QR Code por estação para o participante registrar que realizou uma experiência.
 
 ### 2.2 Alternativas Consideradas
 
-#### **ALTERNATIVA A: Apenas Entrada e Saída**
+#### **ALTERNATIVA A: Somente Entrada e Saída**
 
-**Modelo:**
-```
-O app registra APENAS:
-- Horário de entrada: 14:30
-- Horário de saída: 16:45
-- Tempo total: 2h 15min
-- Evento: Arena Itinerante - Shopping XYZ
-
-NÃO registra quais experiências específicas foram feitas.
-```
-
-**Fluxo da Tela do Evento:**
-```
-┌────────────────────────┐
-│  Arena em Andamento    │
-│                        │
-│  Horário de entrada:   │
-│  14:30                 │
-│                        │
-│  Tempo aqui:           │
-│  2h 15min              │
-│                        │
-│  [Sair da Arena]       │
-└────────────────────────┘
-```
+O sistema registra entrada, saída e permanência, mas não identifica quais experiências foram realizadas.
 
 **Vantagens:**
-- ✅ Super simples (zero ação do participante)
-- ✅ Dados muito confiáveis (baseados em tempo)
-- ✅ Sem necessidade de QR Code nas estações
-- ✅ Sem risco de duplicação
-- ✅ Participante não precisa fazer nada
+- ✅ Nenhuma ação adicional do participante
 - ✅ Implementação mínima
 
 **Desvantagens:**
-- ❌ BEAST não sabe quais experiências foram feitas
-- ❌ Sem dados de preferência
-- ❌ Sem informações sobre engajamento
-- ❌ App oferece pouco valor ao participante (apenas timer)
-- ❌ Não responde "quem usou VR?" ou "PS teve mais uso?"
-
-**Valor para BEAST:** ⭐⭐ Básico (só tempo de permanência)  
-**Valor para Participante:** ⭐⭐ Mínimo (timer apenas)  
-**Complexidade:** ⭐ Mínima  
+- ❌ A empresa não sabe quais experiências foram realizadas
+- ❌ Sem dados sobre preferência e interação com as estações
+- ❌ Histórico do participante fica pobre (apenas tempo)
 
 ---
 
-#### **ALTERNATIVA B: Código Manual por Estação**
+#### **ALTERNATIVA B: Autorregistro por Código da Estação**
 
-**Modelo:**
-```
-Cada estação/experiência tem um código:
-
-🎮 PlayStation: PLAY2024
-🥽 Realidade Virtual: VROC2024
-🚗 Simulador de Corrida: RACE2024
-
-Quando participante usa uma estação:
-1. Encontra o código (placa/adesivo)
-2. Abre app → "Registrar Experiência"
-3. Digita código: PLAY2024
-4. App registra: "PlayStation às 14:35"
-5. Participante volta a aproveitar
-
-Resultado no histórico:
-- PlayStation ✅ 14:35
-- Realidade Virtual ✅ 15:10
-- Simulador ✅ 16:20
-```
-
-**Fluxo da Tela do Evento:**
-```
-┌────────────────────────┐
-│  Arena em Andamento    │
-│                        │
-│  Experiências:         │
-│  ✅ PlayStation 14:35  │
-│  ✅ VR Reality 15:10   │
-│  ⭕ Simulador          │
-│  ⭕ Outras...          │
-│                        │
-│ [+ Registrar Experiên.]│
-│ [Sair da Arena]        │
-└────────────────────────┘
-```
+O participante informa manualmente um código após realizar uma experiência.
 
 **Vantagens:**
-- ✅ BEAST sabe exatamente quais experiências
-- ✅ Dados de preferência (qual experiência mais usada?)
-- ✅ Histórico detalhado para participante
-- ✅ Informações para melhorar Arena
-- ✅ Maior engajamento (participante vê seu histórico)
-- ✅ Fácil identificar experiências populares
+- ✅ Identifica as experiências realizadas
+- ✅ Não depende de câmera
 
 **Desvantagens:**
-- ❌ Participante precisa digitar código múltiplas vezes (3-5x)
-- ❌ Atrito na experiência (tirar atenção do evento)
-- ❌ Risco de esquecer de registrar
-- ❌ Possibilidade de duplicação (digitar 2x por acidente)
-- ❌ Risco de erro na digitação
-- ❌ Código precisa ser simples e único
-- ❌ Impacto negativo na UX (muito atrito)
-
-**Valor para BEAST:** ⭐⭐⭐⭐⭐ Excelente (dados detalhados)  
-**Valor para Participante:** ⭐⭐⭐⭐ Bom (histórico detalhado)  
-**Complexidade:** ⭐⭐⭐ Média + Risco alto  
+- ❌ Exige ação repetitiva do participante após cada experiência
+- ❌ Risco de esquecimento ou erro de digitação
+- ❌ Dados dependem da disciplina do participante
 
 ---
 
-#### **ALTERNATIVA C: Fila Virtual por Estação + Confirmação pelo Staff**
+#### **ALTERNATIVA C: Autorregistro por QR Code da Estação**
 
-**Modelo:**
-```
-Cada estação tem sua própria FILA VIRTUAL:
-
-🎮 PlayStation: fila virtual
-🥽 VR Reality: fila virtual
-🚗 Simulador: fila virtual
-
-Fluxo:
-1. Participante escolhe estação na tela do app
-2. Entra na fila (apenas uma fila por vez)
-3. Acompanha posição em tempo real
-4. É chamado pelo sistema (notificação)
-5. Dirigir-se à estação
-6. Staff confirma conclusão no tablet/celular
-7. Experiência registrada automaticamente
-8. Participante fica livre para entrar em outra fila
-
-Resultado: Fila gerida pelo app + Validação pelo Staff
-```
+Cada estação possui QR próprio e o participante o escaneia para registrar a experiência.
 
 **Vantagens:**
-- ✅ BEAST sabe exatamente quais experiências (Staff confirma)
-- ✅ Participante acompanha posição em tempo real
-- ✅ Sem necessidade de QR Code em cada estação
-- ✅ Fila gerida digitalmente (melhor operacional)
-- ✅ Participante + Estação já associados na fila
-- ✅ Staff confirma ocorrência real (validação)
-- ✅ Dados muito confiáveis
-- ✅ Experiência melhorada (participante sabe seu lugar)
-- ✅ Impacto operacional positivo (Staff controla fluxo)
+- ✅ Reduz a digitação em relação à Alternativa B
+- ✅ Identifica as experiências realizadas
 
 **Desvantagens:**
-- ❌ Requer Staff com dispositivo (tablet/celular)
-- ❌ Implementação de sincronização em tempo real
-- ❌ Coordenação operacional (Staff deve confirmar)
+- ❌ Continua exigindo ação deliberada do participante após cada experiência
+- ❌ Necessidade de manter QR Codes em todas as estações
+- ❌ O escaneamento indica presença na estação, não confirma que a experiência foi realizada
 
-**Valor para BEAST:** ⭐⭐⭐⭐⭐ Excelente (dados + operacional)  
-**Valor para Participante:** ⭐⭐⭐⭐⭐ Excelente (acompanhamento + transparência)  
-**Complexidade:** ⭐⭐⭐ Média (sincronização)  
+---
 
-  
+#### **ALTERNATIVA D: Registro Manual Isolado pelo Staff**
+
+O funcionário identifica/procura o participante e registra manualmente qual experiência ele realizou.
+
+**Vantagens:**
+- ✅ Reduz a ação do participante
+- ✅ Experiência confirmada por quem acompanhou a estação
+
+**Desvantagens:**
+- ❌ Aumenta o trabalho operacional do staff
+- ❌ Staff precisa localizar o participante no sistema a cada atendimento
+- ❌ Risco de registro esquecido ou atribuído à pessoa errada
+
+---
+
+#### **ALTERNATIVA E: Fila Virtual por Estação + Confirmação pelo Staff**
+
+**Funcionamento:**
+```
+Participante escolhe uma experiência
+   → entra na fila da estação
+   → sistema associa participante à estação
+   → participante acompanha sua posição
+   → participante é chamado
+   → realiza a experiência
+   → staff confirma a conclusão
+   → sistema registra automaticamente a experiência na participação
+```
+
+**Diferença em relação à Alternativa D:** o funcionário não precisa procurar manualmente o participante para descobrir quem realizou a experiência. O sistema já conhece o participante atendido, porque ele veio da própria fila daquela estação.
+
+**O check do staff possui duas funções:**
+- **Operacional:** concluir aquele atendimento e permitir o avanço da fila
+- **Coleta de dados:** confirmar que aquela experiência foi efetivamente realizada
+
+Após a conclusão pelo staff, o participante fica livre para entrar na fila de outra estação.
+
+**Vantagens:**
+- ✅ Integra gestão das filas e registro das experiências em uma única ação
+- ✅ Nenhuma ação extra do participante para registrar a experiência
+- ✅ Experiência registrada somente quando confirmada pelo staff
+- ✅ Gera dados adicionais pelo próprio fluxo (espera, chamada, conclusão)
+
+**Desvantagens:**
+- ❌ Depende de o staff confirmar cada conclusão
+- ❌ Exige sincronização em tempo real entre app, staff e monitor
+- ❌ Maior complexidade de backend
 
 ---
 
 ### 2.3 Matriz de Comparação
 
-| Critério | Entrada/Saída | Código Manual | Fila Virtual + Staff |
-|----------|---------------|---------------|---------|
-| **Dados Detalhados** | ❌ | ✅ | ✅✅ |
-| **Atrito (UX)** | ⭐⭐⭐⭐⭐ | ⭐ | ⭐⭐⭐⭐⭐ |
-| **Confiabilidade** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Complexidade Dev** | ⭐ | ⭐⭐ | ⭐⭐⭐ |
-| **Valor Participante** | ⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Gerenciamento Operacional** | ❌ | ❌ | ✅⭐⭐⭐⭐⭐ |
-| **Scalability** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Critério | A: Entrada/Saída | B: Código estação | C: QR estação | D: Staff isolado | E: Fila + staff |
+|----------|------------------|-------------------|---------------|------------------|-----------------|
+| **Identifica experiências** | ❌ | ✅ | ✅ | ✅ | ✅ |
+| **Ação extra do participante** | Nenhuma | Alta | Média | Nenhuma | Nenhuma |
+| **Confirmação de realização** | — | ❌ | ❌ | ✅ | ✅ |
+| **Esforço do staff** | Nenhum | Nenhum | Nenhum | Alto | Baixo (já opera a fila) |
+| **Organiza a espera** | ❌ | ❌ | ❌ | ❌ | ✅ |
+| **Complexidade técnica** | Baixa | Baixa | Média | Média | Alta |
 
 ---
 
-### 2.4 Alinhamento com Princípios
+### 2.4 Decisão Adotada
 
-**Princípio: "Coleta Transparente (Não Atrapalhar)"**
-- ✅ Entrada/Saída: Participante não faz nada
-- ❌ Código Manual: Alto atrito (múltiplas digitações)
-- ✅ Fila Virtual: Participante acompanha (valor) + Staff confirma
-
-**Princípio: "Oferecer Valor ao Participante"**
-- ❌ Entrada/Saída: Mínimo valor (timer apenas)
-- ✅ Código Manual: Bom valor (histórico)
-- ✅✅ Fila Virtual: Máximo valor (posição em tempo real + transparência)
-
-**Princípio: "Dados Confiáveis"**
-- ✅ Entrada/Saída: Muito confiável (automaticamente)
-- ⚠️ Código Manual: Risco de duplicação
-- ✅✅ Fila Virtual: Muito confiável (fila digital + Staff valida)
-
----
-
-### 2.5 RECOMENDAÇÃO
-
-**Escolha: ALTERNATIVA C - Fila Virtual por Estação + Confirmação pelo Staff**
+**✅ Decisão adotada: fila virtual por estação + confirmação pelo staff (Alternativa E).**
 
 **Justificativa:**
-1. Máximo valor ao participante (acompanha posição em tempo real)
-2. Zero atrito durante participação (Staff confirma, não participante)
-3. Dados muito confiáveis (fila digital + validação do Staff)
-4. Elimina necessidade de QR Code em cada estação (reduz custo)
-5. Melhora experiência operacional (Staff gerencia melhor)
-6. Oferece dados estratégicos + operacionais para BEAST
-7. Escalável (funciona com qualquer número de participantes)
+1. Responde ao requisito da empresa de filas por estação gerenciadas pelo staff
+2. Reduz ações desnecessárias do participante (princípio de baixa fricção)
+3. O registro é confiável, pois depende da confirmação de quem conduziu a experiência
+4. O staff não tem trabalho adicional de busca: o participante já está identificado pela fila
+5. O mesmo check que registra o dado também faz a fila avançar
+6. Elimina a necessidade de QR Code individual por estação
 
-**Implementação:**
-- Fila virtual para cada estação/experiência
-- Participante pode estar em apenas 1 fila por vez
-- Staff confirma conclusão em dispositivo (tablet/celular)
-- Sistema sincroniza em tempo real (App + Staff + Monitor)
+**Pendente:** o sistema deve prever alertas/lembretes para o Staff realizar o check de conclusão; formato, tempo e canal desses alertas ainda serão definidos.
 
 ---
 
-## 3. ANÁLISE DA DECISÃO #3: BENEFÍCIO AO PARTICIPANTE
+## 3. DECISÃO: BENEFÍCIO AO PARTICIPANTE
 
 ### 3.1 Contexto
 
-Além de registrar dados, o app deve oferecer valor ao participante ao longo do tempo.
-
-O valor deve ser:
-- Transparente (participante vê dados reais)
-- Significativo (não artificial ou inflacionado)
-- Não obtrusivo (não gamificação pesada)
-- Alinhado com objetivos educacionais da BEAST
-
-Opções consideradas:
-- Histórico simples (o que fez)
-- Histórico + Estatísticas (dados consolidados)
-- Progresso/Níveis
-- Pontuação/Ranking
-- Recompensas
+Além de registrar dados para a empresa, o app deve oferecer valor ao participante. Que valor é esse?
 
 ### 3.2 Alternativas Consideradas
 
 #### **ALTERNATIVA A: Histórico Simples**
 
-**O que mostra:**
-```
-Minha Participação - Arena 2024
-
-📍 BEAST Arena - Shopping XYZ
-📅 15 de Setembro de 2024
-⏱️ Permanência: 2h 45min
-
-Experiências realizadas:
-✅ PlayStation
-✅ Realidade Virtual
-✅ Simulador de Corrida
-
-Avaliação: ⭐⭐⭐⭐ (4/5)
-Comentário: "Muito legal!"
-```
+Lista das participações, com o que foi feito em cada uma.
 
 **Vantagens:**
 - ✅ Simples de implementar
-- ✅ Oferece algum valor (ver o que fez)
 - ✅ Não "incha" a UX com gamificação
-- ✅ Alinha com princípio de simplicidade
-- ✅ Permite participante acompanhar
-- ✅ Data histórica completa
 
 **Desvantagens:**
-- ❌ Valor limitado (apenas registro)
-- ❌ Sem incentivo para retornar
-- ❌ Menos engajamento
-
-**Engajamento:** ⭐⭐ Baixo  
-**Valor Participante:** ⭐⭐⭐ Médio  
+- ❌ Visão apenas por evento, sem consolidação
 
 ---
 
 #### **ALTERNATIVA B: Histórico + Estatísticas Pessoais**
 
-**O que mostra:**
-```
-Meu Perfil & Estatísticas
-
-3 Participações
-8h Tempo total
-12 Experiências realizadas
-
-Últimas participações:
-- BEAST Arena - Shopping XYZ (15 set)
-- BEAST Arena - Feira de Games (10 ago)
-
-Preferências observadas:
-- Experiências mais usadas: VR (3x), PS (2x)
-- Horário preferido: Manhã
-- Duração média: 2h 45min
-
-Avaliações:
-⭐⭐⭐⭐⭐ (4.5 média)
-```
+Histórico detalhado das participações + indicadores consolidados.
 
 **Vantagens:**
-- ✅ Valor real ao participante (dados pessoais)
-- ✅ Simples e transparente
-- ✅ Sem elementos artificiais
-- ✅ Fácil de implementar
-- ✅ Educacional (participante vê seus padrões)
-- ✅ Alinha com propósito de coleta de dados
+- ✅ Oferece visão consolidada sem lógica de progressão
+- ✅ Usa apenas dados que o próprio fluxo já registra
+- ✅ Implementação viável
 
 **Desvantagens:**
-- ⚠️ Engajamento menor que gamificação
-
-**Engajamento:** ⭐⭐⭐ Moderado  
-**Valor Participante:** ⭐⭐⭐⭐ Excelente (dados reais)  
+- ❌ Menor apelo de engajamento que gamificação
 
 ---
 
-#### **ALTERNATIVA C: Progresso/Nível com Gamificação**
+#### **ALTERNATIVA C: Progresso/Nível (Gamificação)**
 
-**O que mostra:**
-```
-Meu Progresso
-
-🎮 Explorador de Experiências
-Nível 3 de 10
-
-Progresso:
-████████░░ 80%
-
-Próximo nível em: 2 experiências
-
-Desbloqueáveis:
-🔓 "Veterano": Completar 5 eventos
-🔒 "Fã de VR": Usar VR 5 vezes
-```
+Níveis, XP, barra de progresso, conquistas.
 
 **Vantagens:**
-- ✅ Incentiva retorno
-- ✅ Oferece progresso visível
-- ✅ Engajamento moderado
+- ✅ Pode incentivar retorno
 
 **Desvantagens:**
-- ❌ Mais complexo de implementar
-- ❌ Pode parecer artificial/inflacionado
-- ❌ Requer lógica de progressão
-- ❌ Nem sempre alinha com objetivo educacional
-
-**Engajamento:** ⭐⭐⭐⭐ Alto  
-**Valor Participante:** ⭐⭐⭐ Médio  
+- ❌ Requer lógica de progressão e regras de pontuação
+- ❌ Pode parecer artificial
+- ❌ Fora do escopo desta versão
 
 ---
 
-#### **ALTERNATIVA D: Ranking/Pontuação**
+#### **ALTERNATIVA D: Pontuação/Ranking**
 
-**O que mostra:**
-```
-Ranking Global
-
-Você: Posição #127
-
-Seus Pontos: 450
-
-Ranking semanal:
-1. João Silva - 1.200 pts
-2. Maria - 980 pts
-3. Você - 450 pts
-```
+Pontos e posição comparativa entre participantes.
 
 **Vantagens:**
 - ✅ Alto engajamento competitivo
-- ✅ Incentiva uso múltiplo
 
 **Desvantagens:**
-- ❌ Pode criar competição não saudável
-- ❌ Pode desmotivar quem não está no top
-- ❌ Foco em pontos vs. experiência real
-- ❌ Muito artificial
+- ❌ Pode criar competição não saudável e desmotivar quem não está no topo
+- ❌ Pode desviar o foco da experiência para os pontos
+- ❌ Fora do escopo desta versão
 
-**Engajamento:** ⭐⭐⭐⭐⭐ Muito alto  
-**Valor Real:** ⭐ Mínimo (artificial)  
+---
+
+#### **ALTERNATIVA E: Recompensas**
+
+Pontos resgatáveis por descontos, brindes ou vouchers.
+
+**Vantagens:**
+- ✅ Valor tangível ao participante
+
+**Desvantagens:**
+- ❌ Complexidade alta (economia de pontos, cupons, validade)
+- ❌ Custo operacional e dependência de parcerias
+- ❌ Fora do escopo desta versão
 
 ---
 
 ### 3.3 Matriz de Comparação
 
-| Critério | Histórico | Histórico + Estatísticas | Progresso/Nível | Ranking |
-|----------|-----------|---------|---------|---------|
-| **Engajamento** | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Valor Real** | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐ |
-| **Simplicidade** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| **Complexidade Dev** | ⭐ | ⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **Alinhamento Princípios** | ✅ | ✅✅ | ⚠️ | ❌ |
+| Critério | Histórico | Histórico + Estatísticas | Progresso | Ranking | Recompensas |
+|----------|-----------|--------------------------|-----------|---------|-------------|
+| **Valor ao participante** | Médio | Bom | Bom | Questionável | Alto |
+| **Simplicidade** | Alta | Alta | Média | Baixa | Baixa |
+| **Complexidade de desenvolvimento** | Baixa | Baixa | Média | Alta | Muito alta |
+| **Alinhamento com princípios** | ✅ | ✅ | ⚠️ | ❌ | ❌ |
 
 ---
 
-### 3.4 Alinhamento com Princípios
+### 3.4 Decisão Adotada
 
-**Princípio: "Simplicidade"**
-- ✅✅ Histórico + Estatísticas: Muito simples
-- ✅ Histórico simples: Básico
-- ⚠️ Progresso/Nível: Moderado
-- ❌ Ranking: Complexo
+**✅ Decisão adotada: Histórico + Estatísticas Pessoais.**
 
-**Princípio: "Oferecer Valor Real (Não Artificial)"**
-- ⭐ Histórico: Valor básico
-- ⭐⭐⭐⭐⭐ Histórico + Estatísticas: Máximo valor (dados reais)
-- ⭐⭐⭐ Progresso/Nível: Valor artificial/inflacionado
-- ⭐ Ranking: Valor artificial
+**O participante terá como benefício:**
+- Histórico de suas participações
+- Eventos dos quais participou
+- Horário de entrada e saída
+- Tempo de permanência
+- Experiências realizadas
+- Avaliação feita
+- Quantidade total de participações
+- Tempo total acumulado nas Arenas
 
-**Princípio: "Coleta Educacional"**
-- ✅ Histórico + Estatísticas: Alinha com objetivo (entender comportamento do participante)
-- ⚠️ Progresso/Nível: Desvia do foco (gamificação)
-- ❌ Ranking: Desvia do foco (competição)
+**Indicadores no Perfil:**
+- **Participações**
+- **Tempo total**
 
----
-
-### 3.5 RECOMENDAÇÃO
-
-**Escolha: ALTERNATIVA B - Histórico + Estatísticas Pessoais**
+**Não haverá, nesta versão:** níveis, XP, barra de progresso, conquistas, ranking, pontos ou recompensas. A BEAST possui uma plataforma gamificada separada, o que não significa que o aplicativo da Arena precise ter esse tipo de sistema.
 
 **Justificativa:**
-1. Oferece valor real ao participante (dados pessoais, não artificial)
-2. Alinha com princípios (simplicidade + transparência)
-3. Educacional (participante entende seus padrões)
-4. Implementação simples e viável
-5. Suporta objetivos principais da BEAST (coleta de dados com propósito)
-6. Não cria pressão artificial (sem gamificação pesada)
-7. Escalável
-
-**O que mostra:**
-- Número de participações
-- Tempo total em Arenas
-- Experiências mais usadas
-- Preferências observadas
-- Avaliações antigas
-- Histórico detalhado
-
-**Implementação:**
-- MVP: Histórico básico + Estatísticas simples
-- V2: Melhorar visualização de estatísticas (gráficos, tendências)
-- Futuro: Insights (ex: "Você gasta mais tempo em VR que outros participantes")
+1. Oferece valor sem complexidade excessiva
+2. Reaproveita dados que o sistema já coleta (princípio de coleta transparente)
+3. Evita engajamento artificial
 
 ---
 
-## 4. RESUMO DAS DECISÕES PRINCIPAIS
+## 4. DECISÃO: ORGANIZAÇÃO DAS FILAS DAS ESTAÇÕES
 
-| Decisão | Recomendação | Justificativa |
-|---------|--------------|---------------|
-| **Entrada no Evento** | QR Code + Código Manual | Rápido + Robusto + Confiável |
-| **Registro Experiências** | Fila Virtual + Staff Confirma | Transparência + Valor + Operacional |
-| **Benefício Participante** | Histórico + Estatísticas | Simples + Valor Real + Educacional |
+### 4.1 Contexto
+
+Com o registro das experiências baseado em filas (Decisão 2), é preciso definir como as filas se organizam e quantas um participante pode ocupar.
+
+### 4.2 Alternativas Consideradas
+
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **Fila única para todas as estações** | Simples de exibir | Não reflete a operação real; estações com ritmos diferentes ficam presas umas às outras |
+| **Uma fila por estação, várias filas simultâneas por participante** | Participante "reserva" vários lugares | Chamadas simultâneas para estações diferentes; posições ocupadas por quem não virá; gestão difícil para o staff |
+| **Uma fila por estação, uma fila por participante por vez** | Chamadas sem conflito; filas refletem quem realmente está esperando | Participante espera uma experiência de cada vez |
+
+### 4.3 Decisão Adotada
+
+**✅ Decisão adotada: cada estação possui sua própria fila.**
+
+Exemplos:
+- PlayStation → fila própria
+- Realidade Virtual → fila própria
+- Simulador → fila própria
+- Demais experiências → suas respectivas filas
+
+O participante visualiza pelo aplicativo sua situação/posição na fila em que estiver.
+
+**✅ Restrição obrigatória: um participante só pode estar em uma fila de estação por vez.**
+
+- Enquanto estiver aguardando, chamado ou sendo atendido em determinada estação, não pode entrar simultaneamente em outra fila
+- Após o staff concluir sua experiência, ele fica novamente disponível para entrar em outra fila
+
+**Justificativa operacional:** evita chamadas simultâneas para diferentes experiências e simplifica o gerenciamento da participação pelo staff.
 
 ---
 
-## 5. DECISÕES ESTRUTURANTES COMPLEMENTARES
+## 5. DECISÃO: CHAMADA DO PARTICIPANTE
 
-### D1: Uma Fila por Vez
-**Decisão:** Participante pode estar em apenas UMA fila de estação por vez.
-**Justificativa:** Evita conflitos operacionais (timer, posição, notificações).
+### 5.1 Contexto
 
-### D2: No-Show Retorna ao Final
-**Decisão:** Se chamado e não comparecer, participante vai para o final da fila (não é removido).
-**Justificativa:** Oferece segunda chance; escalável.
+Quando chega a vez do participante, ele precisa saber que foi chamado e para onde ir. O staff precisa saber quem está sendo chamado, e o público da Arena se beneficia de uma visualização coletiva.
 
-### D3: Fila de Acesso Dinâmica
-**Decisão:** Staff pode ativar/desativar fila de acesso à Arena em tempo real.
-**Justificativa:** Gerencia lotação; transparente.
+### 5.2 Alternativas Consideradas
 
-### D4: Espera não Conta como Permanência
-**Decisão:** Timer de permanência começa apenas na ENTRADA EFETIVA.
-**Justificativa:** Dados precisos (permanência = tempo aproveitado).
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **Chamada somente no app** | Individual e direta | Participante pode não estar olhando o celular |
+| **Chamada somente em monitor/voz** | Visível para todos | Participante precisa estar perto do monitor; sem registro no app |
+| **App + monitor + área do staff sincronizados** | Várias formas de o participante perceber a chamada; staff acompanha o mesmo estado | Exige sincronização em tempo real |
 
-### D5: Uma Participação Ativa por Vez
-**Decisão:** Cada usuário pode ter apenas UMA participação ativa por evento.
-**Justificativa:** Evita conflitos; clareza de estado.
+### 5.3 Decisão Adotada
+
+**✅ Decisão adotada: chamada sincronizada entre app, monitor público e área do staff.**
+
+- **App do participante:** informa claramente que ele foi chamado e para qual estação deve se dirigir
+- **Monitor público da Arena:** apresenta as chamadas em tempo real
+- **Área do staff:** apresenta quem está sendo atendido/chamado e permite gerenciar o avanço da fila
+
+O monitor público e o aplicativo **não representam filas diferentes**. São visualizações diferentes do mesmo estado da fila.
 
 ---
 
-## 6. PRÓXIMAS ETAPAS
+## 6. REQUISITO OPERACIONAL: NÃO COMPARECIMENTO
 
-✅ DECISÕES CONSOLIDADAS  
-⏭️ Atualizar Arquitetura de Telas  
-⏭️ Protótipo Estrutural HTML  
-⏭️ Desenvolvimento Figma (Identidade Visual)  
+### 6.1 Contexto
+
+A empresa informou que, quando um participante for chamado e não estiver presente, ele deverá ser movido para o final da fila.
+
+### 6.2 Fluxo
+
+```
+Participante chamado → não compareceu → staff marca ausência
+   → participante retorna ao final da fila daquela estação
+```
+
+**Justificativa:** a fila continua andando para quem está presente, sem excluir quem se ausentou momentaneamente.
+
+### 6.3 Pendentes
+
+As regras abaixo ainda **não estão definidas** e não fazem parte desta decisão:
+- Número máximo de ausências
+- Remoção definitiva após determinado número de chamadas
+- Penalizações
+- Tempo limite exato para comparecimento
+
+---
+
+## 7. DECISÃO: FILA DE ACESSO À ARENA
+
+### 7.1 Contexto
+
+Além das filas individuais das estações, pode ser necessária uma fila de acesso à própria Arena quando houver excesso de público. Esse excesso não acontece durante todo o evento.
+
+**Não confundir:**
+- **Fila da Arena** = controle de acesso ao espaço
+- **Fila de estação** = espera para uma experiência específica
+
+### 7.2 Alternativas Consideradas
+
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **Sem fila de acesso** | Entrada direta | Sem controle quando a Arena lota |
+| **Fila de acesso permanente** | Controle constante | Etapa desnecessária quando há pouco público |
+| **Fila ativável/desativável pelo staff** | Controle apenas quando necessário | Exige que o estado mude em tempo real para todos |
+
+### 7.3 Decisão Adotada
+
+**✅ Decisão adotada: fila da Arena ativável/desativável pelo staff durante o evento** (Fila da Arena: SIM / NÃO, ou mecanismo equivalente).
+
+**Quando desativada:**
+```
+QR/código → confirmação → entrada na Arena
+```
+
+**Quando ativada:**
+```
+QR/código → confirmação → entrada na fila da Arena
+   → acompanhamento da posição → liberação → entrada efetiva na Arena
+```
+
+Isso permite que um evento comece sem fila de acesso e que o staff a ative posteriormente caso o fluxo de pessoas aumente. Da mesma forma, ela pode ser desativada quando deixar de ser necessária.
+
+**✅ Regra de permanência:** o tempo aguardando na fila de acesso **não** conta como tempo de permanência na Arena. O timer de permanência começa somente quando a entrada efetiva do participante for liberada.
+
+**✅ Desativação com pessoas aguardando:** se o Staff desativar a fila de acesso enquanto existem participantes aguardando, **todos são liberados automaticamente**, sem liberação individual. Para essas pessoas a espera termina, a entrada efetiva é registrada e o tempo de permanência começa. Quem já estava dentro da Arena não é afetado.
+
+**Justificativa:** a desativação significa que a lotação deixou de ser um problema; manter pessoas esperando uma liberação manual criaria atraso sem motivo operacional.
+
+---
+
+## 8. DECISÃO: UMA PARTICIPAÇÃO ATIVA POR USUÁRIO
+
+### 8.1 Contexto
+
+A participação é o registro de um usuário em um evento, com timer, filas e experiências próprios. Se um usuário pudesse manter duas participações abertas ao mesmo tempo, o sistema não saberia a qual evento atribuir tempo, filas e experiências.
+
+### 8.2 Alternativas Consideradas
+
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **Várias participações simultâneas** | Nenhuma restrição ao usuário | Conflito de timer, permanência, filas, experiências e estado do participante; dados pouco confiáveis |
+| **Uma participação ativa por vez** | Estado sempre claro; dados de permanência confiáveis; evita entrada duplicada | Usuário precisa encerrar a participação atual antes de entrar em outro evento |
+
+### 8.3 Decisão Adotada
+
+**✅ Decisão adotada: cada usuário pode possuir apenas uma participação ativa por vez.**
+
+- Enquanto existir uma participação ativa, o usuário não pode iniciar participação em outro evento
+- Ao tentar, o app informa que já existe uma participação em andamento
+- Nenhuma penalidade está associada a essa tentativa
+
+---
+
+## 9. DECISÃO: COLETA DO PERFIL DO PARTICIPANTE
+
+### 9.1 Contexto
+
+Conhecer o perfil do público é parte central do problema da BEAST: a experiência presencial acontece, mas a empresa não sabe quem são os participantes nem qual é a relação deles com games e com o mercado de games. Ao mesmo tempo, um questionário longo contraria o princípio de baixa fricção.
+
+### 9.2 Dados Solicitados pela Empresa
+
+- Idade
+- Gênero
+- Escolaridade
+- Jogos que costuma jogar
+- Se já conhece o mercado de games
+- Se tem interesse no mercado profissional de games
+
+O **nome** e o **e-mail** já são coletados no cadastro e não são perguntados novamente.
+
+### 9.3 O que foi removido do questionário anterior
+
+| Item antigo | Motivo da remoção |
+|-------------|-------------------|
+| Idade por faixa etária | A empresa quer a idade; o campo numérico é igualmente rápido |
+| Frequência com que joga | Não foi solicitado pela empresa |
+| Gêneros favoritos | Substituído pelos jogos que a pessoa realmente joga |
+| Uma pergunta obrigatória por tela | Aumentava o número de telas sem necessidade |
+| Tela final "Seus dados estão corretos?" | Etapa extra; os dados podem ser editados no Perfil |
+
+### 9.4 Decisão Adotada
+
+**✅ Decisão adotada: questionário em 3 etapas curtas, logo após o cadastro.**
+
+1. **Sobre você:** idade (numérica), gênero (com "Outro" + especificação e "Prefiro não informar"), escolaridade ("Qual o nível mais alto de ensino que você cursa ou já cursou?")
+2. **Seus jogos:** pesquisa + sugestões + seleção em chips, com adição manual; pelo menos 1 jogo
+3. **Mercado de games:** conhecimento do mercado e interesse profissional
+
+**Como o atrito é reduzido:** poucas etapas, seleções rápidas em vez de texto livre, nenhuma pergunta redundante, remoção de frequência e gêneros favoritos, ausência de tela de confirmação e edição posterior no Perfil.
+
+### 9.5 Finalidade Específica
+
+A empresa informou que as respostas sobre conhecimento e interesse no mercado de games poderão ser usadas futuramente para direcionar o participante a conhecer a plataforma da BEAST.
+
+**Pendente:** o mecanismo desse direcionamento (momento, formato e regra de segmentação) ainda será definido. Nenhum popup, botão, link ou redirecionamento faz parte desta decisão.
+
+---
+
+## 10. RESUMO DAS DECISÕES
+
+| Tema | Decisão atual |
+|------|---------------|
+| **Entrada no evento** | QR Code principal + código manual alternativo, seguidos de confirmação |
+| **Registro das experiências** | Fila virtual por estação + confirmação pelo Staff |
+| **Benefício ao participante** | Histórico + Estatísticas Pessoais (sem XP, níveis ou ranking) |
+| **Filas das experiências** | Cada estação possui sua própria fila |
+| **Participação em filas** | Uma fila de estação por participante por vez |
+| **Chamada** | App + Staff + monitor público refletem o mesmo estado |
+| **Não comparecimento** | Retorno ao final da fila da estação |
+| **Controle de acesso** | Fila da Arena ativável/desativável pelo Staff |
+| **Permanência** | Espera na fila de acesso não conta como permanência |
+| **Desativação da fila de acesso** | Todos que aguardam são liberados automaticamente |
+| **Participação ativa** | Uma participação ativa por usuário |
+| **Perfil do participante** | Questionário em 3 etapas com os dados solicitados pela empresa |
+
+### Questões em Aberto
+- Comportamento sem conexão com a internet (depende da arquitetura técnica)
+- Tempo de tolerância após uma chamada
+- Quantidade máxima de ausências e eventuais penalidades
+- Tecnologia de sincronização em tempo real
+- Backend e banco de dados definitivos
+- Papel técnico do Google Drive (informado pela empresa como armazenamento; não assumido como banco operacional)
+- Mecanismo de direcionamento para a plataforma da BEAST
+- Formato dos alertas ao Staff para o check de conclusão
+- Identidade visual definitiva (Figma)
+
+---
+
+## 11. ESTADO ATUAL DO PROJETO
+
+| Etapa | Estado |
+|-------|--------|
+| Estrutura, fluxos e interfaces | ✅ Consolidados |
+| Regras de negócio principais | ✅ Definidas |
+| Protótipo estrutural HTML | ✅ Fluxos principais navegáveis |
+| Identidade visual / Figma | ⏳ A desenvolver |
+| Regras técnicas (backend, sincronização, offline) | 🔍 Em avaliação |
 

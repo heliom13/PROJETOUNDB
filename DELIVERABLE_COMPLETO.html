@@ -420,6 +420,7 @@
                 <li><a href="#arquitetura">Arquitetura de Telas e Interfaces</a></li>
                 <li><a href="#fluxos">Fluxos de Navegação</a></li>
                 <li><a href="#design">Diretrizes Visuais Provisórias do Protótipo</a></li>
+                <li><a href="#dados">Origem dos Dados</a></li>
                 <li><a href="#entregaveis">Entregáveis e Próximos Passos</a></li>
             </ul>
         </div>
@@ -434,8 +435,8 @@
                     <div class="label">Interfaces: Participante, Staff e Monitor</div>
                 </div>
                 <div class="stat-card">
-                    <div class="number">∞</div>
-                    <div class="label">Eventos Suportados</div>
+                    <div class="number">2</div>
+                    <div class="label">Tipos de fila: acesso à Arena e estações</div>
                 </div>
                 <div class="stat-card">
                     <div class="number text">Protótipo Estrutural</div>
@@ -444,20 +445,21 @@
             </div>
 
             <h3>Visão Geral</h3>
-            <p><strong>BEAST MARAGAMES</strong> é uma plataforma mobile educacional para participação em eventos de arenas de jogos. O sistema permite que participantes se cadastrem, entrem em eventos por QR Code ou código manual, acompanhem filas e participem das experiências disponíveis na Arena. A solução também contempla uma interface operacional para o staff gerenciar filas e confirmar experiências, além de um monitor público para chamadas em tempo real.</p>
+            <p>A <strong>BEAST MARAGAMES</strong> possui uma Arena Gamer itinerante que recebe participantes em eventos e oferece diferentes experiências/estações (videogames, realidade virtual, simuladores e outras). A experiência presencial acontece, mas a empresa tem dificuldade para transformá-la em dados: quantas pessoas participaram, quem é o público, quanto tempo permaneceu, quais experiências realizou e qual é a sua relação com games e com o mercado de games.</p>
+            <p>O aplicativo transforma a participação presencial em informação útil <strong>sem transformar a experiência em um formulário longo</strong>. O participante se cadastra, responde um questionário curto de perfil, entra no evento por QR Code ou código manual, entra nas <strong>filas das estações</strong>, acompanha sua posição e é chamado quando chega sua vez. O <strong>Staff</strong> confirma a conclusão de cada experiência e controla a <strong>fila de acesso à Arena</strong>; um <strong>monitor público</strong> exibe as chamadas em tempo real. Entrada, saída, tempo de permanência e experiências concluídas são registrados automaticamente pelo próprio fluxo.</p>
 
             <h3>Objetivos Principais</h3>
             <ul class="checklist">
-                <li>Simplificar entrada em eventos (QR Code com fallback)</li>
-                <li>Rastrear participação e experiências em tempo real</li>
-                <li>Criar histórico personalizado por participante</li>
-                <li>Facilitar coleta de feedback após eventos</li>
-                <li>Oferecer interface intuitiva e responsiva</li>
-                <li>Gerenciar filas das experiências/estações</li>
-                <li>Permitir acompanhamento da posição na fila pelo participante</li>
-                <li>Apoiar o staff no gerenciamento e na confirmação das experiências</li>
-                <li>Exibir chamadas em monitor público atualizado em tempo real</li>
-                <li>Mensurar tempo de permanência e interação do público</li>
+                <li>Identificar os participantes e conhecer o seu perfil</li>
+                <li>Contabilizar as participações em cada evento</li>
+                <li>Medir o tempo de permanência na Arena</li>
+                <li>Registrar as experiências efetivamente realizadas</li>
+                <li>Organizar as filas das experiências/estações</li>
+                <li>Permitir que o participante acompanhe sua posição na fila</li>
+                <li>Apoiar o Staff no gerenciamento das filas e na confirmação das experiências</li>
+                <li>Informar as chamadas em um monitor público</li>
+                <li>Coletar avaliação com baixa fricção</li>
+                <li>Produzir dados úteis para a BEAST</li>
             </ul>
 
             <h3>Princípios de Design</h3>
@@ -467,10 +469,10 @@
             </div>
             <div class="subsection">
                 <h4>💎 Valor ao Participante</h4>
-                <p>Histórico, estatísticas pessoais e reconhecimento das atividades realizadas.</p>
+                <p>Histórico das participações, estatísticas pessoais e acompanhamento claro da própria posição nas filas.</p>
             </div>
             <div class="subsection">
-                <h4>⚡ Zero Fricção</h4>
+                <h4>⚡ Baixa Fricção</h4>
                 <p>Entrada rápida, fluxo intuitivo, mínimo de digitação. Avaliação curta na saída, sem formulários extensos.</p>
             </div>
             <div class="subsection">
@@ -496,7 +498,7 @@
             <div class="decision-box">
                 <div class="title">Opção B: Código Manual (Digitação)</div>
                 <p><span class="pro">✅ Robustez:</span> Funciona sem câmera</p>
-                <p><span class="pro">✅ Fallback:</span> Sempre disponível</p>
+                <p><span class="pro">✅ Alternativa:</span> Útil quando a câmera ou o QR não puderem ser usados</p>
                 <p><span class="con">❌ Lentidão:</span> Digitação é chata</p>
                 <p><span class="con">❌ Erros:</span> Código digitado errado</p>
             </div>
@@ -510,6 +512,7 @@
 
             <div class="decided">
                 <strong>✅ Decisão adotada: entrada híbrida.</strong> QR Code como método principal + código manual como alternativa.
+                <p style="margin-top: 8px;">QR Code e código manual apenas <strong>identificam</strong> o evento. A entrada só é registrada depois que o participante vê as informações do evento e confirma. A proteção contra entradas duplicadas vem das regras do sistema (uma participação ativa por usuário), não do meio de identificação. O comportamento sem conexão ainda depende da arquitetura técnica.</p>
             </div>
 
             <hr style="margin: 40px 0;">
@@ -517,20 +520,27 @@
             <h3>Decisão #2: Como registrar e organizar a participação nas experiências?</h3>
 
             <div class="decision-box discarded">
-                <div class="title">Opção A: Entry/Exit Apenas <span class="tag off">Descartada</span></div>
-                <p><span class="pro">✅ Simplicidade:</span> Mínimo de dados</p>
-                <p><span class="con">❌ Valor:</span> Sem detalhes sobre o que foi feito na Arena</p>
+                <div class="title">Opção A: Apenas entrada e saída <span class="tag off">Descartada</span></div>
+                <p><span class="pro">✅ Simplicidade:</span> Nenhuma ação extra do participante</p>
+                <p><span class="con">❌ Valor:</span> A empresa não sabe quais experiências foram realizadas</p>
             </div>
 
             <div class="decision-box discarded">
-                <div class="title">Opção B: QR por Estação <span class="tag off">Descartada</span></div>
-                <p><span class="pro">✅ Detalhe:</span> Registra em qual estação o participante esteve</p>
-                <p><span class="con">❌ Registro pelo próprio participante:</span> Não garante que a experiência foi de fato realizada</p>
-                <p><span class="con">❌ Sem organização do acesso:</span> Não resolve a espera nas estações</p>
+                <div class="title">Opções B e C: Autorregistro na estação (código ou QR Code) <span class="tag off">Descartadas</span></div>
+                <p><span class="pro">✅ Detalhe:</span> Identifica a estação utilizada</p>
+                <p><span class="con">❌ Atrito:</span> Exige uma ação do participante após cada experiência</p>
+                <p><span class="con">❌ Confiabilidade:</span> Registrar presença na estação não comprova que a experiência foi realizada</p>
+                <p><span class="con">❌ Sem organização da espera:</span> Não resolve as filas nas estações</p>
+            </div>
+
+            <div class="decision-box discarded">
+                <div class="title">Opção D: Registro manual isolado pelo Staff <span class="tag off">Descartada</span></div>
+                <p><span class="pro">✅ Confirmação:</span> Registrado por quem acompanhou a experiência</p>
+                <p><span class="con">❌ Operação:</span> O Staff precisa procurar o participante no sistema a cada atendimento</p>
             </div>
 
             <div class="decision-box">
-                <div class="title">Opção C: Fila virtual por estação + confirmação pelo staff</div>
+                <div class="title">Opção E: Fila virtual por estação + confirmação pelo staff</div>
                 <p><span class="pro">✅ Organização:</span> Cada estação possui sua própria fila</p>
                 <p><span class="pro">✅ Confiabilidade:</span> A experiência só é registrada após confirmação do staff</p>
                 <p><span class="pro">✅ Dados:</span> Tempos de espera, chamadas e conclusões registrados pelo próprio fluxo</p>
@@ -540,7 +550,8 @@
                 <strong>✅ Decisão adotada: fila virtual por estação + confirmação pelo staff.</strong>
                 <p style="margin-top: 8px;"><strong>Participante:</strong> entra na fila → acompanha posição → é chamado → realiza a experiência.</p>
                 <p><strong>Staff:</strong> gerencia a fila → realiza a chamada → confirma a conclusão.</p>
-                <p>A conclusão confirmada pelo staff registra a experiência no histórico do participante. Não existe QR Code por estação na solução atual.</p>
+                <p>A própria fila já associa participante e estação, então o Staff não precisa procurar ninguém. O check do Staff tem duas funções: <strong>operacional</strong> (encerra o atendimento e faz a fila avançar) e <strong>dados</strong> (registra que a experiência foi realizada, com horário). Não existe QR Code por estação nem botão "registrar experiência" para o participante.</p>
+                <p>O sistema deve prever a possibilidade de alertar/lembrar o Staff de realizar o check de conclusão (formato a definir).</p>
             </div>
 
             <hr style="margin: 40px 0;">
@@ -576,6 +587,10 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <strong>⏱️ Regra de tempo:</strong> o tempo aguardando na fila de entrada <strong>não</strong> compõe o tempo de permanência na Arena. O cronômetro começa somente após a entrada efetiva.
             </div>
 
+            <div class="recommendation">
+                <strong>🔓 Desativação com pessoas aguardando:</strong> se o Staff desativar a fila de acesso enquanto há participantes aguardando, <strong>todos são liberados automaticamente</strong>. Para eles a espera termina, a entrada efetiva é registrada e o tempo de permanência começa. Quem já estava dentro da Arena não é afetado.
+            </div>
+
             <hr style="margin: 40px 0;">
 
             <h3>Decisão #5: O que mostrar como benefício ao participante?</h3>
@@ -594,7 +609,32 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             </div>
 
             <div class="decided">
-                <strong>✅ Decisão adotada: Histórico + Estatísticas Pessoais</strong> (tempo total, número de participações, experiências realizadas).
+                <strong>✅ Decisão adotada: Histórico + Estatísticas Pessoais</strong> (participações, tempo total, experiências realizadas e avaliações).
+                <p style="margin-top: 8px;">Sem XP, níveis, ranking, conquistas, recompensas ou barra de progresso no aplicativo da Arena. A BEAST possui uma plataforma gamificada separada, o que não exige gamificação neste aplicativo.</p>
+            </div>
+
+            <hr style="margin: 40px 0;">
+
+            <h3>Decisão #6: Uma participação ativa por usuário</h3>
+            <div class="decided">
+                <strong>✅ Decisão adotada:</strong> cada usuário pode ter apenas <strong>uma participação ativa por vez</strong>. Enquanto ela existir, não é possível iniciar participação em outro evento.
+                <p style="margin-top: 8px;">Evita conflitos de timer, permanência, experiências, filas e estado do participante.</p>
+            </div>
+
+            <hr style="margin: 40px 0;">
+
+            <h3>Decisão #7: Chamada sincronizada e não comparecimento</h3>
+            <div class="decided">
+                <strong>✅ Decisão adotada:</strong> app do participante, área do Staff e monitor público são visões do <strong>mesmo estado</strong> das filas. Quando o Staff chama alguém, o app mostra "É a sua vez!" e o monitor exibe a chamada.
+                <p style="margin-top: 8px;"><strong>Não comparecimento:</strong> se o participante chamado não comparecer, ele volta para o <strong>final da fila</strong> daquela estação (regra informada pela empresa). Tempo de tolerância, limite de ausências e penalidades ainda não foram definidos.</p>
+            </div>
+
+            <hr style="margin: 40px 0;">
+
+            <h3>Decisão #8: Questionário de perfil conforme a necessidade da empresa</h3>
+            <div class="decided">
+                <strong>✅ Decisão adotada:</strong> coletar idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games e interesse profissional no mercado.
+                <p style="margin-top: 8px;">Conhecer o perfil do público é parte central do problema da empresa. Para reduzir o atrito: 3 etapas curtas, seleções rápidas, nome não é perguntado de novo, sem perguntas de frequência ou gêneros favoritos, sem tela final de confirmação e edição posterior no Perfil.</p>
             </div>
         </section>
 
@@ -625,13 +665,15 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             <div class="flow-diagram">
 ┌─────────────────────────────────────┐
 │      AUTENTICAÇÃO                   │
-│  (Boas-vindas → Cadastro/Login)     │
+│  (Boas-vindas, Cadastro, Login,     │
+│   Recuperação de senha)             │
 └────────────┬────────────────────────┘
              │
              ↓
 ┌─────────────────────────────────────┐
-│      PERFIL (Questionário)          │
-│  (4 perguntas sobre o participante) │
+│   QUESTIONÁRIO DE PERFIL (3 etapas) │
+│  Sobre você → Seus jogos →          │
+│  Mercado de games                   │
 └────────────┬────────────────────────┘
              │
              ↓
@@ -680,9 +722,16 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
              ↓
 ┌─────────────────────────────────────┐
 │   MINHAS PARTICIPAÇÕES (Aba Eventos)│
-│   • Lista de participações          │
+│   • Histórico completo              │
 │   • Detalhes de cada participação   │
-│   • Estatísticas pessoais           │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│   PERFIL (Aba Perfil)               │
+│   • Dados pessoais e do questionário│
+│   • Estatísticas: Participações e   │
+│     Tempo total                     │
+│   • Configurações e logout          │
 └─────────────────────────────────────┘
             </div>
 
@@ -695,12 +744,12 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <div class="screen-card">
                         <div class="icon">👋</div>
                         <h4>Autenticação</h4>
-                        <p>Boas-vindas, Cadastro e Login</p>
+                        <p>Boas-vindas, Cadastro, Login e Recuperação de senha (desenhadas no Figma)</p>
                     </div>
                     <div class="screen-card">
                         <div class="icon">📝</div>
-                        <h4>Perfil Inicial</h4>
-                        <p>Questionário de perfil</p>
+                        <h4>Questionário de Perfil</h4>
+                        <p>3 etapas: Sobre você, Seus jogos, Mercado de games</p>
                     </div>
                     <div class="screen-card">
                         <div class="icon">🏠</div>
@@ -735,7 +784,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <div class="screen-card">
                         <div class="icon">📊</div>
                         <h4>Minhas Participações</h4>
-                        <p>Histórico + Estatísticas pessoais</p>
+                        <p>Histórico completo das participações (aba Eventos)</p>
                     </div>
                     <div class="screen-card">
                         <div class="icon">🔎</div>
@@ -745,7 +794,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <div class="screen-card">
                         <div class="icon">👤</div>
                         <h4>Perfil</h4>
-                        <p>Dados pessoais, preferências, logout</p>
+                        <p>Dados pessoais, dados do questionário, estatísticas pessoais, configurações, logout</p>
                     </div>
                 </div>
             </div>
@@ -777,7 +826,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <h4>Bottom Tab Navigation</h4>
                 <p><strong>Aba 1: 🏠 Início</strong> - Home principal, saudação, card de entrada, participações recentes (no máximo duas)</p>
                 <p><strong>Aba 2: 📍 Eventos</strong> - Minhas Participações, histórico e detalhes</p>
-                <p><strong>Aba 3: 👤 Perfil</strong> - Dados pessoais, preferências, logout</p>
+                <p><strong>Aba 3: 👤 Perfil</strong> - Dados pessoais, dados do questionário, estatísticas (Participações e Tempo total), configurações, logout</p>
             </div>
         </section>
 
@@ -793,20 +842,29 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 </div>
                 <div class="timeline-item">
                     <h4>2. Criar Conta</h4>
-                    <p>Nome, E-mail, Senha (com validação)</p>
+                    <p>Nome, E-mail, Senha e Confirmar senha (confirmar senha é só validação, não é dado de perfil)</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>3. Questionário de Perfil</h4>
-                    <p>4 perguntas (Idade, Gaming, Gêneros, Confirmação)</p>
+                    <h4>3. Questionário de Perfil — Etapa 1: Sobre você</h4>
+                    <p>Idade (campo numérico) · Gênero (Feminino, Masculino, Outro com especificação, Prefiro não informar) · Escolaridade: "Qual o nível mais alto de ensino que você cursa ou já cursou?" (Fundamental, Médio, Superior, Pós-graduação, Prefiro não informar)</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>4. Home</h4>
-                    <p>Primeira vez sem histórico - pronto para participar!</p>
+                    <h4>4. Questionário — Etapa 2: Seus jogos</h4>
+                    <p>"Quais jogos você costuma jogar?" com pesquisa, sugestões e seleção em chips; é possível adicionar manualmente um jogo que não está na lista. Pelo menos 1 jogo.</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>5. Questionário — Etapa 3: Mercado de games</h4>
+                    <p>"Você já conhece o mercado de games?" e "Você tem interesse no mercado profissional de games?" (ambas obrigatórias)</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>6. Home</h4>
+                    <p>Sem tela de confirmação dos dados; eles podem ser editados depois no Perfil</p>
                 </div>
             </div>
             <div class="pending">
-                <strong>⚠️ A revisar:</strong> as perguntas do questionário de perfil ainda serão conferidas em detalhe.
+                <strong>ℹ️ Em aberto:</strong> a empresa informou que as respostas sobre o mercado de games poderão ser usadas para direcionar o participante a conhecer a plataforma da BEAST. O mecanismo desse direcionamento ainda será definido.
             </div>
+            <p><strong>Login de usuário existente:</strong> perfil já preenchido → Home; perfil inicial incompleto → Questionário → Home.</p>
 
             <h3>Fluxo 2: Entrar em Evento</h3>
             <div class="timeline">
@@ -892,7 +950,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 </div>
                 <div class="timeline-item">
                     <h4>2. Confirmação de Saída</h4>
-                    <p>Horário de saída e tempo de permanência registrados automaticamente</p>
+                    <p>Evita saída acidental. Se o participante estiver em uma fila de estação, é removido dela automaticamente. Horário de saída, tempo de permanência e experiências concluídas são registrados automaticamente.</p>
                 </div>
                 <div class="timeline-item">
                     <h4>3. Resumo</h4>
@@ -971,9 +1029,43 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             </div>
 
             <div class="subsection">
-                <h4>❌ Já registrado neste evento</h4>
-                <p>Aviso de entrada duplicada + opção de continuar ou sair</p>
+                <h4>❌ QR Code inválido</h4>
+                <p>Informa que o QR não foi reconhecido/não é válido + permite nova tentativa</p>
             </div>
+
+            <div class="subsection">
+                <h4>❌ Código inválido</h4>
+                <p>Informa o erro + permite corrigir e tentar novamente</p>
+            </div>
+
+            <div class="subsection">
+                <h4>⚠️ Participação ativa</h4>
+                <p>Informa que o usuário já possui uma participação em andamento e não pode entrar em outro evento até encerrá-la</p>
+            </div>
+        </section>
+
+        <!-- ORIGEM DOS DADOS -->
+        <section class="section" id="dados">
+            <h2>🗂️ Origem dos Dados</h2>
+            <p>Princípio: não pedir ao participante aquilo que o sistema consegue registrar sozinho.</p>
+            <table>
+                <tr>
+                    <th>Origem</th>
+                    <th>Dados</th>
+                </tr>
+                <tr>
+                    <td><strong>Coletados automaticamente</strong></td>
+                    <td>Entrada, saída, tempo de permanência, experiências concluídas (após confirmação do Staff), horário de conclusão, interações operacionais com as filas quando disponíveis</td>
+                </tr>
+                <tr>
+                    <td><strong>Informados pelo participante</strong></td>
+                    <td>Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação e comentário opcional. A senha é dado de autenticação, não dado de perfil.</td>
+                </tr>
+                <tr>
+                    <td><strong>Confirmados pelo Staff</strong></td>
+                    <td>Chamadas, não comparecimento (no-show), conclusão das experiências, controle da fila de acesso</td>
+                </tr>
+            </table>
         </section>
 
         <!-- ENTREGÁVEIS -->
@@ -982,9 +1074,9 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
 
             <h3>Documentação</h3>
             <ul class="checklist">
-                <li><strong>ANALISE_DECISOES.md</strong> - Análise das decisões estratégicas com matriz de prós/contras</li>
-                <li><strong>ARQUITETURA_TELAS.md</strong> - Mapa de telas, componentes, validações, fluxos</li>
-                <li><strong>DELIVERABLE_COMPLETO.html</strong> - Este documento (visual, compilado)</li>
+                <li><strong>Documentação Completa</strong> - Este documento (visão consolidada)</li>
+                <li><strong>Análise de Decisões</strong> - Problema, alternativas, trade-offs e decisão adotada para cada tema</li>
+                <li><strong>Arquitetura de Telas &amp; Fluxos</strong> - Telas e interfaces do participante, do Staff e do monitor, regras, estados e fluxos</li>
             </ul>
 
             <h3>Protótipo</h3>
@@ -1003,8 +1095,8 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             <h3>Próximos Passos</h3>
             <div class="timeline">
                 <div class="timeline-item">
-                    <h4>Fase 1: Definição estrutural e fluxos — EM ANDAMENTO</h4>
-                    <p>Decisões estratégicas, arquitetura de telas e interfaces, protótipo estrutural HTML e regras de negócio</p>
+                    <h4>Fase 1: Definição estrutural e fluxos — EM ESTÁGIO AVANÇADO</h4>
+                    <p>Decisões, arquitetura de telas e interfaces, protótipo estrutural HTML e principais regras de negócio definidas; algumas regras técnicas seguem em avaliação</p>
                 </div>
                 <div class="timeline-item">
                     <h4>Fase 2: Prototipação visual no Figma</h4>
@@ -1082,7 +1174,8 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <li>✅ Decisões estratégicas adotadas (entrada híbrida, filas por estação com confirmação do staff, uma fila por vez, fila dinâmica de acesso, histórico + estatísticas pessoais)</li>
                 <li>✅ Arquitetura com três interfaces: participante, staff e monitor público</li>
                 <li>✅ Protótipo estrutural HTML dos fluxos principais</li>
-                <li>🔄 Regras de negócio pendentes (questionário de perfil, estados de erro, papel do Google Drive)</li>
+                <li>✅ Questionário de perfil definido (3 etapas)</li>
+                <li>🔄 Em aberto: tempo de tolerância após a chamada, limite e penalidades de não comparecimento, comportamento offline, tecnologia de sincronização em tempo real, backend e banco de dados, papel do Google Drive, mecanismo de direcionamento à plataforma da BEAST e formato dos alertas ao Staff</li>
                 <li>🔄 Identidade visual definitiva a ser criada no Figma</li>
             </ul>
         </section>

@@ -56,1110 +56,14 @@ label.q{display:block;font-weight:700;margin:18px 0 6px}
 </head>
 <body>
 <nav class="topnav"><div class="in">
- <span class="brand">🎮 BEAST MARAGAMES</span>
+ <a class="brand" href="index.html" style="color:inherit;text-decoration:none">🎮 BEAST MARAGAMES</a>
  <button data-view="proto" onclick="showView('proto')">📱 Protótipo</button>
  <button data-view="documentacao" onclick="showView('documentacao')">📊 Documentação Completa</button>
  <button data-view="analise" onclick="showView('analise')">🎯 Análise de Decisões</button>
  <button data-view="arquitetura" onclick="showView('arquitetura')">🖼️ Arquitetura de Telas</button>
 </div></nav>
 
-<div id="view-documentacao" class="view"><iframe class="docframe" title="Documentação Completa" srcdoc="<!DOCTYPE html>
-<html lang=&quot;pt-BR&quot;>
-<head>
-    <meta charset=&quot;UTF-8&quot;>
-    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;>
-    <title>BEAST MARAGAMES - Documentação Completa</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f9f9f9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-            margin-bottom: 60px;
-            border-radius: 12px;
-        }
-
-        header h1 {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        header p {
-            font-size: 18px;
-            opacity: 0.95;
-            margin-bottom: 24px;
-        }
-
-        .status {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .section {
-            background: white;
-            padding: 40px;
-            margin-bottom: 40px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .section h2 {
-            color: #8B4789;
-            font-size: 32px;
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #8B4789;
-        }
-
-        .section h3 {
-            color: #333;
-            font-size: 20px;
-            margin-top: 24px;
-            margin-bottom: 12px;
-        }
-
-        .subsection {
-            background: #f9f9f9;
-            padding: 20px;
-            border-left: 4px solid #8B4789;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-
-        .subsection h4 {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        .decision-box {
-            background: linear-gradient(135deg, rgba(139,71,137,0.05) 0%, rgba(196,30,58,0.05) 100%);
-            border: 2px solid #8B4789;
-            padding: 24px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-
-        .decision-box .title {
-            color: #8B4789;
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        .decision-box p {
-            margin-bottom: 8px;
-        }
-
-        .pro {
-            color: #4caf50;
-            font-weight: 600;
-        }
-
-        .con {
-            color: #f44336;
-            font-weight: 600;
-        }
-
-        .recommendation {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 16px;
-            border-radius: 4px;
-            margin: 12px 0;
-        }
-
-        .recommendation strong {
-            color: #2e7d32;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: #f5f5f5;
-            font-weight: 600;
-            color: #333;
-        }
-
-        tr:hover {
-            background: #f9f9f9;
-        }
-
-        .screen-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .screen-card {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 16px;
-            text-align: center;
-        }
-
-        .screen-card .icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-        }
-
-        .screen-card h4 {
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .screen-card p {
-            font-size: 13px;
-            color: #666;
-        }
-
-        .flow-diagram {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-
-        .cta-box {
-            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .cta-box h3 {
-            color: white;
-            margin-bottom: 12px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: white;
-            color: #8B4789;
-            padding: 12px 24px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 8px;
-            transition: all 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .checklist {
-            list-style: none;
-            padding: 0;
-        }
-
-        .checklist li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .checklist li:before {
-            content: &quot;✅ &quot;;
-            color: #4caf50;
-            margin-right: 8px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #8B4789 0%, #C41E3A 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-card .number {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .stat-card .label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .toc {
-            background: #f5f5f5;
-            padding: 24px;
-            border-radius: 8px;
-            margin-bottom: 40px;
-        }
-
-        .toc h3 {
-            margin-bottom: 16px;
-            color: #333;
-        }
-
-        .toc ul {
-            list-style: none;
-        }
-
-        .toc li {
-            margin: 8px 0;
-        }
-
-        .toc a {
-            color: #8B4789;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .toc a:hover {
-            text-decoration: underline;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #d63384;
-        }
-
-        .timeline {
-            position: relative;
-            padding: 20px 0;
-        }
-
-        .timeline-item {
-            padding-left: 40px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-
-        .timeline-item:before {
-            content: &quot;&quot;;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            background: #8B4789;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px #8B4789;
-        }
-
-        .timeline-item h4 {
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .timeline-item p {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .stat-card .number.text {
-            font-size: 22px;
-            line-height: 1.5;
-        }
-
-        .decided {
-            background: #e8f5e9;
-            border-left: 4px solid #4caf50;
-            padding: 16px;
-            border-radius: 4px;
-            margin: 12px 0;
-        }
-
-        .decided strong {
-            color: #2e7d32;
-        }
-
-        .pending {
-            background: #fff8e1;
-            border-left: 4px solid #f9a825;
-            padding: 16px;
-            border-radius: 4px;
-            margin: 12px 0;
-        }
-
-        .pending strong {
-            color: #8d6e00;
-        }
-
-        .discarded {
-            opacity: 0.7;
-            border-style: dashed;
-        }
-
-        .tag {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 8px;
-            vertical-align: middle;
-        }
-
-        .tag.ok { background: #e8f5e9; color: #2e7d32; }
-        .tag.eval { background: #fff8e1; color: #8d6e00; }
-        .tag.off { background: #eeeeee; color: #666; }
-
-        .context-group {
-            margin: 24px 0;
-        }
-
-        .context-group > h4 {
-            color: #8B4789;
-            font-size: 16px;
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>🎮 BEAST MARAGAMES</h1>
-        <p>Plataforma de Arena de Jogos Educacional</p>
-        <div class=&quot;status&quot;>📋 Documentação Completa | Fase: Definição estrutural e fluxos</div>
-    </header>
-
-    <div class=&quot;container&quot;>
-        <!-- ÍNDICE -->
-        <div class=&quot;toc&quot;>
-            <h3>📑 Índice</h3>
-            <ul>
-                <li><a href=&quot;#resumo&quot;>Resumo Executivo</a></li>
-                <li><a href=&quot;#decisoes&quot;>Decisões Estratégicas</a></li>
-                <li><a href=&quot;#arquitetura&quot;>Arquitetura de Telas e Interfaces</a></li>
-                <li><a href=&quot;#fluxos&quot;>Fluxos de Navegação</a></li>
-                <li><a href=&quot;#design&quot;>Diretrizes Visuais Provisórias do Protótipo</a></li>
-                <li><a href=&quot;#entregaveis&quot;>Entregáveis e Próximos Passos</a></li>
-            </ul>
-        </div>
-
-        <!-- RESUMO EXECUTIVO -->
-        <section class=&quot;section&quot; id=&quot;resumo&quot;>
-            <h2>📋 Resumo Executivo</h2>
-
-            <div class=&quot;stats&quot;>
-                <div class=&quot;stat-card&quot;>
-                    <div class=&quot;number&quot;>3</div>
-                    <div class=&quot;label&quot;>Interfaces: Participante, Staff e Monitor</div>
-                </div>
-                <div class=&quot;stat-card&quot;>
-                    <div class=&quot;number&quot;>∞</div>
-                    <div class=&quot;label&quot;>Eventos Suportados</div>
-                </div>
-                <div class=&quot;stat-card&quot;>
-                    <div class=&quot;number text&quot;>Protótipo Estrutural</div>
-                    <div class=&quot;label&quot;>Fluxos principais navegáveis</div>
-                </div>
-            </div>
-
-            <h3>Visão Geral</h3>
-            <p><strong>BEAST MARAGAMES</strong> é uma plataforma mobile educacional para participação em eventos de arenas de jogos. O sistema permite que participantes se cadastrem, entrem em eventos por QR Code ou código manual, acompanhem filas e participem das experiências disponíveis na Arena. A solução também contempla uma interface operacional para o staff gerenciar filas e confirmar experiências, além de um monitor público para chamadas em tempo real.</p>
-
-            <h3>Objetivos Principais</h3>
-            <ul class=&quot;checklist&quot;>
-                <li>Simplificar entrada em eventos (QR Code com fallback)</li>
-                <li>Rastrear participação e experiências em tempo real</li>
-                <li>Criar histórico personalizado por participante</li>
-                <li>Facilitar coleta de feedback após eventos</li>
-                <li>Oferecer interface intuitiva e responsiva</li>
-                <li>Gerenciar filas das experiências/estações</li>
-                <li>Permitir acompanhamento da posição na fila pelo participante</li>
-                <li>Apoiar o staff no gerenciamento e na confirmação das experiências</li>
-                <li>Exibir chamadas em monitor público atualizado em tempo real</li>
-                <li>Mensurar tempo de permanência e interação do público</li>
-            </ul>
-
-            <h3>Princípios de Design</h3>
-            <div class=&quot;subsection&quot;>
-                <h4>🎯 Simplicidade</h4>
-                <p>Interface limpa, sem ruído visual. Cada tela tem um objetivo claro.</p>
-            </div>
-            <div class=&quot;subsection&quot;>
-                <h4>💎 Valor ao Participante</h4>
-                <p>Histórico, estatísticas pessoais e reconhecimento das atividades realizadas.</p>
-            </div>
-            <div class=&quot;subsection&quot;>
-                <h4>⚡ Zero Fricção</h4>
-                <p>Entrada rápida, fluxo intuitivo, mínimo de digitação. Avaliação curta na saída, sem formulários extensos.</p>
-            </div>
-            <div class=&quot;subsection&quot;>
-                <h4>📊 Coleta Transparente</h4>
-                <p>Priorizar dados obtidos naturalmente durante a utilização do sistema, evitando solicitar ao participante informações que o próprio fluxo já consegue registrar.</p>
-            </div>
-        </section>
-
-        <!-- DECISÕES ESTRATÉGICAS -->
-        <section class=&quot;section&quot; id=&quot;decisoes&quot;>
-            <h2>🎯 Decisões Estratégicas</h2>
-
-            <h3>Decisão #1: Como participantes entram em eventos?</h3>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção A: QR Code (Scanning)</div>
-                <p><span class=&quot;pro&quot;>✅ Velocidade:</span> Escaneia e entra em segundos</p>
-                <p><span class=&quot;pro&quot;>✅ UX Moderno:</span> Padrão em eventos</p>
-                <p><span class=&quot;con&quot;>❌ Falha:</span> Câmera pode não funcionar, QR danificado</p>
-                <p><span class=&quot;con&quot;>❌ Dependência:</span> Precisa de QR físico</p>
-            </div>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção B: Código Manual (Digitação)</div>
-                <p><span class=&quot;pro&quot;>✅ Robustez:</span> Funciona sem câmera</p>
-                <p><span class=&quot;pro&quot;>✅ Fallback:</span> Sempre disponível</p>
-                <p><span class=&quot;con&quot;>❌ Lentidão:</span> Digitação é chata</p>
-                <p><span class=&quot;con&quot;>❌ Erros:</span> Código digitado errado</p>
-            </div>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção C: Ambos (Híbrido)</div>
-                <p><span class=&quot;pro&quot;>✅ Velocidade:</span> QR Code primário (rápido)</p>
-                <p><span class=&quot;pro&quot;>✅ Robustez:</span> Código manual como alternativa</p>
-                <p><span class=&quot;pro&quot;>✅ UX:</span> Melhor dos dois mundos</p>
-            </div>
-
-            <div class=&quot;decided&quot;>
-                <strong>✅ Decisão adotada: entrada híbrida.</strong> QR Code como método principal + código manual como alternativa.
-            </div>
-
-            <hr style=&quot;margin: 40px 0;&quot;>
-
-            <h3>Decisão #2: Como registrar e organizar a participação nas experiências?</h3>
-
-            <div class=&quot;decision-box discarded&quot;>
-                <div class=&quot;title&quot;>Opção A: Entry/Exit Apenas <span class=&quot;tag off&quot;>Descartada</span></div>
-                <p><span class=&quot;pro&quot;>✅ Simplicidade:</span> Mínimo de dados</p>
-                <p><span class=&quot;con&quot;>❌ Valor:</span> Sem detalhes sobre o que foi feito na Arena</p>
-            </div>
-
-            <div class=&quot;decision-box discarded&quot;>
-                <div class=&quot;title&quot;>Opção B: QR por Estação <span class=&quot;tag off&quot;>Descartada</span></div>
-                <p><span class=&quot;pro&quot;>✅ Detalhe:</span> Registra em qual estação o participante esteve</p>
-                <p><span class=&quot;con&quot;>❌ Registro pelo próprio participante:</span> Não garante que a experiência foi de fato realizada</p>
-                <p><span class=&quot;con&quot;>❌ Sem organização do acesso:</span> Não resolve a espera nas estações</p>
-            </div>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção C: Fila virtual por estação + confirmação pelo staff</div>
-                <p><span class=&quot;pro&quot;>✅ Organização:</span> Cada estação possui sua própria fila</p>
-                <p><span class=&quot;pro&quot;>✅ Confiabilidade:</span> A experiência só é registrada após confirmação do staff</p>
-                <p><span class=&quot;pro&quot;>✅ Dados:</span> Tempos de espera, chamadas e conclusões registrados pelo próprio fluxo</p>
-            </div>
-
-            <div class=&quot;decided&quot;>
-                <strong>✅ Decisão adotada: fila virtual por estação + confirmação pelo staff.</strong>
-                <p style=&quot;margin-top: 8px;&quot;><strong>Participante:</strong> entra na fila → acompanha posição → é chamado → realiza a experiência.</p>
-                <p><strong>Staff:</strong> gerencia a fila → realiza a chamada → confirma a conclusão.</p>
-                <p>A conclusão confirmada pelo staff registra a experiência no histórico do participante. Não existe QR Code por estação na solução atual.</p>
-            </div>
-
-            <hr style=&quot;margin: 40px 0;&quot;>
-
-            <h3>Decisão #3: Uma fila de estação por vez</h3>
-
-            <div class=&quot;decided&quot;>
-                <strong>✅ Decisão adotada:</strong> o participante só pode ocupar uma fila de estação por vez.
-                <p style=&quot;margin-top: 8px;&quot;><strong>Justificativa operacional:</strong> evita chamadas simultâneas para diferentes experiências e simplifica o gerenciamento da participação.</p>
-                <p>Após o staff confirmar a conclusão da experiência, o participante fica livre para entrar em outra fila.</p>
-            </div>
-
-            <hr style=&quot;margin: 40px 0;&quot;>
-
-            <h3>Decisão #4: Fila dinâmica de acesso à Arena</h3>
-
-            <div class=&quot;decided&quot;>
-                <strong>✅ Decisão adotada:</strong> a fila de acesso à Arena é ativada e desativada pelo staff conforme o fluxo de público.
-                <ul style=&quot;margin: 8px 0 0 20px;&quot;>
-                    <li>Não precisa existir durante todo o evento</li>
-                    <li>Pode ser ativada pelo staff quando houver aumento do fluxo</li>
-                    <li>Pode ser desativada posteriormente</li>
-                    <li>Seu estado muda em tempo real para todas as interfaces</li>
-                </ul>
-            </div>
-
-            <div class=&quot;flow-diagram&quot;>
-Fila desativada:  Confirma entrada → Arena
-Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
-            </div>
-
-            <div class=&quot;recommendation&quot;>
-                <strong>⏱️ Regra de tempo:</strong> o tempo aguardando na fila de entrada <strong>não</strong> compõe o tempo de permanência na Arena. O cronômetro começa somente após a entrada efetiva.
-            </div>
-
-            <hr style=&quot;margin: 40px 0;&quot;>
-
-            <h3>Decisão #5: O que mostrar como benefício ao participante?</h3>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção A: Histórico Apenas</div>
-                <p><span class=&quot;pro&quot;>✅ Simples:</span> Lista de participações passadas</p>
-                <p><span class=&quot;con&quot;>❌ Engajamento:</span> Baixa motivação repetida</p>
-            </div>
-
-            <div class=&quot;decision-box&quot;>
-                <div class=&quot;title&quot;>Opção B: Histórico + Estatísticas Pessoais</div>
-                <p><span class=&quot;pro&quot;>✅ Engajamento:</span> Mostra estatísticas (tempo total, participações)</p>
-                <p><span class=&quot;pro&quot;>✅ Simplicidade:</span> Sem gamificação ou sistema de progressão</p>
-                <p><span class=&quot;pro&quot;>✅ Motivação:</span> Incentiva participação repetida</p>
-            </div>
-
-            <div class=&quot;decided&quot;>
-                <strong>✅ Decisão adotada: Histórico + Estatísticas Pessoais</strong> (tempo total, número de participações, experiências realizadas).
-            </div>
-        </section>
-
-        <!-- ARQUITETURA DE TELAS -->
-        <section class=&quot;section&quot; id=&quot;arquitetura&quot;>
-            <h2>🖼️ Arquitetura de Telas e Interfaces</h2>
-
-            <h3>Visão do Sistema: três interfaces, estados compartilhados</h3>
-            <div class=&quot;flow-diagram&quot;>
-                      SISTEMA BEAST ARENA
-                              │
-         ┌────────────────────┼────────────────────┐
-         ↓                    ↓                    ↓
-   PARTICIPANTE             STAFF               MONITOR
-  (app mobile)        (área restrita)       (exibição pública)
-         │                    │                    │
-         └──────────┬─────────┴──────────┬─────────┘
-                    ↓                    ↓
-          ┌──────────────────────────────────────┐
-          │        EVENTO / ESTADO EM TEMPO REAL │
-          │  • Fila de acesso à Arena (dinâmica) │
-          │  • Filas por estação                 │
-          │  • Chamadas e confirmações           │
-          └──────────────────────────────────────┘
-            </div>
-
-            <h3>Mapa de Navegação do Participante</h3>
-            <div class=&quot;flow-diagram&quot;>
-┌─────────────────────────────────────┐
-│      AUTENTICAÇÃO                   │
-│  (Boas-vindas → Cadastro/Login)     │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│      PERFIL (Questionário)          │
-│  (4 perguntas sobre o participante) │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│    HOME (Início | Eventos | Perfil) │
-│  • Saudação personalizada           │
-│  • Card de entrada em evento        │
-│  • Até 2 participações recentes     │
-│  • Ação &quot;Ver todas&quot; → aba Eventos   │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│   ENTRADA → CONFIRMAÇÃO             │
-│   (QR Code ou Código Manual)        │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│   FILA DE ACESSO À ARENA            │
-│   (somente se ativada pelo staff)   │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│   ARENA EM ANDAMENTO                │
-│   • Timer de permanência            │
-│   • Experiências disponíveis        │
-│   • Estado das experiências         │
-│   • Entrada em fila de estação      │
-│   • Posição na fila                 │
-│   • Estado de chamada               │
-│   • Concluídas (check do staff)     │
-│   • Sair da Arena                   │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│   RESUMO + AVALIAÇÃO                │
-│   • Tempo de permanência            │
-│   • Experiências concluídas         │
-│   • Rating (1-5) + comentário opc.  │
-│   • Finalizar ou Pular avaliação    │
-└────────────┬────────────────────────┘
-             │
-             ↓
-┌─────────────────────────────────────┐
-│   MINHAS PARTICIPAÇÕES (Aba Eventos)│
-│   • Lista de participações          │
-│   • Detalhes de cada participação   │
-│   • Estatísticas pessoais           │
-└─────────────────────────────────────┘
-            </div>
-
-            <h3>Telas e Interfaces Principais</h3>
-            <p>Alguns itens abaixo são estados de uma mesma tela, e não necessariamente telas independentes na implementação. Por isso, a lista é organizada por contexto, sem contagem fixa.</p>
-
-            <div class=&quot;context-group&quot;>
-                <h4>📱 Participante</h4>
-                <div class=&quot;screen-grid&quot;>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>👋</div>
-                        <h4>Autenticação</h4>
-                        <p>Boas-vindas, Cadastro e Login</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>📝</div>
-                        <h4>Perfil Inicial</h4>
-                        <p>Questionário de perfil</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>🏠</div>
-                        <h4>Home</h4>
-                        <p>Saudação + Card de entrada + até 2 participações recentes</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>📍</div>
-                        <h4>Entrada</h4>
-                        <p>QR Code ou Código Manual</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>✔️</div>
-                        <h4>Confirmação</h4>
-                        <p>Dados do evento antes de entrar</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>🚪</div>
-                        <h4>Fila de Acesso</h4>
-                        <p>Aguardando liberação para a Arena (quando ativa)</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>⏱️</div>
-                        <h4>Arena em Andamento</h4>
-                        <p>Timer + Experiências + Filas de estação + Chamadas</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>⭐</div>
-                        <h4>Avaliação</h4>
-                        <p>Resumo + Rating + Comentário (opcional)</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>📊</div>
-                        <h4>Minhas Participações</h4>
-                        <p>Histórico + Estatísticas pessoais</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>🔎</div>
-                        <h4>Detalhes</h4>
-                        <p>Detalhes de uma participação</p>
-                    </div>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>👤</div>
-                        <h4>Perfil</h4>
-                        <p>Dados pessoais, preferências, logout</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class=&quot;context-group&quot;>
-                <h4>🛠️ Operação</h4>
-                <div class=&quot;screen-grid&quot;>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>🧑‍💼</div>
-                        <h4>Área do Staff</h4>
-                        <p>Gerenciar filas, chamar participantes, confirmar conclusões, ativar/desativar fila de acesso</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class=&quot;context-group&quot;>
-                <h4>📺 Exibição Pública</h4>
-                <div class=&quot;screen-grid&quot;>
-                    <div class=&quot;screen-card&quot;>
-                        <div class=&quot;icon&quot;>🖥️</div>
-                        <h4>Monitor da Arena</h4>
-                        <p>Chamadas das filas em tempo real</p>
-                    </div>
-                </div>
-            </div>
-
-            <h3>Navegação de Abas do Participante (Sempre Visível)</h3>
-            <div class=&quot;subsection&quot;>
-                <h4>Bottom Tab Navigation</h4>
-                <p><strong>Aba 1: 🏠 Início</strong> - Home principal, saudação, card de entrada, participações recentes (no máximo duas)</p>
-                <p><strong>Aba 2: 📍 Eventos</strong> - Minhas Participações, histórico e detalhes</p>
-                <p><strong>Aba 3: 👤 Perfil</strong> - Dados pessoais, preferências, logout</p>
-            </div>
-        </section>
-
-        <!-- FLUXOS DE NAVEGAÇÃO -->
-        <section class=&quot;section&quot; id=&quot;fluxos&quot;>
-            <h2>🔄 Fluxos de Navegação Principais</h2>
-
-            <h3>Fluxo 1: Primeiro Acesso (Novo Participante)</h3>
-            <div class=&quot;timeline&quot;>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>1. Boas-vindas</h4>
-                    <p>Apresentação do app + Logo BEAST</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>2. Criar Conta</h4>
-                    <p>Nome, E-mail, Senha (com validação)</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>3. Questionário de Perfil</h4>
-                    <p>4 perguntas (Idade, Gaming, Gêneros, Confirmação)</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>4. Home</h4>
-                    <p>Primeira vez sem histórico - pronto para participar!</p>
-                </div>
-            </div>
-            <div class=&quot;pending&quot;>
-                <strong>⚠️ A revisar:</strong> as perguntas do questionário de perfil ainda serão conferidas em detalhe.
-            </div>
-
-            <h3>Fluxo 2: Entrar em Evento</h3>
-            <div class=&quot;timeline&quot;>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>1. Home → Entrar em Evento</h4>
-                    <p>Toque no card principal</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>2. Opção A: Escanear QR</h4>
-                    <p>Câmera abre, escaneia QR do evento</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>2. Opção B: Digitar Código</h4>
-                    <p>Alternativa ao QR Code: digita o código do evento</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>3. Confirmação</h4>
-                    <p>Mostra evento, local, experiências disponíveis</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>4. Confirmar Entrada</h4>
-                    <p>O próximo passo depende do estado da fila de acesso à Arena</p>
-                </div>
-            </div>
-            <div class=&quot;flow-diagram&quot;>
-        Confirmar Entrada
-               ↓
-   Fila de acesso está ativa?
-               ↓
-        ┌──────┴──────┐
-       NÃO           SIM
-        ↓             ↓
-     Entrada     Fila da Arena
-        ↓             ↓
-      Timer       Liberação
-                      ↓
-                   Entrada
-                      ↓
-                    Timer
-            </div>
-
-            <h3>Fluxo 3: Participar das Experiências</h3>
-            <div class=&quot;timeline&quot;>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>1. Arena em Andamento</h4>
-                    <p>Timer de permanência rodando, experiências disponíveis e seus estados</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>2. Escolher Experiência</h4>
-                    <p>Ex: PlayStation, VR Reality, Simulador</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>3. Entrar na Fila da Estação</h4>
-                    <p>Somente uma fila de estação por vez</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>4. Acompanhar Posição</h4>
-                    <p>Posição atualizada em tempo real</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>5. Ser Chamado</h4>
-                    <p>Chamada exibida no app e no Monitor da Arena</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>6. Realizar Experiência</h4>
-                    <p>Participante vai até a estação</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>7. Staff Confirma Conclusão</h4>
-                    <p>Experiência registrada no histórico do participante</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>8. Livre para Outra Fila</h4>
-                    <p>O participante pode entrar na fila de outra estação</p>
-                </div>
-            </div>
-
-            <h3>Fluxo 4: Saída e Avaliação</h3>
-            <div class=&quot;timeline&quot;>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>1. Sair da Arena</h4>
-                    <p>Participante solicita a saída</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>2. Confirmação de Saída</h4>
-                    <p>Horário de saída e tempo de permanência registrados automaticamente</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>3. Resumo</h4>
-                    <p>Tempo de permanência e experiências concluídas</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>4. Avaliação</h4>
-                    <p>Nota de 1 a 5 + comentário opcional</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>5. Finalizar ou Pular Avaliação</h4>
-                    <p>A avaliação não é obrigatória</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>6. Volta à Home</h4>
-                    <p>A participação aparece entre as Participações Recentes da Home e em Minhas Participações na aba Eventos</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- DIRETRIZES VISUAIS PROVISÓRIAS -->
-        <section class=&quot;section&quot; id=&quot;design&quot;>
-            <h2>🎨 Diretrizes Visuais Provisórias do Protótipo</h2>
-
-            <div class=&quot;pending&quot;>
-                <strong>⚠️ Importante:</strong> as cores, tipografia e estilos utilizados no HTML são provisórios e têm finalidade de representação estrutural. A identidade visual definitiva será estabelecida posteriormente no Figma.
-            </div>
-
-            <h3>Cores Utilizadas no Protótipo</h3>
-            <div class=&quot;subsection&quot;>
-                <h4>🎨 Paleta provisória</h4>
-                <p><strong>Roxo:</strong> #8B4789 (CTA, seleção, destaques)</p>
-                <p><strong>Vermelho:</strong> #C41E3A (Gradientes, ênfase)</p>
-                <p><strong>Branco Base:</strong> #FFFFFF (Fundo, cards)</p>
-                <p><strong>Neutro:</strong> #333333 (Texto), #666666 (Secundário), #999999 (Terciário)</p>
-            </div>
-
-            <h3>Componentes do Protótipo</h3>
-            <div class=&quot;subsection&quot;>
-                <h4>1. Bottom Tab Navigation</h4>
-                <p>Sempre visível, 3 abas (Início, Eventos, Perfil). Tab ativa com destaque.</p>
-            </div>
-
-            <div class=&quot;subsection&quot;>
-                <h4>2. Cards de Evento</h4>
-                <p>Cards com destaque de cor, texto em contraste, ícones para categoria.</p>
-            </div>
-
-            <div class=&quot;subsection&quot;>
-                <h4>3. Botões CTA</h4>
-                <p><strong>Primário:</strong> Cor de destaque, texto em evidência</p>
-                <p><strong>Secundário:</strong> Fundo cinza claro, texto escuro</p>
-            </div>
-
-            <div class=&quot;subsection&quot;>
-                <h4>4. Campos de Input</h4>
-                <p>Borda discreta, cantos arredondados, destaque de cor no foco</p>
-            </div>
-
-            <h3>Tipografia e Espaçamento no Protótipo</h3>
-            <p><strong>Fonte:</strong> System fonts (-apple-system, Segoe UI, Roboto)</p>
-            <p><strong>Títulos:</strong> 24px-32px, weight 700 · <strong>Corpo:</strong> 14px-16px · <strong>Labels:</strong> 12px-13px</p>
-            <p><strong>Padding de cards:</strong> 16px-24px · <strong>Border radius:</strong> 8px (padrão), 12px-16px (cards grandes)</p>
-
-            <h3>Estados de Erro <span class=&quot;tag eval&quot;>A validar</span></h3>
-            <p>Regras a validar e desenvolver posteriormente, junto com a definição da arquitetura e do backend.</p>
-            <div class=&quot;subsection&quot;>
-                <h4>❌ Câmera não disponível</h4>
-                <p>Mensagem clara + opção de digitar código manual</p>
-            </div>
-
-            <div class=&quot;subsection&quot;>
-                <h4>❌ Sem internet</h4>
-                <p>Mensagem + opção de tentar novamente.</p>
-                <p><em>Pendente:</em> digitar o código em vez de escanear o QR não resolve necessariamente a falta de conexão, pois o sistema ainda pode precisar validar o evento no backend. Esse comportamento será revisto na definição da arquitetura/backend.</p>
-            </div>
-
-            <div class=&quot;subsection&quot;>
-                <h4>❌ Já registrado neste evento</h4>
-                <p>Aviso de entrada duplicada + opção de continuar ou sair</p>
-            </div>
-        </section>
-
-        <!-- ENTREGÁVEIS -->
-        <section class=&quot;section&quot; id=&quot;entregaveis&quot;>
-            <h2>📦 Entregáveis e Próximos Passos</h2>
-
-            <h3>Documentação</h3>
-            <ul class=&quot;checklist&quot;>
-                <li><strong>ANALISE_DECISOES.md</strong> - Análise das decisões estratégicas com matriz de prós/contras</li>
-                <li><strong>ARQUITETURA_TELAS.md</strong> - Mapa de telas, componentes, validações, fluxos</li>
-                <li><strong>DELIVERABLE_COMPLETO.html</strong> - Este documento (visual, compilado)</li>
-            </ul>
-
-            <h3>Protótipo</h3>
-            <div class=&quot;cta-box&quot;>
-                <h3>🎮 Protótipo Estrutural HTML</h3>
-                <p>Protótipo estrutural navegável dos principais fluxos e interfaces:</p>
-                <ul style=&quot;text-align: left; display: inline-block; margin-top: 12px;&quot;>
-                    <li>✅ Fluxo do participante</li>
-                    <li>✅ Filas (acesso à Arena e estações)</li>
-                    <li>✅ Estados das experiências</li>
-                    <li>✅ Interface do staff</li>
-                    <li>✅ Monitor público</li>
-                </ul>
-            </div>
-
-            <h3>Próximos Passos</h3>
-            <div class=&quot;timeline&quot;>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>Fase 1: Definição estrutural e fluxos — EM ANDAMENTO</h4>
-                    <p>Decisões estratégicas, arquitetura de telas e interfaces, protótipo estrutural HTML e regras de negócio</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>Fase 2: Prototipação visual no Figma</h4>
-                    <p>Definição da identidade visual definitiva</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>Fase 3: Desenvolvimento</h4>
-                    <p>Implementação do app do participante, da área do staff e do monitor público</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>Fase 4: Backend</h4>
-                    <p>Autenticação, eventos, participações, filas, estados em tempo real, experiências, ações do staff, avaliações e sincronização do monitor</p>
-                </div>
-                <div class=&quot;timeline-item&quot;>
-                    <h4>Fase 5: Testes &amp; Deploy</h4>
-                    <p>QA, ajustes de UX, deploy em produção</p>
-                </div>
-            </div>
-
-            <h3>Armazenamento: requisito levantado junto à empresa</h3>
-            <div class=&quot;pending&quot;>
-                <strong>📁 Armazenamento informado pela empresa: Google Drive.</strong>
-                <p style=&quot;margin-top: 8px;&quot;>O papel do Google Drive na arquitetura final ainda será definido, especialmente considerando os requisitos de sincronização em tempo real das filas. Não se assume, neste momento, que ele será o banco de dados operacional.</p>
-            </div>
-
-            <h3>Tecnologias em Avaliação</h3>
-            <p>Nenhuma das opções abaixo é arquitetura definida; serão discutidas na definição técnica.</p>
-            <table>
-                <tr>
-                    <th>Aspecto</th>
-                    <th>Opções</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>Plataforma mobile</td>
-                    <td>React Native + Expo (iOS/Android)</td>
-                    <td><span class=&quot;tag eval&quot;>A confirmar</span></td>
-                </tr>
-                <tr>
-                    <td>Autenticação</td>
-                    <td>Firebase Auth ou JWT</td>
-                    <td><span class=&quot;tag eval&quot;>Em avaliação</span></td>
-                </tr>
-                <tr>
-                    <td>Banco de dados operacional</td>
-                    <td>Firebase Firestore, PostgreSQL ou outra opção com suporte a tempo real</td>
-                    <td><span class=&quot;tag eval&quot;>Em avaliação</span></td>
-                </tr>
-                <tr>
-                    <td>Leitura de QR Code</td>
-                    <td>expo-barcode-scanner ou react-native-camera</td>
-                    <td><span class=&quot;tag eval&quot;>Em avaliação</span></td>
-                </tr>
-                <tr>
-                    <td>Notificações de chamada</td>
-                    <td>expo-notifications</td>
-                    <td><span class=&quot;tag eval&quot;>Em avaliação</span></td>
-                </tr>
-                <tr>
-                    <td>Analytics</td>
-                    <td>Firebase Analytics</td>
-                    <td><span class=&quot;tag eval&quot;>Em avaliação</span></td>
-                </tr>
-            </table>
-        </section>
-
-        <!-- CONCLUSÃO -->
-        <section class=&quot;section&quot;>
-            <h2>📌 Resumo Final</h2>
-
-            <p><strong>BEAST MARAGAMES</strong> tem fluxos principais e arquitetura estrutural definidos, com regras de negócio específicas e identidade visual ainda em evolução.</p>
-
-            <p><strong>Estado atual:</strong></p>
-            <ul style=&quot;margin-left: 20px;&quot;>
-                <li>✅ Decisões estratégicas adotadas (entrada híbrida, filas por estação com confirmação do staff, uma fila por vez, fila dinâmica de acesso, histórico + estatísticas pessoais)</li>
-                <li>✅ Arquitetura com três interfaces: participante, staff e monitor público</li>
-                <li>✅ Protótipo estrutural HTML dos fluxos principais</li>
-                <li>🔄 Regras de negócio pendentes (questionário de perfil, estados de erro, papel do Google Drive)</li>
-                <li>🔄 Identidade visual definitiva a ser criada no Figma</li>
-            </ul>
-        </section>
-    </div>
-
-    <footer>
-        <p>📊 BEAST MARAGAMES - Documentação Completa</p>
-        <p>Gerado para entrega acadêmica | 2024</p>
-    </footer>
-</body>
-</html>
-"></iframe></div>
+<div id="view-documentacao" class="view"><iframe class="docframe" title="Documentação Completa" src="DELIVERABLE_COMPLETO.html"></iframe></div>
 <div id="view-analise" class="view"><article class="md" data-md="md-analise"></article></div>
 <div id="view-arquitetura" class="view"><article class="md" data-md="md-arquitetura"></article></div>
 <script type="text/markdown" id="md-analise">
@@ -1196,6 +100,8 @@ O participante deve visualizar as informações do evento antes de efetivamente 
 - Simplicidade: não deve exigir muito tempo do participante
 - Confiabilidade: dados devem ser precisos (evitar entradas duplicadas)
 - Acessibilidade: qualquer participante deve conseguir entrar, mesmo sem câmera funcional
+
+**Sobre duplicidade:** a proteção contra entradas duplicadas vem das **regras do sistema** (confirmação explícita e uma participação ativa por usuário — ver Decisão 8), e não do simples fato de usar QR Code.
 
 **Observação:** QR Code e código manual são duas formas de **identificar o evento**. Nenhuma das duas, por si só, garante funcionamento sem internet: a disponibilidade offline depende da arquitetura de dados/backend, que ainda não foi definida.
 
@@ -1433,9 +339,13 @@ Após a conclusão pelo staff, o participante fica livre para entrar na fila de 
 
 **Justificativa:**
 1. Responde ao requisito da empresa de filas por estação gerenciadas pelo staff
-2. Reduz ações desnecessárias do participante (princípio de zero fricção)
+2. Reduz ações desnecessárias do participante (princípio de baixa fricção)
 3. O registro é confiável, pois depende da confirmação de quem conduziu a experiência
 4. O staff não tem trabalho adicional de busca: o participante já está identificado pela fila
+5. O mesmo check que registra o dado também faz a fila avançar
+6. Elimina a necessidade de QR Code individual por estação
+
+**Pendente:** o sistema deve prever alertas/lembretes para o Staff realizar o check de conclusão; formato, tempo e canal desses alertas ainda serão definidos.
 
 ---
 
@@ -1545,7 +455,7 @@ Pontos resgatáveis por descontos, brindes ou vouchers.
 - **Participações**
 - **Tempo total**
 
-**Não haverá, nesta versão:** níveis, XP, barra de progresso, conquistas, ranking, pontos ou recompensas.
+**Não haverá, nesta versão:** níveis, XP, barra de progresso, conquistas, ranking, pontos ou recompensas. A BEAST possui uma plataforma gamificada separada, o que não significa que o aplicativo da Arena precise ter esse tipo de sistema.
 
 **Justificativa:**
 1. Oferece valor sem complexidade excessiva
@@ -1677,66 +587,119 @@ Isso permite que um evento comece sem fila de acesso e que o staff a ative poste
 
 **✅ Regra de permanência:** o tempo aguardando na fila de acesso **não** conta como tempo de permanência na Arena. O timer de permanência começa somente quando a entrada efetiva do participante for liberada.
 
+**✅ Desativação com pessoas aguardando:** se o Staff desativar a fila de acesso enquanto existem participantes aguardando, **todos são liberados automaticamente**, sem liberação individual. Para essas pessoas a espera termina, a entrada efetiva é registrada e o tempo de permanência começa. Quem já estava dentro da Arena não é afetado.
+
+**Justificativa:** a desativação significa que a lotação deixou de ser um problema; manter pessoas esperando uma liberação manual criaria atraso sem motivo operacional.
+
 ---
 
-## 8. REQUISITO: COLETA DO PERFIL DO PARTICIPANTE
+## 8. DECISÃO: UMA PARTICIPAÇÃO ATIVA POR USUÁRIO
 
 ### 8.1 Contexto
 
-A empresa informou diretamente quais dados deseja conhecer dos participantes. O questionário de perfil deve permitir que ela compreenda melhor o público da Arena, evitando coleta sem finalidade clara.
+A participação é o registro de um usuário em um evento, com timer, filas e experiências próprios. Se um usuário pudesse manter duas participações abertas ao mesmo tempo, o sistema não saberia a qual evento atribuir tempo, filas e experiências.
 
-### 8.2 Dados Solicitados pela Empresa
+### 8.2 Alternativas Consideradas
 
-O questionário deverá contemplar pelo menos:
-- Nome
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **Várias participações simultâneas** | Nenhuma restrição ao usuário | Conflito de timer, permanência, filas, experiências e estado do participante; dados pouco confiáveis |
+| **Uma participação ativa por vez** | Estado sempre claro; dados de permanência confiáveis; evita entrada duplicada | Usuário precisa encerrar a participação atual antes de entrar em outro evento |
+
+### 8.3 Decisão Adotada
+
+**✅ Decisão adotada: cada usuário pode possuir apenas uma participação ativa por vez.**
+
+- Enquanto existir uma participação ativa, o usuário não pode iniciar participação em outro evento
+- Ao tentar, o app informa que já existe uma participação em andamento
+- Nenhuma penalidade está associada a essa tentativa
+
+---
+
+## 9. DECISÃO: COLETA DO PERFIL DO PARTICIPANTE
+
+### 9.1 Contexto
+
+Conhecer o perfil do público é parte central do problema da BEAST: a experiência presencial acontece, mas a empresa não sabe quem são os participantes nem qual é a relação deles com games e com o mercado de games. Ao mesmo tempo, um questionário longo contraria o princípio de baixa fricção.
+
+### 9.2 Dados Solicitados pela Empresa
+
 - Idade
 - Gênero
 - Escolaridade
-- Quais jogos costuma jogar
+- Jogos que costuma jogar
 - Se já conhece o mercado de games
-- Se tem interesse pelo mercado profissional de games
+- Se tem interesse no mercado profissional de games
 
-A empresa deixou aberta a possibilidade de outras perguntas que ajudem a compreender o perfil do público. Por isso, o questionário **não tem número fixo de perguntas** neste momento.
+O **nome** e o **e-mail** já são coletados no cadastro e não são perguntados novamente.
 
-### 8.3 Finalidade Específica
+### 9.3 O que foi removido do questionário anterior
 
-As perguntas "Já conhece o mercado de games?" e "Tem interesse pelo mercado profissional de games?" também poderão ser utilizadas para direcionar o participante a conhecer a plataforma da empresa ao final do questionário.
+| Item antigo | Motivo da remoção |
+|-------------|-------------------|
+| Idade por faixa etária | A empresa quer a idade; o campo numérico é igualmente rápido |
+| Frequência com que joga | Não foi solicitado pela empresa |
+| Gêneros favoritos | Substituído pelos jogos que a pessoa realmente joga |
+| Uma pergunta obrigatória por tela | Aumentava o número de telas sem necessidade |
+| Tela final "Seus dados estão corretos?" | Etapa extra; os dados podem ser editados no Perfil |
 
-**Pendente:** o mecanismo exato desse direcionamento ainda será definido.
+### 9.4 Decisão Adotada
+
+**✅ Decisão adotada: questionário em 3 etapas curtas, logo após o cadastro.**
+
+1. **Sobre você:** idade (numérica), gênero (com "Outro" + especificação e "Prefiro não informar"), escolaridade ("Qual o nível mais alto de ensino que você cursa ou já cursou?")
+2. **Seus jogos:** pesquisa + sugestões + seleção em chips, com adição manual; pelo menos 1 jogo
+3. **Mercado de games:** conhecimento do mercado e interesse profissional
+
+**Como o atrito é reduzido:** poucas etapas, seleções rápidas em vez de texto livre, nenhuma pergunta redundante, remoção de frequência e gêneros favoritos, ausência de tela de confirmação e edição posterior no Perfil.
+
+### 9.5 Finalidade Específica
+
+A empresa informou que as respostas sobre conhecimento e interesse no mercado de games poderão ser usadas futuramente para direcionar o participante a conhecer a plataforma da BEAST.
+
+**Pendente:** o mecanismo desse direcionamento (momento, formato e regra de segmentação) ainda será definido. Nenhum popup, botão, link ou redirecionamento faz parte desta decisão.
 
 ---
 
-## 9. RESUMO DAS DECISÕES
+## 10. RESUMO DAS DECISÕES
 
 | Tema | Decisão atual |
 |------|---------------|
-| **Entrada no evento** | QR Code principal + código manual alternativo |
-| **Registro das experiências** | Fila por estação + confirmação pelo staff |
-| **Benefício ao participante** | Histórico + Estatísticas Pessoais |
-| **Filas das experiências** | Uma fila independente por estação |
+| **Entrada no evento** | QR Code principal + código manual alternativo, seguidos de confirmação |
+| **Registro das experiências** | Fila virtual por estação + confirmação pelo Staff |
+| **Benefício ao participante** | Histórico + Estatísticas Pessoais (sem XP, níveis ou ranking) |
+| **Filas das experiências** | Cada estação possui sua própria fila |
 | **Participação em filas** | Uma fila de estação por participante por vez |
-| **Chamada** | App + monitor público sincronizados |
-| **Não comparecimento** | Retorno ao final da fila |
-| **Controle de acesso** | Fila da Arena ativável/desativável pelo staff |
-| **Perfil do participante** | Questionário baseado nos dados solicitados pela empresa |
+| **Chamada** | App + Staff + monitor público refletem o mesmo estado |
+| **Não comparecimento** | Retorno ao final da fila da estação |
+| **Controle de acesso** | Fila da Arena ativável/desativável pelo Staff |
+| **Permanência** | Espera na fila de acesso não conta como permanência |
+| **Desativação da fila de acesso** | Todos que aguardam são liberados automaticamente |
+| **Participação ativa** | Uma participação ativa por usuário |
+| **Perfil do participante** | Questionário em 3 etapas com os dados solicitados pela empresa |
 
-### Pendências Registradas
-- Comportamento da entrada sem conexão com a internet (depende do backend)
-- Regras adicionais de não comparecimento (limites, penalizações, tempo para comparecer)
-- Perguntas finais do questionário de perfil
-- Mecanismo de direcionamento para a plataforma da empresa
+### Questões em Aberto
+- Comportamento sem conexão com a internet (depende da arquitetura técnica)
+- Tempo de tolerância após uma chamada
+- Quantidade máxima de ausências e eventuais penalidades
+- Tecnologia de sincronização em tempo real
+- Backend e banco de dados definitivos
+- Papel técnico do Google Drive (informado pela empresa como armazenamento; não assumido como banco operacional)
+- Mecanismo de direcionamento para a plataforma da BEAST
+- Formato dos alertas ao Staff para o check de conclusão
+- Identidade visual definitiva (Figma)
 
 ---
 
-## 10. ESTADO ATUAL DO PROJETO
+## 11. ESTADO ATUAL DO PROJETO
 
 | Etapa | Estado |
 |-------|--------|
-| Fluxos e regras estruturais | 🔄 Em revisão/consolidação |
-| Protótipo estrutural HTML | 🔄 Desenvolvido e em atualização |
-| Identidade visual / Figma | ⏳ Pendente |
-| Regras de negócio específicas | ⚠️ Algumas ainda pendentes |
-| Desenvolvimento mobile | 🔄 Em andamento conforme evolução do projeto |
+| Estrutura, fluxos e interfaces | ✅ Consolidados |
+| Regras de negócio principais | ✅ Definidas |
+| Protótipo estrutural HTML | ✅ Fluxos principais navegáveis |
+| Identidade visual / Figma | ⏳ A desenvolver |
+| Regras técnicas (backend, sincronização, offline) | 🔍 Em avaliação |
 
 </script>
 <script type="text/markdown" id="md-arquitetura">
@@ -2380,7 +1343,7 @@ A estratégia técnica de sincronização em tempo real ainda não foi definida.
 | Origem | Dados |
 |--------|-------|
 | **Automáticos (sistema)** | Entrada, saída, tempo de permanência, experiências concluídas, horários de conclusão, interações operacionais com filas (quando disponíveis) |
-| **Informados pelo participante** | Dados de perfil, jogos, conhecimento/interesse no mercado, avaliação, comentário opcional |
+| **Informados pelo participante** | Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação, comentário opcional (a senha é dado de autenticação, não dado analítico de perfil) |
 | **Confirmados pelo Staff** | Chamadas, ausência/no-show, conclusão de experiência, controle da fila de acesso |
 
 **Princípio:** não pedir ao participante informações que o próprio sistema pode registrar.
@@ -2516,7 +1479,8 @@ Princípios que orientam a arquitetura:
 - Penalidades por ausência
 - Comportamento completo em queda de internet
 - Estratégia técnica de sincronização em tempo real
-- Banco de dados definitivo
+- Backend e banco de dados definitivos
+- Formato dos alertas/lembretes ao Staff para o check de conclusão
 - Papel técnico definitivo do Google Drive (mencionado pela empresa como preferência de armazenamento; não é, por ora, decisão de arquitetura operacional nem banco de dados em tempo real)
 - Mecanismo exato de direcionamento para a plataforma da BEAST
 - Identidade visual final

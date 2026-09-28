@@ -1,189 +1,49 @@
-# 🎮 BEAST MARAGAMES - Hub Central
+# 🎮 BEAST MARAGAMES
 
-Plataforma de Arena de Jogos Educacional | Projeto Acadêmico
+Aplicativo da Arena Gamer itinerante da BEAST: participante, área do Staff e monitor público | Projeto Acadêmico
 
----
-
-## 📋 Arquivos Disponíveis
-
-### 1. **index.html** 🏠
-Hub central com links para todos os recursos. Este é o arquivo principal - abra-o primeiro!
-
-### 2. **DELIVERABLE_COMPLETO.html** 📊
-Documentação visual compilada contendo:
-- Resumo executivo
-- Análise de decisões consolidadas
-- Arquitetura de telas e interfaces
-- Fluxos de navegação (Participante, Staff, Monitor)
-- Padrões de design
-- Próximos passos
-
-### 3. **prototipo.html** 📱
-Protótipo estrutural navegável do app mobile:
-- Fluxos principais funcionais
-- Bottom tab navigation (Início | Eventos | Perfil)
-- Simulação de estados e interações
-- Timer em tempo real
-- Avaliação simplificada
-- Layout mobile responsivo (iPhone 12/13)
-- Nota: Design visual é estrutural; identidade visual final será definida no Figma
-
-**Como usar:**
-- Clique nos botões para navegar
-- Use as abas inferiores (Início | Eventos | Perfil)
-- Teste o fluxo completo de entrada e avaliação
-
-### 4. **ANALISE_DECISOES.md** 🎯
-Análise técnica de decisões consolidadas do projeto:
-
-Decisões principais:
-1. **Entrada em Eventos** - QR Code + Código Manual (Híbrido)
-2. **Registro de Experiências** - Fila Virtual + Confirmação do Staff
-3. **Benefício ao Participante** - Histórico + Estatísticas Pessoais
-4. **Outras decisões estruturantes** - Filas por estação, no-show, acesso dinâmico
-
-Cada decisão inclui:
-- Contexto
-- Alternativas analisadas
-- Matriz de comparação
-- Recomendação fundamentada
-
-### 5. **ARQUITETURA_TELAS.md** 🖼️
-Especificação completa de telas e interfaces:
-- Mapa de navegação integrado (Participante, Staff, Monitor)
-- Jornada do participante com filas de estação
-- Filas de acesso à Arena (dinâmica)
-- Componentes detalhados por interface
-- Validações e regras de negócio
-- Estados de erro e fallbacks
-- Padrões de design UX
-- Sincronização entre contextos
+Site publicado: https://projetoundb.onrender.com/
 
 ---
 
-## 🚀 Deploy no Render
+## 📋 Arquivos
 
-### Pré-requisitos
-- Conta no [GitHub](https://github.com)
-- Conta no [Render](https://render.com)
+| Arquivo | Conteúdo |
+|---------|----------|
+| `index.html` | Página inicial com as quatro áreas do projeto |
+| `beast_arena_prototipo_integrado.html` | Protótipo estrutural + abas Documentação Completa, Análise de Decisões e Arquitetura de Telas |
+| `DELIVERABLE_COMPLETO.html` | Documentação Completa (exibida na aba "Documentação Completa") |
+| `ANALISE_DECISOES.md` | Análise de Decisões em Markdown (mesmo conteúdo da aba "Análise de Decisões") |
+| `ARQUITETURA_TELAS.md` | Arquitetura de Telas & Fluxos em Markdown (mesmo conteúdo da aba "Arquitetura de Telas") |
+| `prototipo.html` | Redireciona para o protótipo integrado (mantém links antigos funcionando) |
 
-### Passo a Passo
-
-#### 1. Criar repositório no GitHub
-```bash
-git init
-git add .
-git commit -m "Initial commit: BEAST MARAGAMES documentation"
-git branch -M main
-git remote add origin https://github.com/SEU_USER/BEAST-MARAGAMES.git
-git push -u origin main
-```
-
-#### 2. Deploy no Render
-1. Acesse [render.com](https://render.com)
-2. Clique em "New" → "Static Site"
-3. Conecte seu repositório GitHub
-4. Preencha:
-   - **Name:** `beast-maragames`
-   - **Build Command:** (deixe em branco)
-   - **Publish directory:** `.` (ou `/`)
-5. Clique em "Create Static Site"
-
-#### 3. Aguarde deploy
-Seu site estará em: `https://beast-maragames.onrender.com`
+A Análise e a Arquitetura exibidas no site ficam embutidas em `beast_arena_prototipo_integrado.html` (blocos `md-analise` e `md-arquitetura`). Ao editar os `.md`, atualize também esses blocos.
 
 ---
 
-## 📱 Estrutura do Projeto
+## 📱 Protótipo Estrutural
 
-```
-BEAST-MARAGAMES/
-├── index.html                    (Hub central)
-├── DELIVERABLE_COMPLETO.html     (Documentação visual)
-├── prototipo.html                (App navegável)
-├── ANALISE_DECISOES.md           (Análise de decisões)
-├── ARQUITETURA_TELAS.md          (Especificação de telas)
-├── README.md                     (Este arquivo)
-└── .gitignore                    (Exclusões Git)
-```
+O protótipo HTML demonstra estrutura, fluxos principais, estados e regras. **Não** é o design visual final e não contém todas as telas secundárias (Login, Cadastro e Recuperação de senha serão desenhadas no Figma).
+
+Representa: questionário de perfil em 3 etapas, Home, Minhas Participações, Perfil, entrada por QR Code ou código, confirmação, fila de acesso à Arena, Arena em andamento, filas das estações, chamada, conclusão pelo Staff, saída com confirmação, avaliação opcional, detalhes, área do Staff e monitor público — todos compartilhando o mesmo estado.
 
 ---
 
 ## 🎨 Identidade Visual
 
-**Nota:** As cores e tipografia do protótipo HTML são estruturais.
-
-A identidade visual definitiva será desenvolvida no **Figma** e incluirá:
-- Paleta de cores consolidada
-- Tipografia adequada
-- Componentes detalhados
-- Telas completas (participante, staff, monitor)
-- Estados e interações
-
-Protótipo atual: Roxo (#8B4789) + Vermelho (#C41E3A) — sujeito a mudanças
+As cores e a tipografia do protótipo são provisórias. A identidade visual definitiva será desenvolvida no **Figma**.
 
 ---
 
-## ✅ Checklist de Entrega
+## 📊 Status
 
-- [x] Análise de decisões estratégicas
-- [x] Arquitetura completa de telas
-- [x] Protótipo HTML navegável
-- [x] Documentação compilada
-- [x] Hub central
-- [x] Pronto para deploy
+- ✅ Estrutura, fluxos e interfaces consolidados
+- ✅ Regras de negócio principais definidas
+- ⏳ Identidade visual e telas completas no Figma
+- 🔍 Em avaliação: backend, banco de dados, sincronização em tempo real, comportamento offline, papel do Google Drive (informado pela empresa como armazenamento)
 
 ---
 
-## 🔄 Próximas Fases (Futuro)
+## 🚀 Deploy
 
-### Fase 2: Desenvolvimento
-- React Native + Expo
-- Implementação de todas as telas
-- Integração com câmera (QR scanning)
-- Autenticação e registro de usuário
-
-### Fase 3: Backend
-- API REST (Node.js/Express ou Django)
-- Banco de dados (Firebase ou PostgreSQL)
-- Autenticação (JWT ou OAuth)
-- Endpoints para:
-  - Eventos
-  - Participações
-  - Avaliações
-  - Histórico de usuário
-
-### Fase 4: Testes & Deploy
-- Testes unitários
-- QA/Testes de usabilidade
-- Ajustes de performance
-- Deploy em App Store/Google Play
-
----
-
-## 📞 Dúvidas?
-
-Consulte os documentos individuais ou revise o protótipo navegável para entender melhor a proposta.
-
----
-
-## 📊 Status do Projeto
-
-**Fase Atual:** Arquitetura consolidada
-
-✅ **Completado:**
-- Análise de decisões estratégicas
-- Fluxos de negócio principais definidos
-- Arquitetura de sistemas (Participante, Staff, Monitor)
-- Protótipo estrutural HTML navegável
-- Documentação consolidada
-
-🎨 **Próximo:**
-- Figma com identidade visual definitiva
-- Telas completas (todas as interfaces)
-- Design system consolidado
-
-🔨 **Futuro:**
-- Desenvolvimento (React Native/Frontend)
-- Backend (API, banco de dados)
-- Integração e deploy
+Site estático no Render (`render.yaml`, publish path `.`). Cada `git push` na branch `main` dispara um novo deploy.
