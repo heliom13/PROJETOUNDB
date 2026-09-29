@@ -548,34 +548,58 @@ BEAST Arena - Shopping XYZ
 
 ---
 
-## 4. ÁREA RESTRITA DO STAFF
+## 4. ÁREA DO STAFF
 
-Interface operacional usada pela equipe da Arena, cuja **estrutura e fluxo detalhados ainda serão definidos** (ver Questões Ainda Não Definidas).
+Interface **mobile** usada pela equipe que opera um evento em andamento. Perfil separado do Participante e do Admin, sem herança automática de permissões.
 
-**Responsabilidades já estabelecidas:**
-- Visualizar e gerenciar as filas
-- Acompanhar os participantes aguardando
-- Realizar chamadas
-- Registrar ausência (no-show)
-- Confirmar a conclusão das experiências
-- Controlar a fila de acesso à Arena
-- Ativar/desativar a fila de acesso
+**Acesso ao evento:** Login (o mesmo login dos demais perfis) → informar o **código do evento** → Painel Operacional. O código é o mesmo usado pelo Participante: ele identifica o evento, e o comportamento depende do perfil autenticado. Não existe "código de Staff" separado nem cadastro público de Staff.
 
-A área do Staff exibida no protótipo estrutural apenas simula essas responsabilidades e a sincronização das filas; ela não define a interface final.
+**Painel Operacional:** montado a partir das estações **configuradas pelo Admin para aquele evento** (as estações não são fixas no app). O Staff vê os pontos operacionais — Controle de Entrada + estações do evento — e escolhe onde atuar, podendo voltar ao painel e trocar de área. Uma conta Staff não fica presa a uma única estação.
 
-**Quando o Staff confirma a conclusão:**
-1. A experiência é registrada no histórico do participante
-2. O atendimento daquela estação é concluído
-3. A fila pode avançar
-4. O participante deixa de estar vinculado àquela fila
-5. Ele fica livre para entrar em outra fila
+**Controle de Entrada (fila de acesso à Arena):** fila diferente das filas das estações. O Staff visualiza o estado da fila, a quantidade aguardando, o próximo participante e a lista. A operação normal é **individual** — "Confirmar entrada na Arena" registra a entrada efetiva e o horário, inicia a permanência e remove o participante da fila. "Confirmar entrada" é diferente de "Concluir experiência". A fila pode ser ativada/desativada; ao **desativar** com pessoas aguardando, **todos são liberados** automaticamente, e a ação pede confirmação informando quantos serão liberados. Não há regra de capacidade máxima.
 
-- O Staff não precisa procurar manualmente o participante: a própria fila já associa participante e estação
-- A arquitetura prevê a possibilidade de alertar/lembrar o Staff para realizar o check de conclusão (mecanismo a definir)
+**Filas das estações:** cada estação tem fila própria; o participante fica em uma fila por vez. Ao abrir uma estação, o Staff vê: participante chamado (se houver), alerta de check pendente, fila ordenada, "Chamar próximo", "Concluir experiência", "Ausente" e "Remover da fila".
+
+- **Chamar próximo:** somente o próximo da fila — sem furar a ordem, sem reordenar manualmente, sem prioridade manual.
+- **Sem "Iniciar experiência":** o fluxo é Chamar próximo → experiência acontece → Concluir experiência. Enquanto não há conclusão, o participante chamado permanece em **check pendente**.
+- **Alerta de check pendente (requisito):** quando há participante chamado aguardando confirmação, a interface deixa isso claramente visível. O mecanismo e a temporização (tempo, som, push, vibração, repetição, timeout) ainda **não** foram definidos.
+- **Ausente / no-show:** o participante chamado volta ao **final da fila** daquela estação. Sem limite de ausências nem penalidades definidas.
+- **Remover da fila:** ação manual, **diferente** de "Ausente". O participante deixa a fila, mas a participação na Arena continua ativa (não é "sair da Arena"). Pede confirmação. Se um participante removido pode reentrar imediatamente na mesma fila ainda é **pendente**.
+
+**Quando o Staff confirma a conclusão:** a experiência é registrada como concluída (com horário), o atendimento da estação encerra, a fila avança e o participante fica livre para entrar em outra fila. A própria fila associa participante e estação; o Staff não procura manualmente.
+
+**Dados visíveis ao Staff:** apenas o necessário para operar (nome, identificação abreviada, posição, estado operacional). Dados demográficos e do questionário **não** são exibidos ao Staff — têm finalidade analítica (BI/Admin), preferencialmente de forma agregada.
 
 ---
 
-## 5. MONITOR PÚBLICO DA ARENA
+## 5. ÁREA DO ADMIN
+
+Interface **mobile** de gestão. O Admin **não** opera diretamente as pessoas nas filas. Perfil separado do Staff — **não** há herança automática de permissões entre eles, e não existe cadastro público de Admin. Uma mesma pessoa pode ter contas Admin e Staff separadas.
+
+Fluxo: **criar → configurar → acompanhar → encerrar → analisar**. Três grandes áreas:
+- **Gerenciar:** eventos próximos e em andamento, criação, configuração, duplicação, catálogo de estações e encerramento.
+- **Histórico:** eventos encerrados, BI de cada evento e duplicação de eventos anteriores.
+- **Visão Geral:** BI consolidado da BEAST (vários eventos).
+
+**Criar evento:** nome, local, data, horário de início, término previsto, código e estações. O código pode ser **gerado automaticamente** ou **personalizado** (ex.: BEASTUNDB); é o mesmo usado por Participante e Staff e deve identificar o evento de forma inequívoca.
+
+**Catálogo de estações:** entidade **reutilizável**, separada dos eventos. O Admin cria, edita, **arquiva** e **reativa** estações. Arquivar preserva o histórico; não há exclusão destrutiva no MVP. O cadastro inicial pode conter apenas o nome. Ao configurar um evento, o Admin seleciona quais estações do catálogo ficarão disponíveis.
+
+**Ciclo de vida do evento:** Próximo → Em andamento → Encerrado. A partir do horário de início, passa a Em andamento. O encerramento é preferencialmente **manual** pelo Admin; como segurança, há **encerramento automático 24h após o término previsto** caso o manual não ocorra.
+
+**Encerramento (ação crítica, com confirmação):** informa se há participações ativas e pessoas em filas. Ao encerrar, as filas são encerradas, participantes aguardando/chamados deixam as filas e as participações abertas são **finalizadas administrativamente**.
+
+**Participações sem saída ao encerrar:** entrada registrada + sem saída + evento encerrado → participação fechada administrativamente. **Não** se calcula permanência artificial até o horário de encerramento, e ela **não** entra no tempo médio de permanência. O registro não é apagado (entrada, participação e experiências confirmadas continuam válidas). A mesma regra vale para o encerramento automático de 24h.
+
+**BI por evento (durante e após):** participação (participantes, permanência média válida), experiências concluídas por estação, avaliações (média e quantidade — quem pulou a avaliação **não** conta como zero), comentários opcionais e perfil agregado do público (idade, gênero, escolaridade, jogos, conhecimento e interesse no mercado). Ao exibir a permanência média, indica-se a base de cálculo (apenas participações com entrada e saída válidas). O foco é a análise agregada, não navegar dados pessoais individuais.
+
+**Duplicar evento:** reaproveita configuração (nome, local, estações) como ponto de partida; o novo evento recebe/confirma data, horários e código. **Não** duplica participantes, filas, experiências, avaliações, comentários, BI nem registros operacionais.
+
+**Visão Geral / BI consolidado:** dados agregados de vários eventos (eventos realizados, participações, permanência média válida, experiências, avaliação média, uso das estações, perfil agregado, jogos mais citados, conhecimento e interesse no mercado), com possibilidade de filtrar por período/evento.
+
+---
+
+## 6. MONITOR PÚBLICO DA ARENA
 
 Interface pública exibida na Arena. **Não** faz parte das abas do aplicativo do participante.
 
@@ -595,7 +619,7 @@ Interface pública exibida na Arena. **Não** faz parte das abas do aplicativo d
 
 ---
 
-## 6. SINCRONIZAÇÃO DOS TRÊS CONTEXTOS
+## 7. SINCRONIZAÇÃO DOS TRÊS CONTEXTOS
 
 ```
 App do participante
@@ -619,21 +643,24 @@ A estratégia técnica de sincronização em tempo real ainda não foi definida.
 
 ---
 
-## 7. ORIGEM DOS DADOS
+## 8. ORIGEM DOS DADOS
 
 | Origem | Dados |
 |--------|-------|
 | **Automáticos / derivados pelo sistema** | Entrada, saída, tempo de permanência, horários e informações derivadas de eventos registrados, interações operacionais com filas (quando disponíveis) |
 | **Informados pelo participante** | Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação, comentário opcional (a senha é dado de autenticação, não dado analítico de perfil) |
-| **Confirmados pelo Staff** | Chamadas, ausência/no-show, conclusão de experiência, controle da fila de acesso |
+| **Decorrentes de ações do Staff** | Chamada, ausência/no-show, confirmação de conclusão da experiência, remoção manual da fila, confirmação de entrada quando a fila de acesso está sendo operada, ativação/desativação da fila de acesso |
+| **Decorrentes de ações do Admin** | Configuração do evento, estações selecionadas, encerramento administrativo e demais configurações administrativas |
 
-**Conclusão da experiência:** quando o Staff confirma a conclusão, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão; ela não acontece sem essa intervenção.
+**Conclusão da experiência:** quando o Staff confirma a conclusão, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão; ela não é puramente automática e não acontece sem essa intervenção.
+
+A **Área do Admin / BI** consome os registros produzidos pela operação (Participante + Staff). A estratégia técnica de sincronização e a solução de backend continuam a definir; a menção a Google Drive é uma preferência informada pela empresa, não uma decisão técnica já tomada.
 
 **Princípio:** não pedir ao participante informações que o próprio sistema pode registrar.
 
 ---
 
-## 8. ESTADOS DE ERRO
+## 9. ESTADOS DE ERRO
 
 ### Erro: Câmera indisponível
 ```
@@ -676,7 +703,7 @@ sua participação atual não for encerrada.
 
 ---
 
-## 9. NAVEGAÇÃO INFERIOR (ABAS)
+## 10. NAVEGAÇÃO INFERIOR (ABAS)
 
 ```
 ┌─────────────────────────────────────┐
@@ -703,7 +730,7 @@ sua participação atual não for encerrada.
 
 ---
 
-## 10. FLUXO COMPLETO RESUMIDO
+## 11. FLUXO COMPLETO RESUMIDO
 
 ```
 START
@@ -739,7 +766,7 @@ ARENA EM ANDAMENTO
 
 ---
 
-## 11. PADRÕES DE DESIGN
+## 12. PADRÕES DE DESIGN
 
 Princípios que orientam a arquitetura:
 - **Simplicidade**: cada tela com objetivo claro
@@ -755,18 +782,19 @@ Princípios que orientam a arquitetura:
 
 ---
 
-## 12. QUESTÕES AINDA NÃO DEFINIDAS
+## 13. QUESTÕES AINDA NÃO DEFINIDAS
 
-- Tempo de tolerância após uma chamada
-- Quantidade máxima de ausências (no-shows)
-- Penalidades por ausência
-- Comportamento completo em queda de internet
-- Estratégia técnica de sincronização em tempo real
-- Backend e banco de dados definitivos
-- Formato dos alertas/lembretes ao Staff para o check de conclusão
-- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
-- Estrutura da interface e fluxo operacional detalhado da Área do Staff
+- Mecanismo e temporização exatos do alerta de check de conclusão do Staff
+- Quantidade máxima de ausências (no-shows) e eventuais penalidades
+- Tempo de tolerância (timeout) após uma chamada
+- Se um participante removido manualmente pelo Staff pode reentrar imediatamente na mesma fila
+- Comportamento do participante ao desistir/abandonar a fila de acesso à Arena antes de entrar
+- Comportamento completo em queda de internet / offline
+- Estratégia técnica de sincronização em tempo real e backend/banco de dados definitivos
 - Papel técnico definitivo do Google Drive (mencionado pela empresa como preferência de armazenamento; não é, por ora, decisão de arquitetura operacional nem banco de dados em tempo real)
-- Mecanismo exato de direcionamento para a plataforma da BEAST
-- Identidade visual final
+- Forma técnica de criação/provisionamento das contas de Staff e Admin
+- Restrições detalhadas de edição de um evento já em andamento
+- Faixas/categorias exatas usadas nas visualizações analíticas do BI
+- Mecanismo exato de direcionamento por perfil após o login
+- Identidade visual final (definida no Figma)
 

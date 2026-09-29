@@ -651,18 +651,33 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 | **Sair da fila** | Remove somente daquela fila; o participante continua na Arena |
 | **Saída da Arena durante fila** | Remoção automática da fila ao confirmar a saída; participação encerrada normalmente |
 | **Perfil do participante** | Questionário em 3 etapas com os dados solicitados pela empresa |
+| **Perfis do sistema** | Participante, Staff e Admin separados; mesmo login com direcionamento por perfil; sem herança de permissões e sem cadastro público de Staff/Admin |
+| **Acesso do Staff ao evento** | Mesmo código do evento usado pelo Participante; leva ao Painel Operacional |
+| **Painel do Staff** | Montado com as estações configuradas para o evento; Staff escolhe onde atuar |
+| **Entrada na Arena (Staff)** | Confirmação individual ("Confirmar entrada"); desativar a fila libera todos, com confirmação informando a quantidade |
+| **Chamada (Staff)** | Somente o próximo; sem "Iniciar experiência"; check de conclusão obrigatório pelo Staff |
+| **Remover da fila (Staff)** | Ação manual distinta de "Ausente"; não é sair da Arena |
+| **Admin** | Gerenciar / Histórico / Visão Geral; cria, configura, acompanha, encerra e analisa eventos |
+| **Catálogo de estações** | Reutilizável e separado dos eventos; arquivar/reativar, sem exclusão destrutiva no MVP |
+| **Código do evento** | Automático ou personalizado; identifica o evento de forma inequívoca |
+| **Ciclo de vida do evento** | Próximo → Em andamento → Encerrado; encerramento manual + automático 24h após o término previsto |
+| **Encerramento** | Ação crítica com confirmação; trata filas e finaliza participações abertas administrativamente |
+| **Participações sem saída** | Fechadas administrativamente; não geram permanência artificial nem entram no tempo médio |
+| **BI** | Por evento (durante e após) e consolidado (Visão Geral); permanência média só com entrada+saída válidas; não-avaliação não é nota zero |
+| **Duplicar evento** | Reaproveita configuração; não copia dados operacionais |
 
 ### Questões em Aberto
+- Mecanismo e temporização exatos do alerta de check de conclusão do Staff
+- Quantidade máxima de ausências (no-shows) e eventuais penalidades; timeout após uma chamada
+- Se um participante removido manualmente pelo Staff pode reentrar imediatamente na mesma fila
+- Comportamento do participante ao desistir/abandonar a fila de acesso à Arena antes de entrar
 - Comportamento sem conexão com a internet (depende da arquitetura técnica)
-- Tempo de tolerância após uma chamada
-- Quantidade máxima de ausências e eventuais penalidades
-- Tecnologia de sincronização em tempo real
-- Backend e banco de dados definitivos
+- Tecnologia de sincronização em tempo real, backend e banco de dados definitivos
 - Papel técnico do Google Drive (informado pela empresa como armazenamento; não assumido como banco operacional)
-- Mecanismo de direcionamento para a plataforma da BEAST
-- Formato dos alertas ao Staff para o check de conclusão
-- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
-- Estrutura da interface e fluxo operacional detalhado da Área do Staff
+- Forma técnica de criação/provisionamento das contas de Staff e Admin
+- Restrições detalhadas de edição de um evento já em andamento
+- Faixas/categorias exatas usadas nas visualizações analíticas do BI
+- Mecanismo de direcionamento por perfil após o login
 - Identidade visual definitiva (Figma)
 
 ---
@@ -672,8 +687,9 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 | Etapa | Estado |
 |-------|--------|
 | Estrutura e fluxos principais | ✅ Consolidados |
+| Áreas de Staff e Admin | ✅ Estrutura operacional e de gestão definida |
 | Regras de negócio principais | ✅ Definidas, com pontos específicos ainda pendentes (ver Questões em Aberto) |
-| Protótipo estrutural HTML | ✅ Fluxos principais navegáveis |
+| Protótipo estrutural HTML | ✅ Fluxos de Participante, Staff e Admin navegáveis |
 | Identidade visual / Figma | ⏳ A desenvolver |
 | Regras técnicas (backend, sincronização, offline) | 🔍 Em avaliação |
 

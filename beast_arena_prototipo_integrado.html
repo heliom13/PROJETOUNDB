@@ -720,18 +720,33 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 | **Sair da fila** | Remove somente daquela fila; o participante continua na Arena |
 | **Saída da Arena durante fila** | Remoção automática da fila ao confirmar a saída; participação encerrada normalmente |
 | **Perfil do participante** | Questionário em 3 etapas com os dados solicitados pela empresa |
+| **Perfis do sistema** | Participante, Staff e Admin separados; mesmo login com direcionamento por perfil; sem herança de permissões e sem cadastro público de Staff/Admin |
+| **Acesso do Staff ao evento** | Mesmo código do evento usado pelo Participante; leva ao Painel Operacional |
+| **Painel do Staff** | Montado com as estações configuradas para o evento; Staff escolhe onde atuar |
+| **Entrada na Arena (Staff)** | Confirmação individual ("Confirmar entrada"); desativar a fila libera todos, com confirmação informando a quantidade |
+| **Chamada (Staff)** | Somente o próximo; sem "Iniciar experiência"; check de conclusão obrigatório pelo Staff |
+| **Remover da fila (Staff)** | Ação manual distinta de "Ausente"; não é sair da Arena |
+| **Admin** | Gerenciar / Histórico / Visão Geral; cria, configura, acompanha, encerra e analisa eventos |
+| **Catálogo de estações** | Reutilizável e separado dos eventos; arquivar/reativar, sem exclusão destrutiva no MVP |
+| **Código do evento** | Automático ou personalizado; identifica o evento de forma inequívoca |
+| **Ciclo de vida do evento** | Próximo → Em andamento → Encerrado; encerramento manual + automático 24h após o término previsto |
+| **Encerramento** | Ação crítica com confirmação; trata filas e finaliza participações abertas administrativamente |
+| **Participações sem saída** | Fechadas administrativamente; não geram permanência artificial nem entram no tempo médio |
+| **BI** | Por evento (durante e após) e consolidado (Visão Geral); permanência média só com entrada+saída válidas; não-avaliação não é nota zero |
+| **Duplicar evento** | Reaproveita configuração; não copia dados operacionais |
 
 ### Questões em Aberto
+- Mecanismo e temporização exatos do alerta de check de conclusão do Staff
+- Quantidade máxima de ausências (no-shows) e eventuais penalidades; timeout após uma chamada
+- Se um participante removido manualmente pelo Staff pode reentrar imediatamente na mesma fila
+- Comportamento do participante ao desistir/abandonar a fila de acesso à Arena antes de entrar
 - Comportamento sem conexão com a internet (depende da arquitetura técnica)
-- Tempo de tolerância após uma chamada
-- Quantidade máxima de ausências e eventuais penalidades
-- Tecnologia de sincronização em tempo real
-- Backend e banco de dados definitivos
+- Tecnologia de sincronização em tempo real, backend e banco de dados definitivos
 - Papel técnico do Google Drive (informado pela empresa como armazenamento; não assumido como banco operacional)
-- Mecanismo de direcionamento para a plataforma da BEAST
-- Formato dos alertas ao Staff para o check de conclusão
-- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
-- Estrutura da interface e fluxo operacional detalhado da Área do Staff
+- Forma técnica de criação/provisionamento das contas de Staff e Admin
+- Restrições detalhadas de edição de um evento já em andamento
+- Faixas/categorias exatas usadas nas visualizações analíticas do BI
+- Mecanismo de direcionamento por perfil após o login
 - Identidade visual definitiva (Figma)
 
 ---
@@ -741,8 +756,9 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 | Etapa | Estado |
 |-------|--------|
 | Estrutura e fluxos principais | ✅ Consolidados |
+| Áreas de Staff e Admin | ✅ Estrutura operacional e de gestão definida |
 | Regras de negócio principais | ✅ Definidas, com pontos específicos ainda pendentes (ver Questões em Aberto) |
-| Protótipo estrutural HTML | ✅ Fluxos principais navegáveis |
+| Protótipo estrutural HTML | ✅ Fluxos de Participante, Staff e Admin navegáveis |
 | Identidade visual / Figma | ⏳ A desenvolver |
 | Regras técnicas (backend, sincronização, offline) | 🔍 Em avaliação |
 
@@ -1298,34 +1314,58 @@ BEAST Arena - Shopping XYZ
 
 ---
 
-## 4. ÁREA RESTRITA DO STAFF
+## 4. ÁREA DO STAFF
 
-Interface operacional usada pela equipe da Arena, cuja **estrutura e fluxo detalhados ainda serão definidos** (ver Questões Ainda Não Definidas).
+Interface **mobile** usada pela equipe que opera um evento em andamento. Perfil separado do Participante e do Admin, sem herança automática de permissões.
 
-**Responsabilidades já estabelecidas:**
-- Visualizar e gerenciar as filas
-- Acompanhar os participantes aguardando
-- Realizar chamadas
-- Registrar ausência (no-show)
-- Confirmar a conclusão das experiências
-- Controlar a fila de acesso à Arena
-- Ativar/desativar a fila de acesso
+**Acesso ao evento:** Login (o mesmo login dos demais perfis) → informar o **código do evento** → Painel Operacional. O código é o mesmo usado pelo Participante: ele identifica o evento, e o comportamento depende do perfil autenticado. Não existe "código de Staff" separado nem cadastro público de Staff.
 
-A área do Staff exibida no protótipo estrutural apenas simula essas responsabilidades e a sincronização das filas; ela não define a interface final.
+**Painel Operacional:** montado a partir das estações **configuradas pelo Admin para aquele evento** (as estações não são fixas no app). O Staff vê os pontos operacionais — Controle de Entrada + estações do evento — e escolhe onde atuar, podendo voltar ao painel e trocar de área. Uma conta Staff não fica presa a uma única estação.
 
-**Quando o Staff confirma a conclusão:**
-1. A experiência é registrada no histórico do participante
-2. O atendimento daquela estação é concluído
-3. A fila pode avançar
-4. O participante deixa de estar vinculado àquela fila
-5. Ele fica livre para entrar em outra fila
+**Controle de Entrada (fila de acesso à Arena):** fila diferente das filas das estações. O Staff visualiza o estado da fila, a quantidade aguardando, o próximo participante e a lista. A operação normal é **individual** — "Confirmar entrada na Arena" registra a entrada efetiva e o horário, inicia a permanência e remove o participante da fila. "Confirmar entrada" é diferente de "Concluir experiência". A fila pode ser ativada/desativada; ao **desativar** com pessoas aguardando, **todos são liberados** automaticamente, e a ação pede confirmação informando quantos serão liberados. Não há regra de capacidade máxima.
 
-- O Staff não precisa procurar manualmente o participante: a própria fila já associa participante e estação
-- A arquitetura prevê a possibilidade de alertar/lembrar o Staff para realizar o check de conclusão (mecanismo a definir)
+**Filas das estações:** cada estação tem fila própria; o participante fica em uma fila por vez. Ao abrir uma estação, o Staff vê: participante chamado (se houver), alerta de check pendente, fila ordenada, "Chamar próximo", "Concluir experiência", "Ausente" e "Remover da fila".
+
+- **Chamar próximo:** somente o próximo da fila — sem furar a ordem, sem reordenar manualmente, sem prioridade manual.
+- **Sem "Iniciar experiência":** o fluxo é Chamar próximo → experiência acontece → Concluir experiência. Enquanto não há conclusão, o participante chamado permanece em **check pendente**.
+- **Alerta de check pendente (requisito):** quando há participante chamado aguardando confirmação, a interface deixa isso claramente visível. O mecanismo e a temporização (tempo, som, push, vibração, repetição, timeout) ainda **não** foram definidos.
+- **Ausente / no-show:** o participante chamado volta ao **final da fila** daquela estação. Sem limite de ausências nem penalidades definidas.
+- **Remover da fila:** ação manual, **diferente** de "Ausente". O participante deixa a fila, mas a participação na Arena continua ativa (não é "sair da Arena"). Pede confirmação. Se um participante removido pode reentrar imediatamente na mesma fila ainda é **pendente**.
+
+**Quando o Staff confirma a conclusão:** a experiência é registrada como concluída (com horário), o atendimento da estação encerra, a fila avança e o participante fica livre para entrar em outra fila. A própria fila associa participante e estação; o Staff não procura manualmente.
+
+**Dados visíveis ao Staff:** apenas o necessário para operar (nome, identificação abreviada, posição, estado operacional). Dados demográficos e do questionário **não** são exibidos ao Staff — têm finalidade analítica (BI/Admin), preferencialmente de forma agregada.
 
 ---
 
-## 5. MONITOR PÚBLICO DA ARENA
+## 5. ÁREA DO ADMIN
+
+Interface **mobile** de gestão. O Admin **não** opera diretamente as pessoas nas filas. Perfil separado do Staff — **não** há herança automática de permissões entre eles, e não existe cadastro público de Admin. Uma mesma pessoa pode ter contas Admin e Staff separadas.
+
+Fluxo: **criar → configurar → acompanhar → encerrar → analisar**. Três grandes áreas:
+- **Gerenciar:** eventos próximos e em andamento, criação, configuração, duplicação, catálogo de estações e encerramento.
+- **Histórico:** eventos encerrados, BI de cada evento e duplicação de eventos anteriores.
+- **Visão Geral:** BI consolidado da BEAST (vários eventos).
+
+**Criar evento:** nome, local, data, horário de início, término previsto, código e estações. O código pode ser **gerado automaticamente** ou **personalizado** (ex.: BEASTUNDB); é o mesmo usado por Participante e Staff e deve identificar o evento de forma inequívoca.
+
+**Catálogo de estações:** entidade **reutilizável**, separada dos eventos. O Admin cria, edita, **arquiva** e **reativa** estações. Arquivar preserva o histórico; não há exclusão destrutiva no MVP. O cadastro inicial pode conter apenas o nome. Ao configurar um evento, o Admin seleciona quais estações do catálogo ficarão disponíveis.
+
+**Ciclo de vida do evento:** Próximo → Em andamento → Encerrado. A partir do horário de início, passa a Em andamento. O encerramento é preferencialmente **manual** pelo Admin; como segurança, há **encerramento automático 24h após o término previsto** caso o manual não ocorra.
+
+**Encerramento (ação crítica, com confirmação):** informa se há participações ativas e pessoas em filas. Ao encerrar, as filas são encerradas, participantes aguardando/chamados deixam as filas e as participações abertas são **finalizadas administrativamente**.
+
+**Participações sem saída ao encerrar:** entrada registrada + sem saída + evento encerrado → participação fechada administrativamente. **Não** se calcula permanência artificial até o horário de encerramento, e ela **não** entra no tempo médio de permanência. O registro não é apagado (entrada, participação e experiências confirmadas continuam válidas). A mesma regra vale para o encerramento automático de 24h.
+
+**BI por evento (durante e após):** participação (participantes, permanência média válida), experiências concluídas por estação, avaliações (média e quantidade — quem pulou a avaliação **não** conta como zero), comentários opcionais e perfil agregado do público (idade, gênero, escolaridade, jogos, conhecimento e interesse no mercado). Ao exibir a permanência média, indica-se a base de cálculo (apenas participações com entrada e saída válidas). O foco é a análise agregada, não navegar dados pessoais individuais.
+
+**Duplicar evento:** reaproveita configuração (nome, local, estações) como ponto de partida; o novo evento recebe/confirma data, horários e código. **Não** duplica participantes, filas, experiências, avaliações, comentários, BI nem registros operacionais.
+
+**Visão Geral / BI consolidado:** dados agregados de vários eventos (eventos realizados, participações, permanência média válida, experiências, avaliação média, uso das estações, perfil agregado, jogos mais citados, conhecimento e interesse no mercado), com possibilidade de filtrar por período/evento.
+
+---
+
+## 6. MONITOR PÚBLICO DA ARENA
 
 Interface pública exibida na Arena. **Não** faz parte das abas do aplicativo do participante.
 
@@ -1345,7 +1385,7 @@ Interface pública exibida na Arena. **Não** faz parte das abas do aplicativo d
 
 ---
 
-## 6. SINCRONIZAÇÃO DOS TRÊS CONTEXTOS
+## 7. SINCRONIZAÇÃO DOS TRÊS CONTEXTOS
 
 ```
 App do participante
@@ -1369,21 +1409,24 @@ A estratégia técnica de sincronização em tempo real ainda não foi definida.
 
 ---
 
-## 7. ORIGEM DOS DADOS
+## 8. ORIGEM DOS DADOS
 
 | Origem | Dados |
 |--------|-------|
 | **Automáticos / derivados pelo sistema** | Entrada, saída, tempo de permanência, horários e informações derivadas de eventos registrados, interações operacionais com filas (quando disponíveis) |
 | **Informados pelo participante** | Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação, comentário opcional (a senha é dado de autenticação, não dado analítico de perfil) |
-| **Confirmados pelo Staff** | Chamadas, ausência/no-show, conclusão de experiência, controle da fila de acesso |
+| **Decorrentes de ações do Staff** | Chamada, ausência/no-show, confirmação de conclusão da experiência, remoção manual da fila, confirmação de entrada quando a fila de acesso está sendo operada, ativação/desativação da fila de acesso |
+| **Decorrentes de ações do Admin** | Configuração do evento, estações selecionadas, encerramento administrativo e demais configurações administrativas |
 
-**Conclusão da experiência:** quando o Staff confirma a conclusão, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão; ela não acontece sem essa intervenção.
+**Conclusão da experiência:** quando o Staff confirma a conclusão, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão; ela não é puramente automática e não acontece sem essa intervenção.
+
+A **Área do Admin / BI** consome os registros produzidos pela operação (Participante + Staff). A estratégia técnica de sincronização e a solução de backend continuam a definir; a menção a Google Drive é uma preferência informada pela empresa, não uma decisão técnica já tomada.
 
 **Princípio:** não pedir ao participante informações que o próprio sistema pode registrar.
 
 ---
 
-## 8. ESTADOS DE ERRO
+## 9. ESTADOS DE ERRO
 
 ### Erro: Câmera indisponível
 ```
@@ -1426,7 +1469,7 @@ sua participação atual não for encerrada.
 
 ---
 
-## 9. NAVEGAÇÃO INFERIOR (ABAS)
+## 10. NAVEGAÇÃO INFERIOR (ABAS)
 
 ```
 ┌─────────────────────────────────────┐
@@ -1453,7 +1496,7 @@ sua participação atual não for encerrada.
 
 ---
 
-## 10. FLUXO COMPLETO RESUMIDO
+## 11. FLUXO COMPLETO RESUMIDO
 
 ```
 START
@@ -1489,7 +1532,7 @@ ARENA EM ANDAMENTO
 
 ---
 
-## 11. PADRÕES DE DESIGN
+## 12. PADRÕES DE DESIGN
 
 Princípios que orientam a arquitetura:
 - **Simplicidade**: cada tela com objetivo claro
@@ -1505,20 +1548,21 @@ Princípios que orientam a arquitetura:
 
 ---
 
-## 12. QUESTÕES AINDA NÃO DEFINIDAS
+## 13. QUESTÕES AINDA NÃO DEFINIDAS
 
-- Tempo de tolerância após uma chamada
-- Quantidade máxima de ausências (no-shows)
-- Penalidades por ausência
-- Comportamento completo em queda de internet
-- Estratégia técnica de sincronização em tempo real
-- Backend e banco de dados definitivos
-- Formato dos alertas/lembretes ao Staff para o check de conclusão
-- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
-- Estrutura da interface e fluxo operacional detalhado da Área do Staff
+- Mecanismo e temporização exatos do alerta de check de conclusão do Staff
+- Quantidade máxima de ausências (no-shows) e eventuais penalidades
+- Tempo de tolerância (timeout) após uma chamada
+- Se um participante removido manualmente pelo Staff pode reentrar imediatamente na mesma fila
+- Comportamento do participante ao desistir/abandonar a fila de acesso à Arena antes de entrar
+- Comportamento completo em queda de internet / offline
+- Estratégia técnica de sincronização em tempo real e backend/banco de dados definitivos
 - Papel técnico definitivo do Google Drive (mencionado pela empresa como preferência de armazenamento; não é, por ora, decisão de arquitetura operacional nem banco de dados em tempo real)
-- Mecanismo exato de direcionamento para a plataforma da BEAST
-- Identidade visual final
+- Forma técnica de criação/provisionamento das contas de Staff e Admin
+- Restrições detalhadas de edição de um evento já em andamento
+- Faixas/categorias exatas usadas nas visualizações analíticas do BI
+- Mecanismo exato de direcionamento por perfil após o login
+- Identidade visual final (definida no Figma)
 
 </script>
 
@@ -1540,8 +1584,11 @@ Princípios que orientam a arquitetura:
 <button onclick="demoCalled()">📣 Usuário Chamado</button>
 <button onclick="demoFinish()">⭐ Finalização / Avaliação</button>
 <button onclick="openDetails(0)">📄 Detalhes</button>
-<h4>Operação e exibição</h4>
-<button onclick="go('staff')">🔐 Área do Staff</button>
+<h4>Staff</h4>
+<button onclick="openStaff()">🔐 Área do Staff</button>
+<h4>Admin</h4>
+<button onclick="openAdmin()">🛠 Área do Admin</button>
+<h4>Exibição</h4>
 <button onclick="go('monitor')">🖥 Monitor Público</button>
 <h4>Simulação</h4>
 <button onclick="location.reload()">↺ Reiniciar simulação</button>
@@ -1680,14 +1727,73 @@ Princípios que orientam a arquitetura:
  <div class="head"><h2>Detalhes da Participação</h2></div><div class="content" id="detailBody"></div>
 </section>
 
-<!-- STAFF -->
-<section id="staff" class="screen">
- <div class="head"><h2>🔐 Área do Staff</h2></div><div class="content" id="staffBody"></div>
+<!-- STAFF: LOGIN / CÓDIGO DO EVENTO -->
+<section id="stafflogin" class="screen">
+ <div class="head"><h2>🔐 Área do Staff</h2><span class="muted">Operação de um evento</span></div>
+ <div class="content">
+  <div class="card"><b>Login</b><p class="muted">Participante, Staff e Admin usam o mesmo login; após autenticar, o sistema direciona pelo perfil da conta. A interface visual de login será definida no Figma.</p></div>
+  <b>Código do evento</b>
+  <input id="staffCode" class="input" placeholder="Ex: BEAST2024">
+  <div id="staffCodeMsg"></div>
+  <button class="btn primary" onclick="staffEnterCode()">ENTRAR NO EVENTO</button>
+  <p class="muted">É o mesmo código usado pelo Participante. Ele identifica o evento; o comportamento depende do perfil autenticado.</p>
+ </div>
+</section>
+<!-- STAFF: PAINEL OPERACIONAL -->
+<section id="staffpanel" class="screen">
+ <div class="head"><h2>Painel Operacional</h2><span class="muted" id="staffEventLabel"></span></div>
+ <div class="content" id="staffPanelBody"></div>
+</section>
+<!-- STAFF: CONTROLE DE ENTRADA -->
+<section id="staffentry" class="screen">
+ <div class="head"><h2>Controle de Entrada</h2><span class="muted">Fila de acesso à Arena</span></div>
+ <div class="content" id="staffEntryBody"></div>
+</section>
+<!-- STAFF: OPERAÇÃO DA ESTAÇÃO -->
+<section id="staffstation" class="screen">
+ <div class="head"><h2 id="staffStationTitle">Estação</h2></div>
+ <div class="content" id="staffStationBody"></div>
 </section>
 
 <!-- MONITOR -->
 <section id="monitor" class="screen">
  <div class="monitor"><h1>🎮 BEAST ARENA</h1><p style="color:#bbb">Chamadas em tempo real</p><div id="monitorBody"></div></div>
+</section>
+
+<!-- ADMIN: GERENCIAR (home) -->
+<section id="adminhome" class="screen">
+ <div class="head"><h2>🛠 Área do Admin</h2><span class="muted">Gerenciar eventos e BI</span></div>
+ <div class="content" id="adminHomeBody"></div>
+</section>
+<!-- ADMIN: CRIAR EVENTO -->
+<section id="admincreate" class="screen">
+ <div class="head"><h2>Criar Evento</h2></div>
+ <div class="content" id="adminCreateBody"></div>
+</section>
+<!-- ADMIN: CATÁLOGO -->
+<section id="admincatalog" class="screen">
+ <div class="head"><h2>Catálogo de Estações</h2></div>
+ <div class="content" id="adminCatalogBody"></div>
+</section>
+<!-- ADMIN: EVENTO (gerenciar/acompanhar/encerrar) -->
+<section id="adminevent" class="screen">
+ <div class="head"><h2 id="adminEventTitle">Evento</h2></div>
+ <div class="content" id="adminEventBody"></div>
+</section>
+<!-- ADMIN: BI DO EVENTO -->
+<section id="adminbi" class="screen">
+ <div class="head"><h2 id="adminBiTitle">BI do Evento</h2></div>
+ <div class="content" id="adminBiBody"></div>
+</section>
+<!-- ADMIN: HISTÓRICO -->
+<section id="adminhistory" class="screen">
+ <div class="head"><h2>Histórico</h2><span class="muted">Eventos encerrados</span></div>
+ <div class="content" id="adminHistoryBody"></div>
+</section>
+<!-- ADMIN: VISÃO GERAL / BI CONSOLIDADO -->
+<section id="adminoverview" class="screen">
+ <div class="head"><h2>Visão Geral</h2><span class="muted">BI consolidado da BEAST</span></div>
+ <div class="content" id="adminOverviewBody"></div>
 </section>
 
 <div id="modal" class="modal hidden"><div class="box">
@@ -1720,8 +1826,10 @@ Princípios que orientam a arquitetura:
 <li>Não existe mais “Registrar experiência” para o participante.</li>
 <li>Sair da Arena pede confirmação e remove automaticamente da fila; gera resumo + avaliação opcional.</li>
 <li>Detalhes mostram experiências como “Concluída às HH:MM”, sem histórico de filas.</li>
+<li><b>Staff:</b> entra pelo código do evento → painel operacional → Controle de Entrada (confirmar entrada individual, desativar liberando todos) e estações (chamar próximo, check pendente, concluir, ausente → fim da fila, remover da fila).</li>
+<li><b>Admin:</b> Gerenciar (criar/configurar evento, catálogo de estações com arquivar/reativar, duplicar, encerrar), Histórico (BI por evento) e Visão Geral (BI consolidado). Admin e Staff são perfis separados.</li>
 </ul>
-<p class="muted">Login, Cadastro e Recuperação de senha constam na arquitetura e serão desenhados no Figma; não fazem parte deste protótipo estrutural.</p>
+<p class="muted">Login e o direcionamento por perfil são conceituais aqui (a interface visual completa, incluindo autenticação, será desenhada no Figma). Não há cadastro público de Staff/Admin.</p>
 <p><b>Importante:</b> este é um protótipo de estrutura. Não representa a identidade visual final.</p>
 </aside>
 </div>
@@ -1786,7 +1894,8 @@ function go(id) {
  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
  const el = $(id); if (el) el.classList.add('active');
  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === id));
- $('tabs').style.display = ['staff', 'monitor', 'quiz'].includes(id) ? 'none' : 'flex';
+ const semTabs = id === 'quiz' || id === 'monitor' || id.indexOf('staff') === 0 || id.indexOf('admin') === 0;
+ $('tabs').style.display = semTabs ? 'none' : 'flex';
  if (id !== 'entry') $('entryMsg').innerHTML = '';
  if (id !== 'confirm') $('confirmMsg').innerHTML = '';
  render();
@@ -2034,25 +2143,211 @@ function render() {
   + '<div class="card" style="background:#fff3c9;border-left-color:#ffbd17">' + (d.rating ? '<b>⭐ Sua Avaliação: ' + d.rating + '/5</b>' + (d.comment ? '<br><span class="muted">💬 “' + esc(d.comment) + '”</span>' : '') : '<b>Não avaliado</b>') + '</div>'
   + '<button class="btn" onclick="go(\'events\')">VOLTAR</button>' : '';
 
- // Área do Staff
- $('staffBody').innerHTML = '<div class="section">' + EVENT.name + '</div>'
-  + '<div class="card"><div class="row"><div><b>Fila de entrada da Arena</b><br><span class="muted">Pode ser alterada durante o evento</span></div><div class="staffswitch"><button class="pill' + (S.arenaQueueOn ? '' : ' on') + '" onclick="toggleArenaQueue(false)">Não</button><button class="pill' + (S.arenaQueueOn ? ' on' : '') + '" onclick="toggleArenaQueue(true)">Sim</button></div></div>'
-  + (S.arenaQueueOn ? '<p class="muted">' + (S.arenaQueue.length ? S.arenaQueue.map((n, i) => (i + 1) + '. ' + n).join('<br>') : 'Ninguém aguardando.') + '</p><button class="btn" onclick="staffReleaseNext()"' + (S.arenaQueue.length ? '' : ' disabled') + '>LIBERAR PRÓXIMO</button><p class="muted">Ao desativar a fila, todos que aguardam são liberados automaticamente.</p>' : '')
-  + '</div><div class="section">Filas das estações</div>'
-  + Object.keys(S.stations).map(k => {
-   const st = S.stations[k];
-   return '<div class="card"><b>' + st.name + '</b><p class="muted">' + (st.called ? '<b>' + st.called + ' — CHAMADO</b><br>' : '')
-    + (st.queue.length ? st.queue.map((n, i) => (i + 1) + '. ' + n).join('<br>') : 'Ninguém aguardando.') + '</p>'
-    + (st.called ? '<button class="btn primary" onclick="staffConclude(\'' + k + '\')">CONCLUIR EXPERIÊNCIA</button><button class="btn" onclick="staffNoShow(\'' + k + '\')">NÃO COMPARECEU → FINAL DA FILA</button>'
-      : '<button class="btn" onclick="staffCall(\'' + k + '\')"' + (st.queue.length ? '' : ' disabled') + '>CHAMAR PRÓXIMO</button>') + '</div>';
-  }).join('')
-  + '<p class="muted">O sistema deverá poder alertar o staff quando houver uma experiência aguardando check de conclusão.</p>';
+ // Área do Staff e Área do Admin (não alteram o fluxo do Participante)
+ renderStaffAdmin();
 
  // Monitor público (mesmo estado das filas)
  $('monitorBody').innerHTML = Object.keys(S.stations).map(k => {
   const st = S.stations[k];
   return '<div class="card"><h2>' + st.name + '</h2><p>AGORA: <b>' + (st.called || '—') + '</b></p><p style="color:#bbb">Próximo: ' + (st.queue[0] || '—') + '</p></div>';
  }).join('');
+}
+
+/* ================= STAFF / ADMIN (perfis separados; não alteram o Participante) ================= */
+const STAFF = { code: '', station: null };
+const CATALOG = [
+ { id: 'ps',  name: '🎮 PlayStation',          archived: false },
+ { id: 'vr',  name: '🥽 Realidade Virtual',     archived: false },
+ { id: 'sim', name: '🏎️ Simulador de Corrida', archived: false },
+ { id: 'jd',  name: '💃 Just Dance',            archived: true  }
+];
+const ADMIN = {
+ draft: null,
+ current: null,
+ events: [
+  { code: 'BEASTUNDB', name: 'BEAST Arena - UNDB',         local: 'UNDB',         date: '05/10/2026', ini: '14:00', fim: '20:00', status: 'proximo',   stations: ['ps', 'jd'] },
+  { code: 'BEAST2024', name: 'BEAST Arena - Shopping XYZ',  local: 'Shopping XYZ', date: '29/09/2026', ini: '14:00', fim: '20:00', status: 'andamento', stations: ['ps', 'vr', 'sim'] }
+ ],
+ history: [
+  { code: 'BEASTILHA', name: 'BEAST Arena - Shopping da Ilha', local: 'Shopping da Ilha', date: '15/09/2026', ini: '14:00', fim: '20:00', status: 'encerrado', stations: ['ps', 'vr', 'sim'],
+    bi: { parts: 200, valid: 185, adm: 15, avgMins: 97, exps: [['🎮 PlayStation', 120], ['🥽 Realidade Virtual', 95], ['🏎️ Simulador de Corrida', 60]], ratingAvg: 4.3, ratingN: 150, comments: ['Muito legal!', 'Curti demais o VR', 'Poderia ter mais estações'] } }
+ ]
+};
+const stName = id => (CATALOG.find(s => s.id === id) || { name: id }).name;
+
+/* Confirmação genérica (separada do modal do Participante) */
+function confirmDlg(html, okText, onOk, danger) {
+ const ov = document.createElement('div'); ov.className = 'modal';
+ ov.innerHTML = '<div class="box">' + html + '<div class="row" style="margin-top:12px"><button class="btn ' + (danger ? 'danger' : 'primary') + '" id="cfgOk">' + okText + '</button><button class="btn" id="cfgNo">CANCELAR</button></div></div>';
+ document.body.appendChild(ov);
+ ov.querySelector('#cfgOk').onclick = () => { ov.remove(); if (onOk) onOk(); };
+ ov.querySelector('#cfgNo').onclick = () => ov.remove();
+}
+
+/* ---- Staff ---- */
+function openStaff() { STAFF.station = null; if ($('staffCode')) $('staffCode').value = ''; if ($('staffCodeMsg')) $('staffCodeMsg').innerHTML = ''; go('stafflogin'); }
+function staffEnterCode() {
+ const v = $('staffCode').value.trim().toUpperCase();
+ const known = [EVENT.code].concat(ADMIN.events.map(e => e.code));
+ if (known.includes(v)) { STAFF.code = v; go('staffpanel'); }
+ else $('staffCodeMsg').innerHTML = '<div class="alert"><b>❌ Código não encontrado</b><br>Confira o código do evento (ex.: BEAST2024).</div>';
+}
+function staffOpenEntry() { go('staffentry'); }
+function staffOpenStation(k) { STAFF.station = k; go('staffstation'); }
+function staffConfirmEntry() { const n = S.arenaQueue.shift(); if (n === ME && S.part && S.part.status === 'queue') startArena(); render(); }
+function staffDeactivateQueue() {
+ confirmDlg('<h3 style="margin-top:0">Desativar fila de acesso?</h3><p class="muted">Existem <b>' + S.arenaQueue.length + '</b> participante(s) aguardando.<br>Todos serão liberados para entrar na Arena.</p>', 'DESATIVAR E LIBERAR TODOS', () => toggleArenaQueue(false), true);
+}
+function staffRemove(k) {
+ const st = S.stations[k]; if (!st.queue.length) return;
+ const nome = st.queue[0];
+ confirmDlg('<h3 style="margin-top:0">Remover ' + esc(nome) + ' da fila?</h3><p class="muted">O participante será retirado da fila de ' + stName(k).replace(/^\S+ /, '') + '. A participação na Arena continua ativa (não é o mesmo que sair da Arena).</p>', 'REMOVER DA FILA', () => { st.queue.shift(); render(); }, true);
+}
+
+/* ---- Admin ---- */
+function openAdmin() { go('adminhome'); }
+function adminGoto(nav) { go(nav === 'historico' ? 'adminhistory' : nav === 'visao' ? 'adminoverview' : 'adminhome'); }
+function openAdminEvent(code) { ADMIN.current = code; go('adminevent'); }
+function openAdminBi(code) { ADMIN.current = code; go('adminbi'); }
+function adminFindEvent(code) { return ADMIN.events.concat(ADMIN.history).find(e => e.code === code); }
+function adminClose(code) {
+ const ev = adminFindEvent(code); if (!ev) return;
+ const ativos = Object.values(S.stations).reduce((a, s) => a + s.queue.length + (s.called ? 1 : 0), 0);
+ confirmDlg('<h3 style="margin-top:0">Encerrar evento?</h3><p class="muted">Ainda existem participações ativas e <b>' + ativos + '</b> participante(s) em filas.<br>As filas serão encerradas e as participações abertas serão finalizadas administrativamente — sem gerar permanência artificial.</p>', 'ENCERRAR EVENTO', () => {
+  ev.status = 'encerrado';
+  ADMIN.events = ADMIN.events.filter(e => e.code !== code);
+  if (!ADMIN.history.find(e => e.code === code)) ADMIN.history.unshift(ev);
+  go('adminhistory');
+ }, true);
+}
+function adminDuplicate(code) {
+ const ev = adminFindEvent(code); if (!ev) return;
+ ADMIN.draft = { name: ev.name + ' (novo)', local: ev.local, stations: ev.stations.slice() };
+ go('admincreate');
+}
+function adminGenCode() { $('evCode').value = 'BEAST' + Math.random().toString(36).slice(2, 6).toUpperCase(); }
+function adminCreateEvent() {
+ const name = $('evName').value.trim(), code = $('evCode').value.trim().toUpperCase();
+ if (!name || !code) { $('evMsg').innerHTML = '<div class="alert"><b>Preencha ao menos nome e código.</b></div>'; return; }
+ if (adminFindEvent(code)) { $('evMsg').innerHTML = '<div class="alert"><b>Código já em uso.</b> Escolha outro.</div>'; return; }
+ const stations = CATALOG.filter(s => $('st_' + s.id) && $('st_' + s.id).checked).map(s => s.id);
+ ADMIN.events.unshift({ code, name, local: $('evLocal').value.trim(), date: $('evDate').value.trim() || 'a definir', ini: $('evIni').value.trim(), fim: $('evFim').value.trim(), status: 'proximo', stations });
+ ADMIN.draft = null; go('adminhome');
+}
+function catalogArchive(id, arch) { const s = CATALOG.find(x => x.id === id); if (s) s.archived = arch; render(); }
+function catalogCreate() { const n = $('catName').value.trim(); if (!n) return; CATALOG.push({ id: 'c' + Date.now(), name: n, archived: false }); $('catName').value = ''; render(); }
+
+/* ---- Render Staff/Admin ---- */
+function renderStaffAdmin() {
+ // Painel operacional
+ if ($('staffPanelBody')) {
+  $('staffEventLabel').textContent = EVENT.name + ' · ' + (STAFF.code || EVENT.code);
+  $('staffPanelBody').innerHTML = '<p class="muted">Selecione onde você vai atuar. As áreas abaixo são as configuradas para este evento.</p>'
+   + '<button class="btn primary" onclick="staffOpenEntry()">🚪 Controle de Entrada</button>'
+   + '<div class="section">Estações do evento</div>'
+   + Object.keys(S.stations).map(k => '<button class="btn" onclick="staffOpenStation(\'' + k + '\')">' + S.stations[k].name + ' <span class="muted">(' + (S.stations[k].called ? '1 chamado · ' : '') + S.stations[k].queue.length + ' na fila)</span></button>').join('')
+   + '<button class="btn" style="margin-top:14px" onclick="openStaff()">↩ Trocar de evento</button>';
+ }
+ // Controle de entrada
+ if ($('staffEntryBody')) {
+  const q = S.arenaQueue;
+  $('staffEntryBody').innerHTML = '<div class="card"><div class="row"><div><b>Fila de acesso</b><br><span class="muted">' + (S.arenaQueueOn ? 'ATIVA' : 'DESATIVADA') + '</span></div><div class="staffswitch"><button class="pill' + (S.arenaQueueOn ? '' : ' on') + '" onclick="staffDeactivateQueue()">Não</button><button class="pill' + (S.arenaQueueOn ? ' on' : '') + '" onclick="toggleArenaQueue(true)">Sim</button></div></div>'
+   + '<p class="muted">Aguardando: <b>' + q.length + '</b> · Próximo: <b>' + (q[0] || '—') + '</b></p></div>'
+   + (S.arenaQueueOn
+     ? '<div class="section">Fila</div>' + (q.length ? q.map((n, i) => '<div class="exp"><div class="row"><div>' + (i + 1) + '. ' + esc(n) + '</div>' + (i === 0 ? '<button class="btn small primary" onclick="staffConfirmEntry()">CONFIRMAR ENTRADA</button>' : '') + '</div></div>').join('') : '<p class="muted">Ninguém aguardando.</p>')
+       + '<button class="btn danger" onclick="staffDeactivateQueue()">DESATIVAR FILA (LIBERA TODOS)</button>'
+       + '<p class="muted">A entrada normal é individual (“Confirmar entrada”). Desativar a fila libera todos de uma vez.</p>'
+     : '<div class="alert warn"><b>Fila de acesso desativada</b><br>Os participantes entram direto na Arena.</div>')
+   + '<button class="btn" onclick="go(\'staffpanel\')">↩ Painel</button>';
+ }
+ // Operação da estação
+ if ($('staffStationBody')) {
+  const k = STAFF.station, st = k && S.stations[k];
+  if (st) {
+   $('staffStationTitle').textContent = st.name;
+   $('staffStationBody').innerHTML = (st.called
+     ? '<div class="alert warn"><b>⚠️ Check pendente</b><br>' + esc(st.called) + ' foi chamado(a). Ao terminar a experiência, confirme a conclusão.</div>'
+       + '<button class="btn primary" onclick="staffConclude(\'' + k + '\')">CONCLUIR EXPERIÊNCIA</button>'
+       + '<button class="btn" onclick="staffNoShow(\'' + k + '\')">AUSENTE → FINAL DA FILA</button>'
+     : '<div class="card"><b>Nenhum participante chamado</b><br><span class="muted">Chame o próximo da fila.</span></div>'
+       + '<button class="btn primary" onclick="staffCall(\'' + k + '\')"' + (st.queue.length ? '' : ' disabled') + '>CHAMAR PRÓXIMO</button>')
+    + '<div class="section">Fila (' + st.queue.length + ')</div>'
+    + (st.queue.length ? st.queue.map((n, i) => '<div class="exp"><div class="row"><div>' + (i + 1) + '. ' + esc(n) + '</div>' + (i === 0 ? '<button class="btn small" onclick="staffRemove(\'' + k + '\')">Remover</button>' : '') + '</div></div>').join('') : '<p class="muted">Ninguém aguardando.</p>')
+    + '<p class="muted">Chama-se apenas o próximo (sem furar a ordem). “Ausente” volta ao fim da fila; “Remover” é uma ação manual diferente.</p>'
+    + '<button class="btn" onclick="go(\'staffpanel\')">↩ Painel</button>';
+  } else $('staffStationBody').innerHTML = '<p class="muted">Selecione uma estação no painel.</p><button class="btn" onclick="go(\'staffpanel\')">↩ Painel</button>';
+ }
+ renderAdmin();
+}
+function adminNav(active) {
+ return '<div class="row" style="gap:6px;margin-bottom:10px">'
+  + ['gerenciar|Gerenciar', 'historico|Histórico', 'visao|Visão Geral'].map(x => { const p = x.split('|'); return '<button class="btn small' + (active === p[0] ? ' primary' : '') + '" onclick="adminGoto(\'' + p[0] + '\')">' + p[1] + '</button>'; }).join('') + '</div>';
+}
+function evBadge(s) { return s === 'proximo' ? '🟡 Próximo' : s === 'andamento' ? '🟢 Em andamento' : '⚫ Encerrado'; }
+function renderAdmin() {
+ if ($('adminHomeBody')) {
+  const list = ADMIN.events.slice().sort((a, b) => a.status < b.status ? -1 : 1);
+  $('adminHomeBody').innerHTML = adminNav('gerenciar')
+   + '<div class="row"><button class="btn primary" onclick="ADMIN.draft=null;go(\'admincreate\')">➕ Criar Evento</button><button class="btn" onclick="go(\'admincatalog\')">🗂 Catálogo</button></div>'
+   + '<div class="section">Eventos</div>'
+   + (list.length ? list.map(e => '<div class="card"><b>' + esc(e.name) + '</b><p class="muted">' + evBadge(e.status) + ' · ' + esc(e.date) + ' · Código: ' + esc(e.code) + '</p><button class="btn small" onclick="openAdminEvent(\'' + e.code + '\')">GERENCIAR</button></div>').join('') : '<p class="muted">Nenhum evento.</p>');
+ }
+ if ($('adminCatalogBody')) {
+  $('adminCatalogBody').innerHTML = '<p class="muted">Estações reutilizáveis pelos eventos. Arquivar preserva o histórico; não há exclusão destrutiva no MVP.</p>'
+   + CATALOG.map(s => '<div class="card"><div class="row"><div><b>' + esc(s.name) + '</b>' + (s.archived ? ' <span class="muted">(arquivada)</span>' : '') + '</div>' + (s.archived ? '<button class="btn small" onclick="catalogArchive(\'' + s.id + '\',false)">Reativar</button>' : '<button class="btn small" onclick="catalogArchive(\'' + s.id + '\',true)">Arquivar</button>') + '</div></div>').join('')
+   + '<div class="section">Nova estação</div><input id="catName" class="input" placeholder="Nome da estação"><button class="btn primary" onclick="catalogCreate()">CRIAR ESTAÇÃO</button>'
+   + '<button class="btn" onclick="go(\'adminhome\')">↩ Voltar</button>';
+ }
+ if ($('adminCreateBody')) {
+  const d = ADMIN.draft;
+  $('adminCreateBody').innerHTML = (d ? '<div class="alert warn"><b>Duplicando evento</b><br>Configurações reaproveitadas; defina data, horários e código. Nenhum dado operacional é copiado.</div>' : '')
+   + '<b>Nome do evento</b><input id="evName" class="input" value="' + (d ? esc(d.name) : '') + '" placeholder="BEAST Arena - ...">'
+   + '<b>Local</b><input id="evLocal" class="input" value="' + (d ? esc(d.local) : '') + '" placeholder="Local do evento">'
+   + '<b>Data</b><input id="evDate" class="input" placeholder="DD/MM/AAAA">'
+   + '<div class="row"><div style="flex:1"><b>Início</b><input id="evIni" class="input" placeholder="14:00"></div><div style="flex:1"><b>Término previsto</b><input id="evFim" class="input" placeholder="20:00"></div></div>'
+   + '<b>Código do evento</b><div class="row"><input id="evCode" class="input" placeholder="Automático ou personalizado" style="flex:1"><button class="btn small" onclick="adminGenCode()">Gerar</button></div><p class="muted">O mesmo código é usado por Participante e Staff.</p>'
+   + '<b>Estações do evento</b>' + CATALOG.filter(s => !s.archived).map(s => '<label class="opt"><input type="checkbox" id="st_' + s.id + '"' + (d && d.stations.includes(s.id) ? ' checked' : '') + '>' + esc(s.name) + '</label>').join('')
+   + '<div id="evMsg"></div><button class="btn primary" onclick="adminCreateEvent()">CRIAR EVENTO</button><button class="btn" onclick="go(\'adminhome\')">CANCELAR</button>';
+ }
+ if ($('adminEventBody')) {
+  const e = adminFindEvent(ADMIN.current);
+  if (e) {
+   $('adminEventTitle').textContent = e.name;
+   $('adminEventBody').innerHTML = '<div class="card"><b>' + evBadge(e.status) + '</b><p class="muted">📍 ' + esc(e.local) + '<br>📅 ' + esc(e.date) + (e.ini ? ' · ' + esc(e.ini) + '–' + esc(e.fim) : '') + '<br>Código: ' + esc(e.code) + '<br>Estações: ' + e.stations.map(stName).join(', ') + '</p></div>'
+    + '<button class="btn primary" onclick="openAdminBi(\'' + e.code + '\')">📊 Acompanhar BI</button>'
+    + '<button class="btn" onclick="adminDuplicate(\'' + e.code + '\')">🔁 Duplicar evento</button>'
+    + (e.status !== 'encerrado' ? '<button class="btn danger" onclick="adminClose(\'' + e.code + '\')">⛔ Encerrar evento</button>' : '')
+    + '<p class="muted">Segurança: se não for encerrado manualmente, o evento é encerrado automaticamente 24h após o término previsto.</p>'
+    + '<button class="btn" onclick="go(\'' + (e.status === 'encerrado' ? 'adminhistory' : 'adminhome') + '\')">↩ Voltar</button>';
+  } else $('adminEventBody').innerHTML = '<p class="muted">Evento não encontrado.</p>';
+ }
+ if ($('adminBiBody')) {
+  const e = adminFindEvent(ADMIN.current), bi = e && e.bi;
+  $('adminBiTitle').textContent = 'BI · ' + (e ? e.name : '');
+  if (bi) {
+   $('adminBiBody').innerHTML = '<div class="section">Participação</div>'
+    + '<div class="stats"><div class="stat"><strong>' + bi.parts + '</strong>Participantes</div><div class="stat"><strong>' + fmtDur(bi.avgMins) + '</strong>Permanência média</div></div>'
+    + '<p class="muted">Permanência média calculada a partir de <b>' + bi.valid + '</b> participações com entrada e saída registradas. ' + bi.adm + ' finalizadas administrativamente não entram nesse cálculo.</p>'
+    + '<div class="section">Experiências concluídas</div>' + bi.exps.map(x => '<div class="exp"><div class="row"><div>' + x[0] + '</div><b>' + x[1] + '</b></div></div>').join('')
+    + '<div class="section">Avaliações</div><div class="card"><b>⭐ ' + bi.ratingAvg + '/5</b> <span class="muted">(' + bi.ratingN + ' avaliações; quem pulou não conta como zero)</span></div>'
+    + '<div class="section">Comentários</div>' + bi.comments.map(c => '<div class="exp"><span class="muted">💬 “' + esc(c) + '”</span></div>').join('')
+    + '<div class="section">Perfil do público (agregado)</div><div class="card"><small class="muted">Idade, gênero, escolaridade, jogos, conhecimento e interesse no mercado de games — apresentados de forma agregada. Detalhamento visual no Figma.</small></div>'
+    + '<button class="btn" onclick="openAdminEvent(\'' + e.code + '\')">↩ Voltar</button>';
+  } else {
+   $('adminBiBody').innerHTML = '<div class="card"><p class="muted">O BI fica disponível durante e após o evento e é atualizado conforme os registros são produzidos. (Este evento de exemplo ainda não possui dados.)</p></div><button class="btn" onclick="go(\'adminhome\')">↩ Voltar</button>';
+  }
+ }
+ if ($('adminHistoryBody')) {
+  $('adminHistoryBody').innerHTML = adminNav('historico')
+   + (ADMIN.history.length ? ADMIN.history.map(e => '<div class="card"><b>' + esc(e.name) + '</b><p class="muted">⚫ Encerrado · ' + esc(e.date) + ' · Código: ' + esc(e.code) + '</p><div class="row"><button class="btn small" onclick="openAdminBi(\'' + e.code + '\')">Ver BI</button><button class="btn small" onclick="adminDuplicate(\'' + e.code + '\')">Duplicar</button></div></div>').join('') : '<p class="muted">Nenhum evento encerrado.</p>');
+ }
+ if ($('adminOverviewBody')) {
+  const H = ADMIN.history, tot = H.reduce((a, e) => a + (e.bi ? e.bi.parts : 0), 0);
+  $('adminOverviewBody').innerHTML = adminNav('visao')
+   + '<div class="stats"><div class="stat"><strong>' + H.length + '</strong>Eventos</div><div class="stat"><strong>' + tot + '</strong>Participações</div></div>'
+   + '<div class="card"><b>Base analítica consolidada</b><p class="muted">Permanência média válida, experiências concluídas, avaliação média, uso das estações, perfil agregado, jogos mais citados, conhecimento e interesse no mercado de games.</p></div>'
+   + '<div class="card"><small class="muted">É possível filtrar por período/evento para a análise não ficar limitada a um acumulado eterno. Gráficos e faixas serão definidos no Figma. As métricas dependem apenas de dados que o sistema coleta.</small></div>';
+ }
 }
 function tick() {
  $('timer').textContent = S.part && S.part.status === 'active' ? fmtTimer(Date.now() - S.part.start) : '00:00:00';

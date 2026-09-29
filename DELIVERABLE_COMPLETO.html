@@ -431,8 +431,8 @@
 
             <div class="stats">
                 <div class="stat-card">
-                    <div class="number">3</div>
-                    <div class="label">Interfaces: Participante, Staff e Monitor</div>
+                    <div class="number">4</div>
+                    <div class="label">Interfaces: Participante, Staff, Admin e Monitor</div>
                 </div>
                 <div class="stat-card">
                     <div class="number">2</div>
@@ -800,14 +800,51 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             </div>
 
             <div class="context-group">
-                <h4>🛠️ Operação</h4>
+                <h4>🛠️ Operação (Staff)</h4>
                 <div class="screen-grid">
                     <div class="screen-card">
-                        <div class="icon">🧑‍💼</div>
-                        <h4>Área do Staff</h4>
-                        <p>Gerenciamento operacional das filas, chamadas de participantes, registro de não comparecimento, confirmação de conclusão das experiências e controle da fila de acesso à Arena. Interface e fluxo detalhados a definir.</p>
+                        <div class="icon">🔐</div>
+                        <h4>Acesso ao evento</h4>
+                        <p>Login + código do evento (o mesmo do Participante) → Painel Operacional. Perfil separado; sem cadastro público de Staff.</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🧭</div>
+                        <h4>Painel Operacional</h4>
+                        <p>Montado com as estações configuradas para o evento. O Staff escolhe onde atuar (Controle de Entrada ou uma estação) e pode trocar de área.</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🚪</div>
+                        <h4>Controle de Entrada</h4>
+                        <p>Fila de acesso à Arena: confirmar entrada individual, ver quem aguarda e desativar a fila (libera todos, com confirmação da quantidade).</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🎮</div>
+                        <h4>Operação da estação</h4>
+                        <p>Chamar próximo (só o próximo), alerta de check pendente, concluir experiência, ausente (volta ao fim da fila) e remover da fila (ação manual).</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="context-group">
+                <h4>🛠 Gestão (Admin)</h4>
+                <div class="screen-grid">
+                    <div class="screen-card">
+                        <div class="icon">🗂️</div>
+                        <h4>Gerenciar</h4>
+                        <p>Eventos próximos/em andamento, criar e configurar evento, catálogo de estações (arquivar/reativar), duplicar e encerrar. Código automático ou personalizado.</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">🕘</div>
+                        <h4>Histórico</h4>
+                        <p>Eventos encerrados, com BI por evento e comentários; permite duplicar eventos anteriores. Dados não são apagados ao encerrar.</p>
+                    </div>
+                    <div class="screen-card">
+                        <div class="icon">📊</div>
+                        <h4>Visão Geral (BI)</h4>
+                        <p>BI consolidado da BEAST: permanência média válida, experiências, avaliação média, uso das estações e perfil agregado, com filtro por período.</p>
+                    </div>
+                </div>
+                <p style="margin-top:8px"><strong>Admin e Staff são perfis separados</strong>, sem herança automática de permissões. O Admin não opera pessoas nas filas.</p>
             </div>
 
             <div class="context-group">
@@ -1062,11 +1099,16 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <td>Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação e comentário opcional. A senha é dado de autenticação, não dado de perfil.</td>
                 </tr>
                 <tr>
-                    <td><strong>Confirmados pelo Staff</strong></td>
-                    <td>Chamadas, não comparecimento (no-show), conclusão das experiências, controle da fila de acesso</td>
+                    <td><strong>Decorrentes de ações do Staff</strong></td>
+                    <td>Chamada, ausência/no-show, confirmação de conclusão da experiência, remoção manual da fila, confirmação de entrada quando a fila de acesso está sendo operada, ativação/desativação da fila de acesso</td>
+                </tr>
+                <tr>
+                    <td><strong>Decorrentes de ações do Admin</strong></td>
+                    <td>Configuração do evento, estações selecionadas, encerramento administrativo e demais configurações administrativas</td>
                 </tr>
             </table>
-            <p>Quando o Staff confirma a conclusão de uma experiência, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão.</p>
+            <p>Quando o Staff confirma a conclusão de uma experiência, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão — não é puramente automática.</p>
+            <p>A <strong>Área do Admin / BI</strong> consome os registros produzidos pela operação (Participante + Staff). Para a qualidade do dado: participações sem saída válida são finalizadas administrativamente e <strong>não</strong> entram no cálculo da permanência média; e a não-avaliação <strong>não</strong> é tratada como nota zero.</p>
         </section>
 
         <!-- ENTREGÁVEIS -->
@@ -1173,7 +1215,8 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <li>✅ Arquitetura com três interfaces: participante, staff e monitor público</li>
                 <li>✅ Protótipo estrutural HTML dos fluxos principais</li>
                 <li>✅ Questionário de perfil definido (3 etapas)</li>
-                <li>🔄 Em aberto: tempo de tolerância após a chamada, limite e penalidades de não comparecimento, comportamento offline, tecnologia de sincronização em tempo real, backend e banco de dados, papel do Google Drive, mecanismo de direcionamento à plataforma da BEAST, formato dos alertas ao Staff, comportamento ao desistir enquanto aguarda na fila de acesso e estrutura da interface e fluxo operacional detalhado da Área do Staff</li>
+                <li>✅ Definido nesta rodada: perfis Participante/Staff/Admin separados; acesso do Staff pelo código do evento; painel operacional por estações do evento; entrada individual e desativação da fila liberando todos; chamar só o próximo; check de conclusão pelo Staff; ausente volta ao fim da fila; remover da fila; catálogo reutilizável de estações (arquivar/reativar); criação/duplicação/encerramento de eventos; ciclo Próximo/Em andamento/Encerrado com encerramento automático de 24h; BI por evento e consolidado</li>
+                <li>🔄 Em aberto: mecanismo e temporização do alerta de check do Staff; limite/penalidades de não comparecimento e timeout após a chamada; se um participante removido pelo Staff pode reentrar imediatamente na mesma fila; comportamento ao desistir da fila de acesso antes de entrar; comportamento offline; sincronização em tempo real, backend e banco de dados; papel técnico do Google Drive; forma de criação das contas de Staff/Admin; restrições de edição de evento em andamento; faixas/categorias do BI; mecanismo de direcionamento por perfil após o login</li>
                 <li>🔄 Identidade visual definitiva a ser criada no Figma</li>
             </ul>
         </section>
