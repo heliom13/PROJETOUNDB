@@ -23,6 +23,7 @@ A entrada no evento é o ponto de partida da experiência. É nela que:
 ```
 Home → Entrar em Evento → QR Code ou Código Manual
      → identificação do evento → tela de confirmação → confirmar entrada
+     → verificação do estado da fila de acesso à Arena (ver Decisão 7)
 ```
 
 O participante deve visualizar as informações do evento antes de efetivamente confirmar sua participação.
@@ -49,7 +50,8 @@ O participante deve visualizar as informações do evento antes de efetivamente 
 5. Sistema identifica o evento
 6. Mostra confirmação com as informações do evento
 7. Participante confirma
-8. Entrada registrada
+8. Após a confirmação, o fluxo segue conforme o estado
+   da fila de acesso à Arena (ver Decisão 7)
 ```
 
 **Vantagens:**
@@ -78,12 +80,12 @@ O participante deve visualizar as informações do evento antes de efetivamente 
 6. Sistema identifica o evento
 7. Mostra confirmação com as informações do evento
 8. Participante confirma
-9. Entrada registrada
+9. Após a confirmação, o fluxo segue conforme o estado
+   da fila de acesso à Arena (ver Decisão 7)
 ```
 
 **Vantagens:**
 - ✅ Não depende de câmera
-- ✅ Funciona em qualquer celular
 - ✅ Código pode ser exibido em placa grande, visível de longe
 
 **Desvantagens:**
@@ -109,7 +111,7 @@ FLUXO ALTERNATIVO (câmera indisponível ou QR ilegível):
 
 **Vantagens:**
 - ✅ Experiência principal rápida (QR Code)
-- ✅ Alternativa disponível quando a câmera ou o QR falham
+- ✅ Alternativa de identificação quando a câmera ou o QR Code não puderem ser utilizados
 - ✅ Ambos os caminhos levam à mesma confirmação
 
 **Desvantagens:**
@@ -137,7 +139,7 @@ FLUXO ALTERNATIVO (câmera indisponível ou QR ilegível):
 
 **Justificativa:**
 1. Mantém o caminho mais rápido como padrão (QR Code)
-2. Evita que o participante fique impedido de entrar quando a câmera ou o QR falham
+2. Oferece uma alternativa de identificação do evento quando a câmera ou o QR Code não puderem ser utilizados (o código manual não garante funcionamento sem internet)
 3. Os dois caminhos convergem para a mesma tela de confirmação, na qual o participante vê o evento antes de confirmar
 
 **Pendente:** comportamento sem conexão com a internet, a ser definido junto com a arquitetura de dados/backend.
@@ -258,7 +260,7 @@ Após a conclusão pelo staff, o participante fica livre para entrar na fila de 
 | **Identifica experiências** | ❌ | ✅ | ✅ | ✅ | ✅ |
 | **Ação extra do participante** | Nenhuma | Alta | Média | Nenhuma | Nenhuma |
 | **Confirmação de realização** | — | ❌ | ❌ | ✅ | ✅ |
-| **Esforço do staff** | Nenhum | Nenhum | Nenhum | Alto | Baixo (já opera a fila) |
+| **Participação do staff no registro** | Nenhuma | Nenhuma | Nenhuma | Busca manual do participante a cada registro | Integrado à operação da fila |
 | **Organiza a espera** | ❌ | ❌ | ❌ | ❌ | ✅ |
 | **Complexidade técnica** | Baixa | Baixa | Média | Média | Alta |
 
@@ -306,12 +308,11 @@ Lista das participações, com o que foi feito em cada uma.
 Histórico detalhado das participações + indicadores consolidados.
 
 **Vantagens:**
-- ✅ Oferece visão consolidada sem lógica de progressão
-- ✅ Usa apenas dados que o próprio fluxo já registra
-- ✅ Implementação viável
+- ✅ Oferece informação pessoal consolidada sem lógica de progressão
+- ✅ Reaproveitamento dos dados: utiliza principalmente informações que já são registradas pelo próprio fluxo da participação
 
 **Desvantagens:**
-- ❌ Menor apelo de engajamento que gamificação
+- ❌ Não adiciona mecanismos de progressão ou incentivo
 
 ---
 
@@ -320,11 +321,10 @@ Histórico detalhado das participações + indicadores consolidados.
 Níveis, XP, barra de progresso, conquistas.
 
 **Vantagens:**
-- ✅ Pode incentivar retorno
+- ✅ Adiciona mecanismos explícitos de progressão
 
 **Desvantagens:**
 - ❌ Requer lógica de progressão e regras de pontuação
-- ❌ Pode parecer artificial
 - ❌ Fora do escopo desta versão
 
 ---
@@ -334,11 +334,12 @@ Níveis, XP, barra de progresso, conquistas.
 Pontos e posição comparativa entre participantes.
 
 **Vantagens:**
-- ✅ Alto engajamento competitivo
+- ✅ Introduz comparação competitiva entre participantes
 
 **Desvantagens:**
-- ❌ Pode criar competição não saudável e desmotivar quem não está no topo
-- ❌ Pode desviar o foco da experiência para os pontos
+- ❌ Introduz competição entre participantes, algo que não faz parte dos objetivos atuais do aplicativo
+- ❌ Desloca o foco do histórico pessoal para a comparação entre usuários
+- ❌ Exige sistema de pontuação
 - ❌ Fora do escopo desta versão
 
 ---
@@ -348,10 +349,10 @@ Pontos e posição comparativa entre participantes.
 Pontos resgatáveis por descontos, brindes ou vouchers.
 
 **Vantagens:**
-- ✅ Valor tangível ao participante
+- ✅ Oferece benefício material (descontos, brindes ou vouchers)
 
 **Desvantagens:**
-- ❌ Complexidade alta (economia de pontos, cupons, validade)
+- ❌ Exige operação de recompensas (pontos, cupons, validade)
 - ❌ Custo operacional e dependência de parcerias
 - ❌ Fora do escopo desta versão
 
@@ -361,8 +362,11 @@ Pontos resgatáveis por descontos, brindes ou vouchers.
 
 | Critério | Histórico | Histórico + Estatísticas | Progresso | Ranking | Recompensas |
 |----------|-----------|--------------------------|-----------|---------|-------------|
-| **Valor ao participante** | Médio | Bom | Bom | Questionável | Alto |
-| **Simplicidade** | Alta | Alta | Média | Baixa | Baixa |
+| **Informação exibida ao participante** | Lista de participações | Histórico + participações, tempo total e experiências | Nível/progresso | Posição comparativa | Pontos e resgates |
+| **Utiliza principalmente dados já coletados** | ✅ | ✅ | ❌ | ❌ | ❌ |
+| **Exige sistema de pontuação** | Não | Não | Sim | Sim | Sim |
+| **Introduz competição entre participantes** | Não | Não | Não | Sim | Não |
+| **Exige operação de recompensas** | Não | Não | Não | Não | Sim |
 | **Complexidade de desenvolvimento** | Baixa | Baixa | Média | Alta | Muito alta |
 | **Alinhamento com princípios** | ✅ | ✅ | ⚠️ | ❌ | ❌ |
 
@@ -389,9 +393,9 @@ Pontos resgatáveis por descontos, brindes ou vouchers.
 **Não haverá, nesta versão:** níveis, XP, barra de progresso, conquistas, ranking, pontos ou recompensas. A BEAST possui uma plataforma gamificada separada, o que não significa que o aplicativo da Arena precise ter esse tipo de sistema.
 
 **Justificativa:**
-1. Oferece valor sem complexidade excessiva
-2. Reaproveita dados que o sistema já coleta (princípio de coleta transparente)
-3. Evita engajamento artificial
+1. Oferece informação pessoal útil (histórico e estatísticas) sem introduzir gamificação
+2. Reaproveitamento dos dados: as estatísticas são construídas principalmente a partir de informações que o sistema já precisa registrar (princípio de coleta transparente)
+3. Não introduz mecanismos de progressão, competição ou recompensa que não fazem parte dos objetivos atuais
 
 ---
 
@@ -427,6 +431,12 @@ O participante visualiza pelo aplicativo sua situação/posição na fila em que
 - Após o staff concluir sua experiência, ele fica novamente disponível para entrar em outra fila
 
 **Justificativa operacional:** evita chamadas simultâneas para diferentes experiências e simplifica o gerenciamento da participação pelo staff.
+
+**✅ Sair da fila:** enquanto aguarda uma estação, o participante pode escolher "Sair da fila". Essa ação:
+- remove o participante somente daquela fila;
+- **não** encerra a participação e **não** significa sair da Arena;
+- mantém o tempo de permanência correndo normalmente;
+- deixa o participante livre para, depois, entrar em outra fila.
 
 ---
 
@@ -547,13 +557,44 @@ A participação é o registro de um usuário em um evento, com timer, filas e e
 
 ---
 
-## 9. DECISÃO: COLETA DO PERFIL DO PARTICIPANTE
+## 9. DECISÃO: SAÍDA DA ARENA DURANTE UMA FILA DE ESTAÇÃO
 
 ### 9.1 Contexto
 
+O participante pode decidir encerrar sua participação enquanto ainda aguarda em uma fila de estação.
+
+### 9.2 Alternativas Consideradas
+
+| Alternativa | Vantagens | Desvantagens |
+|-------------|-----------|--------------|
+| **A) Exigir que o participante saia manualmente da fila antes de sair da Arena** | Cada ação é executada separadamente | Etapa adicional para o participante; se ele não sair da fila, pode continuar ocupando uma posição mesmo após deixar a Arena |
+| **B) Remover automaticamente da fila ao confirmar a saída da Arena** | Uma única confirmação encerra tudo; a fila reflete apenas quem está na Arena | — |
+
+### 9.3 Decisão Adotada
+
+**✅ Decisão adotada: remoção automática (Alternativa B).**
+
+Ao confirmar "Sair da Arena", se o participante estiver em uma fila de estação, o sistema:
+- remove o participante automaticamente dessa fila;
+- não exige que ele execute "Sair da fila" antes;
+- encerra a participação normalmente;
+- registra a saída;
+- calcula a permanência.
+
+**Justificativa:**
+1. Evita uma etapa desnecessária para o participante
+2. Impede que alguém que já deixou a Arena continue ocupando posição em uma fila
+3. Mantém o estado operacional consistente entre app, Staff e monitor
+
+---
+
+## 10. DECISÃO: COLETA DO PERFIL DO PARTICIPANTE
+
+### 10.1 Contexto
+
 Conhecer o perfil do público é parte central do problema da BEAST: a experiência presencial acontece, mas a empresa não sabe quem são os participantes nem qual é a relação deles com games e com o mercado de games. Ao mesmo tempo, um questionário longo contraria o princípio de baixa fricção.
 
-### 9.2 Dados Solicitados pela Empresa
+### 10.2 Dados Solicitados pela Empresa
 
 - Idade
 - Gênero
@@ -564,7 +605,7 @@ Conhecer o perfil do público é parte central do problema da BEAST: a experiên
 
 O **nome** e o **e-mail** já são coletados no cadastro e não são perguntados novamente.
 
-### 9.3 O que foi removido do questionário anterior
+### 10.3 O que foi removido do questionário anterior
 
 | Item antigo | Motivo da remoção |
 |-------------|-------------------|
@@ -574,7 +615,7 @@ O **nome** e o **e-mail** já são coletados no cadastro e não são perguntados
 | Uma pergunta obrigatória por tela | Aumentava o número de telas sem necessidade |
 | Tela final "Seus dados estão corretos?" | Etapa extra; os dados podem ser editados no Perfil |
 
-### 9.4 Decisão Adotada
+### 10.4 Decisão Adotada
 
 **✅ Decisão adotada: questionário em 3 etapas curtas, logo após o cadastro.**
 
@@ -584,7 +625,7 @@ O **nome** e o **e-mail** já são coletados no cadastro e não são perguntados
 
 **Como o atrito é reduzido:** poucas etapas, seleções rápidas em vez de texto livre, nenhuma pergunta redundante, remoção de frequência e gêneros favoritos, ausência de tela de confirmação e edição posterior no Perfil.
 
-### 9.5 Finalidade Específica
+### 10.5 Finalidade Específica
 
 A empresa informou que as respostas sobre conhecimento e interesse no mercado de games poderão ser usadas futuramente para direcionar o participante a conhecer a plataforma da BEAST.
 
@@ -592,7 +633,7 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 
 ---
 
-## 10. RESUMO DAS DECISÕES
+## 11. RESUMO DAS DECISÕES
 
 | Tema | Decisão atual |
 |------|---------------|
@@ -607,6 +648,8 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 | **Permanência** | Espera na fila de acesso não conta como permanência |
 | **Desativação da fila de acesso** | Todos que aguardam são liberados automaticamente |
 | **Participação ativa** | Uma participação ativa por usuário |
+| **Sair da fila** | Remove somente daquela fila; o participante continua na Arena |
+| **Saída da Arena durante fila** | Remoção automática da fila ao confirmar a saída; participação encerrada normalmente |
 | **Perfil do participante** | Questionário em 3 etapas com os dados solicitados pela empresa |
 
 ### Questões em Aberto
@@ -618,16 +661,18 @@ A empresa informou que as respostas sobre conhecimento e interesse no mercado de
 - Papel técnico do Google Drive (informado pela empresa como armazenamento; não assumido como banco operacional)
 - Mecanismo de direcionamento para a plataforma da BEAST
 - Formato dos alertas ao Staff para o check de conclusão
+- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
+- Estrutura da interface e fluxo operacional detalhado da Área do Staff
 - Identidade visual definitiva (Figma)
 
 ---
 
-## 11. ESTADO ATUAL DO PROJETO
+## 12. ESTADO ATUAL DO PROJETO
 
 | Etapa | Estado |
 |-------|--------|
-| Estrutura, fluxos e interfaces | ✅ Consolidados |
-| Regras de negócio principais | ✅ Definidas |
+| Estrutura e fluxos principais | ✅ Consolidados |
+| Regras de negócio principais | ✅ Definidas, com pontos específicos ainda pendentes (ver Questões em Aberto) |
 | Protótipo estrutural HTML | ✅ Fluxos principais navegáveis |
 | Identidade visual / Figma | ⏳ A desenvolver |
 | Regras técnicas (backend, sincronização, offline) | 🔍 Em avaliação |

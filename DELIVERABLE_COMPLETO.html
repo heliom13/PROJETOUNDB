@@ -446,7 +446,7 @@
 
             <h3>Visão Geral</h3>
             <p>A <strong>BEAST MARAGAMES</strong> possui uma Arena Gamer itinerante que recebe participantes em eventos e oferece diferentes experiências/estações (videogames, realidade virtual, simuladores e outras). A experiência presencial acontece, mas a empresa tem dificuldade para transformá-la em dados: quantas pessoas participaram, quem é o público, quanto tempo permaneceu, quais experiências realizou e qual é a sua relação com games e com o mercado de games.</p>
-            <p>O aplicativo transforma a participação presencial em informação útil <strong>sem transformar a experiência em um formulário longo</strong>. O participante se cadastra, responde um questionário curto de perfil, entra no evento por QR Code ou código manual, entra nas <strong>filas das estações</strong>, acompanha sua posição e é chamado quando chega sua vez. O <strong>Staff</strong> confirma a conclusão de cada experiência e controla a <strong>fila de acesso à Arena</strong>; um <strong>monitor público</strong> exibe as chamadas em tempo real. Entrada, saída, tempo de permanência e experiências concluídas são registrados automaticamente pelo próprio fluxo.</p>
+            <p>O aplicativo transforma a participação presencial em informação útil <strong>sem transformar a experiência em um formulário longo</strong>. O participante se cadastra, responde um questionário curto de perfil, entra no evento por QR Code ou código manual, entra nas <strong>filas das estações</strong>, acompanha sua posição e é chamado quando chega sua vez. O <strong>Staff</strong> confirma a conclusão de cada experiência e controla a <strong>fila de acesso à Arena</strong>; um <strong>monitor público</strong> exibe as chamadas em tempo real. Entrada, saída e tempo de permanência são registrados automaticamente pelo fluxo, enquanto as experiências concluídas são registradas a partir da confirmação do Staff.</p>
 
             <h3>Objetivos Principais</h3>
             <ul class="checklist">
@@ -512,7 +512,7 @@
 
             <div class="decided">
                 <strong>✅ Decisão adotada: entrada híbrida.</strong> QR Code como método principal + código manual como alternativa.
-                <p style="margin-top: 8px;">QR Code e código manual apenas <strong>identificam</strong> o evento. A entrada só é registrada depois que o participante vê as informações do evento e confirma. A proteção contra entradas duplicadas vem das regras do sistema (uma participação ativa por usuário), não do meio de identificação. O comportamento sem conexão ainda depende da arquitetura técnica.</p>
+                <p style="margin-top: 8px;">QR Code e código manual apenas <strong>identificam</strong> o evento. Depois que o participante vê as informações do evento e confirma, o fluxo segue conforme o estado da fila de acesso à Arena: entrada efetiva imediata se a fila estiver desativada, ou após a liberação se estiver ativada. A proteção contra entradas duplicadas vem das regras do sistema (uma participação ativa por usuário), não do meio de identificação. O comportamento sem conexão ainda depende da arquitetura técnica.</p>
             </div>
 
             <hr style="margin: 40px 0;">
@@ -598,14 +598,14 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
             <div class="decision-box">
                 <div class="title">Opção A: Histórico Apenas</div>
                 <p><span class="pro">✅ Simples:</span> Lista de participações passadas</p>
-                <p><span class="con">❌ Engajamento:</span> Baixa motivação repetida</p>
+                <p><span class="con">❌ Sem visão consolidada:</span> Apenas a lista de participações</p>
             </div>
 
             <div class="decision-box">
                 <div class="title">Opção B: Histórico + Estatísticas Pessoais</div>
-                <p><span class="pro">✅ Engajamento:</span> Mostra estatísticas (tempo total, participações)</p>
+                <p><span class="pro">✅ Informação consolidada:</span> Mostra estatísticas pessoais (participações, tempo total)</p>
                 <p><span class="pro">✅ Simplicidade:</span> Sem gamificação ou sistema de progressão</p>
-                <p><span class="pro">✅ Motivação:</span> Incentiva participação repetida</p>
+                <p><span class="pro">✅ Valor ao participante:</span> Permite acompanhar seu histórico e suas estatísticas pessoais, oferecendo informação pessoal útil sem introduzir gamificação artificial</p>
             </div>
 
             <div class="decided">
@@ -805,7 +805,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <div class="screen-card">
                         <div class="icon">🧑‍💼</div>
                         <h4>Área do Staff</h4>
-                        <p>Gerenciar filas, chamar participantes, confirmar conclusões, ativar/desativar fila de acesso</p>
+                        <p>Gerenciamento operacional das filas, chamadas de participantes, registro de não comparecimento, confirmação de conclusão das experiências e controle da fila de acesso à Arena. Interface e fluxo detalhados a definir.</p>
                     </div>
                 </div>
             </div>
@@ -1055,7 +1055,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 </tr>
                 <tr>
                     <td><strong>Coletados automaticamente</strong></td>
-                    <td>Entrada, saída, tempo de permanência, experiências concluídas (após confirmação do Staff), horário de conclusão, interações operacionais com as filas quando disponíveis</td>
+                    <td>Entrada, saída, tempo de permanência, horários e informações derivadas de eventos registrados, interações operacionais com as filas quando disponíveis</td>
                 </tr>
                 <tr>
                     <td><strong>Informados pelo participante</strong></td>
@@ -1066,6 +1066,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <td>Chamadas, não comparecimento (no-show), conclusão das experiências, controle da fila de acesso</td>
                 </tr>
             </table>
+            <p>Quando o Staff confirma a conclusão de uma experiência, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão.</p>
         </section>
 
         <!-- ENTREGÁVEIS -->
@@ -1099,20 +1100,20 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                     <p>Decisões, arquitetura de telas e interfaces, protótipo estrutural HTML e principais regras de negócio definidas; algumas regras técnicas seguem em avaliação</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 2: Prototipação visual no Figma</h4>
-                    <p>Definição da identidade visual definitiva</p>
+                    <h4>Fase 2: Figma / Prototipação Visual</h4>
+                    <p>Identidade visual, componentes, telas completas, estados visuais e refinamento da experiência</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 3: Desenvolvimento</h4>
-                    <p>Implementação do app do participante, da área do staff e do monitor público</p>
+                    <h4>Fase 3: Definição da Arquitetura Técnica</h4>
+                    <p>Backend, persistência/banco de dados, autenticação, sincronização, tecnologias necessárias, integração entre participante, Staff e monitor, e demais decisões técnicas</p>
                 </div>
                 <div class="timeline-item">
-                    <h4>Fase 4: Backend</h4>
-                    <p>Autenticação, eventos, participações, filas, estados em tempo real, experiências, ações do staff, avaliações e sincronização do monitor</p>
+                    <h4>Fase 4: Desenvolvimento</h4>
+                    <p>Implementação do aplicativo, dos serviços/backend necessários, da Área do Staff e do Monitor Público, e integração dos componentes do sistema</p>
                 </div>
                 <div class="timeline-item">
                     <h4>Fase 5: Testes & Deploy</h4>
-                    <p>QA, ajustes de UX, deploy em produção</p>
+                    <p>Testes, validação, ajustes e publicação/deploy</p>
                 </div>
             </div>
 
@@ -1122,43 +1123,40 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <p style="margin-top: 8px;">O papel do Google Drive na arquitetura final ainda será definido, especialmente considerando os requisitos de sincronização em tempo real das filas. Não se assume, neste momento, que ele será o banco de dados operacional.</p>
             </div>
 
-            <h3>Tecnologias em Avaliação</h3>
-            <p>Nenhuma das opções abaixo é arquitetura definida; serão discutidas na definição técnica.</p>
+            <h3>Tecnologias</h3>
+            <p>Nenhuma tecnologia específica foi escolhida para o aplicativo até o momento. As escolhas serão feitas na Fase 3 (Definição da Arquitetura Técnica). A tabela registra o que a solução precisa atender e a situação de cada aspecto.</p>
             <table>
                 <tr>
                     <th>Aspecto</th>
-                    <th>Opções</th>
-                    <th>Status</th>
+                    <th>Situação</th>
                 </tr>
                 <tr>
-                    <td>Plataforma mobile</td>
-                    <td>React Native + Expo (iOS/Android)</td>
-                    <td><span class="tag eval">A confirmar</span></td>
+                    <td>Aplicativo mobile</td>
+                    <td><span class="tag eval">A definir</span></td>
                 </tr>
                 <tr>
                     <td>Autenticação</td>
-                    <td>Firebase Auth ou JWT</td>
-                    <td><span class="tag eval">Em avaliação</span></td>
+                    <td><span class="tag eval">Solução técnica a definir</span></td>
                 </tr>
                 <tr>
-                    <td>Banco de dados operacional</td>
-                    <td>Firebase Firestore, PostgreSQL ou outra opção com suporte a tempo real</td>
-                    <td><span class="tag eval">Em avaliação</span></td>
+                    <td>Persistência / banco de dados</td>
+                    <td><span class="tag eval">Solução técnica a definir</span></td>
+                </tr>
+                <tr>
+                    <td>Sincronização em tempo real (participante, Staff e monitor)</td>
+                    <td><span class="tag eval">Solução técnica a definir</span></td>
                 </tr>
                 <tr>
                     <td>Leitura de QR Code</td>
-                    <td>expo-barcode-scanner ou react-native-camera</td>
-                    <td><span class="tag eval">Em avaliação</span></td>
+                    <td>Requisito funcional definido (identificação do evento); implementação/biblioteca conforme a arquitetura técnica</td>
                 </tr>
                 <tr>
-                    <td>Notificações de chamada</td>
-                    <td>expo-notifications</td>
-                    <td><span class="tag eval">Em avaliação</span></td>
+                    <td>Alertas e notificações</td>
+                    <td><span class="tag eval">Solução técnica a definir</span></td>
                 </tr>
                 <tr>
                     <td>Analytics</td>
-                    <td>Firebase Analytics</td>
-                    <td><span class="tag eval">Em avaliação</span></td>
+                    <td><span class="tag eval">Solução técnica a definir, se necessário</span></td>
                 </tr>
             </table>
         </section>
@@ -1175,7 +1173,7 @@ Fila ativada:     Confirma entrada → Fila da Arena → Liberação → Arena
                 <li>✅ Arquitetura com três interfaces: participante, staff e monitor público</li>
                 <li>✅ Protótipo estrutural HTML dos fluxos principais</li>
                 <li>✅ Questionário de perfil definido (3 etapas)</li>
-                <li>🔄 Em aberto: tempo de tolerância após a chamada, limite e penalidades de não comparecimento, comportamento offline, tecnologia de sincronização em tempo real, backend e banco de dados, papel do Google Drive, mecanismo de direcionamento à plataforma da BEAST e formato dos alertas ao Staff</li>
+                <li>🔄 Em aberto: tempo de tolerância após a chamada, limite e penalidades de não comparecimento, comportamento offline, tecnologia de sincronização em tempo real, backend e banco de dados, papel do Google Drive, mecanismo de direcionamento à plataforma da BEAST, formato dos alertas ao Staff, comportamento ao desistir enquanto aguarda na fila de acesso e estrutura da interface e fluxo operacional detalhado da Área do Staff</li>
                 <li>🔄 Identidade visual definitiva a ser criada no Figma</li>
             </ul>
         </section>

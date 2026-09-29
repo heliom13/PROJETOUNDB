@@ -93,7 +93,7 @@ O sistema é composto por três interfaces que participam do funcionamento do ev
 - Campos (somente):
   - Nome (obrigatório)
   - E-mail (obrigatório, com validação)
-  - Senha (obrigatório, mín. 8 caracteres)
+  - Senha (obrigatório, mín. 6 caracteres)
   - Confirmar Senha (obrigatório)
 - Observações:
   - "Confirmar senha" é uma validação do cadastro, não um dado de perfil armazenado
@@ -253,8 +253,9 @@ Pronto para explorar?
   🎮 BEAST Arena - Shopping XYZ
   📅 15 de setembro
   ⏱️ 2h 45min
-  ⭐ 4/5
+  ⭐ 4/5        (participação avaliada)
   ```
+- A avaliação é opcional: se o participante pulou a avaliação, a Home **não** pressupõe uma nota. A nota pode ser omitida ou aparecer como "Não avaliado" (apresentação definida posteriormente no Figma); nunca se exibe uma avaliação que não existe
 - "Ver todas" → aba Eventos → Minhas Participações
 
 ---
@@ -486,13 +487,13 @@ Chamado → não compareceu → Staff registra ausência
 Minhas Participações
 
 📍 BEAST Arena - Shopping XYZ
-📅 15 de setembro de 2024
+📅 15 de setembro de 2026
 ⏱️ Permanência: 2h 45min
 ⭐ Avaliação: 4/5
 [Ver detalhes]
 
 📍 BEAST Arena - Feira de Games
-📅 10 de agosto de 2024
+📅 10 de agosto de 2026
 ⏱️ Permanência: 1h 30min
 ⭐ Não avaliado
 [Ver detalhes]
@@ -505,7 +506,7 @@ Minhas Participações
 Fluxo: Eventos → Minhas Participações → Ver detalhes → Detalhes da Participação
 ```
 BEAST Arena - Shopping XYZ
-📅 15 de setembro de 2024
+📅 15 de setembro de 2026
 
 ⏱️ Permanência: 2h 45min
    Entrada: 14:30
@@ -549,33 +550,18 @@ BEAST Arena - Shopping XYZ
 
 ## 4. ÁREA RESTRITA DO STAFF
 
-Interface operacional usada pela equipe da Arena.
+Interface operacional usada pela equipe da Arena, cuja **estrutura e fluxo detalhados ainda serão definidos** (ver Questões Ainda Não Definidas).
 
-**Funções:**
-- Visualizar as filas das estações
-- Visualizar participantes aguardando
+**Responsabilidades já estabelecidas:**
+- Visualizar e gerenciar as filas
+- Acompanhar os participantes aguardando
 - Realizar chamadas
-- Identificar o participante chamado
 - Registrar ausência (no-show)
-- Confirmar conclusão da experiência
+- Confirmar a conclusão das experiências
 - Controlar a fila de acesso à Arena
 - Ativar/desativar a fila de acesso
 
-```
-┌─────────────────────────────────────┐
-│  STAFF — Estação VR                 │
-├─────────────────────────────────────┤
-│  Chamado agora: João S.             │
-│  [✅ Concluir] [🚫 Ausente]         │
-├─────────────────────────────────────┤
-│  Aguardando:                        │
-│  1. Maria A.                        │
-│  2. Pedro M.                        │
-│  [Chamar próximo]                   │
-├─────────────────────────────────────┤
-│  Fila de acesso à Arena: [SIM|NÃO]  │
-└─────────────────────────────────────┘
-```
+A área do Staff exibida no protótipo estrutural apenas simula essas responsabilidades e a sincronização das filas; ela não define a interface final.
 
 **Quando o Staff confirma a conclusão:**
 1. A experiência é registrada no histórico do participante
@@ -637,9 +623,11 @@ A estratégia técnica de sincronização em tempo real ainda não foi definida.
 
 | Origem | Dados |
 |--------|-------|
-| **Automáticos (sistema)** | Entrada, saída, tempo de permanência, experiências concluídas, horários de conclusão, interações operacionais com filas (quando disponíveis) |
+| **Automáticos / derivados pelo sistema** | Entrada, saída, tempo de permanência, horários e informações derivadas de eventos registrados, interações operacionais com filas (quando disponíveis) |
 | **Informados pelo participante** | Nome, e-mail, idade, gênero, escolaridade, jogos que costuma jogar, conhecimento do mercado de games, interesse profissional no mercado, avaliação, comentário opcional (a senha é dado de autenticação, não dado analítico de perfil) |
 | **Confirmados pelo Staff** | Chamadas, ausência/no-show, conclusão de experiência, controle da fila de acesso |
+
+**Conclusão da experiência:** quando o Staff confirma a conclusão, o sistema registra automaticamente a experiência como concluída e os dados associados, como o horário de conclusão. A gravação é feita pelo sistema, mas é a confirmação do Staff que autoriza a conclusão; ela não acontece sem essa intervenção.
 
 **Princípio:** não pedir ao participante informações que o próprio sistema pode registrar.
 
@@ -776,6 +764,8 @@ Princípios que orientam a arquitetura:
 - Estratégia técnica de sincronização em tempo real
 - Backend e banco de dados definitivos
 - Formato dos alertas/lembretes ao Staff para o check de conclusão
+- Comportamento do participante ao desistir enquanto aguarda na fila de acesso à Arena
+- Estrutura da interface e fluxo operacional detalhado da Área do Staff
 - Papel técnico definitivo do Google Drive (mencionado pela empresa como preferência de armazenamento; não é, por ora, decisão de arquitetura operacional nem banco de dados em tempo real)
 - Mecanismo exato de direcionamento para a plataforma da BEAST
 - Identidade visual final

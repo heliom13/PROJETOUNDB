@@ -193,5 +193,10 @@
             <p>BEAST MARAGAMES © 2024 | Projeto Acadêmico</p>
         </div>
     </div>
+    <div id="ultimaAtualizacao" style="position:fixed;right:10px;bottom:8px;z-index:1000;font:12px Arial,sans-serif;color:#444;background:#ffffffe6;padding:4px 10px;border-radius:12px;box-shadow:0 1px 6px #0003;pointer-events:none"></div>
+    <script>
+    // document.lastModified vem do cabeçalho Last-Modified que o Render envia a cada deploy
+    document.getElementById('ultimaAtualizacao').textContent = 'Última atualização: ' + new Date(document.lastModified).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short' });
+    </script>
 </body>
 </html>
